@@ -14,3 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resources([
+    'coalitions' => 'CoalitionController',
+    'comments' => 'CommentController',
+    'discounts' => 'DiscountController',
+    'doctrines' => 'DoctrineController',
+    'handbooks' => 'HandbookController',
+    'invoices' => 'InvoiceController',
+    'memberships' => 'MembershipController',
+    'replacements' => 'ReplacementClaimController',
+    'settings' => 'SettingController',
+]);
