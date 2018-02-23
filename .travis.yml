@@ -10,7 +10,6 @@ php:
 
 env:
   global:
-    - secure: "gxNLSCyYsOozGapg/Ww6fibDCItmXcPgQhK6ven/WSS9K/zXwa5egOewVtCjvr/4P/hV7DT8z//J94wPk0xrZGbOaEXtqHCzKpRKaY8X8eB+pQWkbVqKbvQc9pe4e8W9Y67fOFjAbf1baMztWUudXWX/GJ0QpK/Pb/3kUi9f4W8KygW6upHImHDfsOXLZbqa1u0HbT2qvQiTVPAoBdwoUb84ZXRxOA0ECQ0+lAsyaTa0se2mkGXfcNBuXSg0FMHoDYU1Tb5Q19h1vu6ZnOooPIipFqWcmVuNHD7/6Cnju36FUg7+qjjZmH1GPwt79Gn0epkkVFW09DraEqJlM57+6DDfURRoEubC3bHxzfhUcenp5sncXiicEIRgVoewPpAoCQ3hS0HXJ2l81GSv5j3xIECfzg+kNJ3h2k3k3yZ5biWrDdswOgaP/wIBTmgrlo1IZKP9QMKYDXYVCFWfFvxCe53KBXj2I/sxrV0RsIdjxx8KBcTHZlA9qIYgJRz/dbaP4de5LD++wLLER2NoB72ad0ts1b+41eC7PhpmH5/MbSCqm/h5KinMcI9sDBdkKM1d5sj/QdmVNamGG05utvRVnzYFmE9nWYJ4Fs4oDh6EkGMyJSUR4HLmuCrySWF50ehNxCAj5AuXc8CCLLfT7tQHE7oQciT6/gh9iUxFbntXrII=" #DOCKER_EMAIL
     - secure: "jXOmSGojOObq/WAWE6daZv4Q8Xc7lSKCGvFcMy3kZkCUuDkcdojM+UqPmeZIPb7f78W9SepSbcjgHc5p7hh313+4Jl0OXWW61RkU2CGgcsjCIoGHcdc+xNe0DzssaLvq4prES+RAKfCx5uwHLtjG5coMd3tO7BR7sM7EYztr/dtN6KR7SoCGyrMHwrg2L23qGJFQZ/+pK/tKedtIm6DssjBpir9U4XgW73VZ9KUjyr9bjABPXNcXSb4vCrbvFOkCZz3xPvc8RDZza7NwJuVvoXSKxbRlMsOKGatjpPNMI0DCONSh+xB9Vi1/C5vaXHrudPJWHs7NZtSsuHCNdtgfXqQKsOzMYwgINF2xHDMknYHN6q4y02uDxv1w9PJMTx07Hz74ZzuMHUwwq2k2gVhRJpn6RVi9osKUQKv7lZqjGlcoctxvaIyFpjUSI+nk6KdmPRYU9jnJqL0j5dTEOS5sWhN8gMNYpf6HNJMXf7InTB4ZFMkm1Xu06WtQKgdLEagbpNpAZgEc53/iFrvnT0mvG8Q0ykyGy9lFapjy8lGEmu8toFyRzMb02CZ2h5PzSyXbinsyY28vBzPEVK+vSx4JYjVBTDTY/YDv80HV32UwZeHntmdExwTksVlOb1ygGs5hrQ9enCSSbWD9x1UsNnmKQavi+7nV5SxJ0eIaDjls3Zo=" #DOCKER_USER
     - secure: "k/KcyUSrntMHO0LKK/r88envlp1pLf2Uzwfy9jScVwSYYNsaqHkZEgXFXrR+YkW9wwhpMMcfp6OgBZ1edf+eyIGoEl1O90Lf3QXOsqaCYHahFatXpru4qSawaIpCjc9NhpMCeTJ/ZQIzQGBHbh13BMUbFpArYVM5FLueH8zQ3xoIW/JDWMfS4aN0lbQeba9pWKiEfGKfoirCDFw5Jj+tav2a1vz4vdfcrvq/5uPd3oRuRc/1ON5Dg5v8zxACREywiffTUzD6nqLuFp4qDV8QcsFAqv0jcXsdVkC1+nBeAVYgmW9YYdg6TCiEIxKdsObp5778BQqkj0sFalM3iFesP5mgOmaJjvAemxwE+kSwAzQ2GfFuZIg1uILp/Qg6QojziJSyWadFd94uZhQyL2yEPV0kxsfIj27WR+s4cKLxTuA9mzNoF0EMaWakXiMpEM+/xuWmLBGjeqms86CsnwwkMf0NjuDc+X6HXvqW0QqC2FtuDmxPyo/nfcxSfq+HWdawG9PnyZoQPhU0+DdEtG3gCzBN28aSFlpS7HKAyvPRCnHP4oBUQdrxz0N2gdbDsgWk+/nxe03T+lEA3v55CHPCWMeWo2TXJ2EAJamL4wjDT1eQzH7iIujPFm2Cnri9wWvOoIvo0eLISDBykOi4QfukZbIv4RcSQlKtW9lgaufKh9g=" #DOCKER_PASS
     - COMMIT=${TRAVIS_COMMIT::8}
@@ -27,7 +26,7 @@ before_script:
 
 after_success:
   - rm .env
-  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - export REPO=wizofgoz/evecommander-php
   - export TAG=`if ["$TRAVIS_BRANCH" == "master"]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
   - docker build -f app.dockerfile -t $REPO:$COMMIT .
