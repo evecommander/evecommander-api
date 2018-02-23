@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', \App\Http\Controllers\DashboardController::class.'@index')->name('dashboard');
+Route::get('/', 'WelcomeController@index')->name('welcome');
 
 Route::resource('characters', 'CharacterController', ['except' => [
     'edit'
@@ -30,3 +30,7 @@ Route::prefix('characters/{id}')->group(function () {
         'settings' => 'SettingController',
     ]);
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
