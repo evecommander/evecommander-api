@@ -24,8 +24,6 @@ before_script:
   - npm run production
   - php artisan config:cache
   - php artisan route:cache
-  - cp .env.example .env
-  - php artisan key:generate
 
 after_success:
   - rm .env
