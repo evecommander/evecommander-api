@@ -34,7 +34,7 @@ class Updated extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -46,7 +46,7 @@ class Updated extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
+                    ->line('There is a new invoice available for '.$this->invoice->recipient()->name.'.')
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
     }

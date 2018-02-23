@@ -22,6 +22,11 @@ class Comment extends Model
 {
     use Commentable;
 
+    /**
+     * Get the character that authored the comment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function character()
     {
         return $this->belongsTo(Character::class);

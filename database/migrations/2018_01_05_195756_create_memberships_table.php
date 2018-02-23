@@ -14,7 +14,7 @@ class CreateMembershipsTable extends Migration
     public function up()
     {
         Schema::create('memberships', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
             $table->morphs('owner');
             $table->morphs('member');
             $table->unsignedInteger('membership_level_id');
@@ -23,6 +23,7 @@ class CreateMembershipsTable extends Migration
             $table->unsignedInteger('last_updated_by');
             $table->timestamps();
 
+            $table->primary('id');
             $table->foreign('membership_level_id')->references('id')->on('membership_levels');
             $table->foreign('added_by')->references('id')->on('characters');
             $table->foreign('last_updated_by')->references('id')->on('characters');

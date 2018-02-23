@@ -14,7 +14,9 @@ class CreateCorporationsTable extends Migration
     public function up()
     {
         Schema::create('corporations', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
+            $table->unsignedInteger('api_id');
+            $table->string('name');
             $table->unsignedInteger('default_membership_level')->nullable();
             $table->timestamps();
 

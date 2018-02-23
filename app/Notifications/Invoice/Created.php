@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class Created extends Notification implements ShouldQueue
 {
@@ -34,7 +35,7 @@ class Created extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'broadcast', 'database'];
     }
 
     /**
@@ -49,6 +50,17 @@ class Created extends Notification implements ShouldQueue
                     ->line('The introduction to the notification.')
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
+    }
+
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'invoice_id' => $this->invoice->id,
+            'from' => $this->invoice->owner()->first()->name,
+            'to' => $this->invoice->recipient()->first()->name,
+            'amount' => $this->invoice->total,
+            'due' => $this->invoice->due_date
+        ]);
     }
 
     /**

@@ -30,6 +30,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * Get any characters that belong to the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function characters()
     {
         return $this->hasMany(Character::class);

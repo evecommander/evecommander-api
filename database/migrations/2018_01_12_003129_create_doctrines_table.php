@@ -14,7 +14,7 @@ class CreateDoctrinesTable extends Migration
     public function up()
     {
         Schema::create('doctrines', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
             $table->morphs('owner');
             $table->string('name');
             $table->text('description');
@@ -22,6 +22,8 @@ class CreateDoctrinesTable extends Migration
             $table->unsignedInteger('added_by');
             $table->unsignedInteger('last_updated_by');
             $table->timestamps();
+
+            $table->primary('id');
         });
     }
 

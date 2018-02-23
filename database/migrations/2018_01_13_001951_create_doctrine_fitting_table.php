@@ -15,7 +15,12 @@ class CreateDoctrineFittingTable extends Migration
     {
         Schema::create('doctrine_fitting', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('doctrine_id');
+            $table->uuid('fitting_id');
             $table->timestamps();
+
+            $table->foreign('doctrine_id')->references('id')->on('doctrines');
+            $table->foreign('fitting_id')->references('id')->on('fittings');
         });
     }
 

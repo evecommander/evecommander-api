@@ -14,12 +14,14 @@ class CreateCoalitionsTable extends Migration
     public function up()
     {
         Schema::create('coalitions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
             $table->unsignedInteger('leader_character_id');
             $table->string('name');
             $table->text('description');
             $table->string('logo');
             $table->timestamps();
+
+            $table->primary('id');
         });
     }
 

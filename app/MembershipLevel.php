@@ -25,4 +25,14 @@ class MembershipLevel extends Model
     {
         return $this->belongsTo(Character::class, 'last_updated_by');
     }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function hasPermission(string $permission_slug)
+    {
+        return $this->permissions()->where('slug', $permission_slug)->exists();
+    }
 }

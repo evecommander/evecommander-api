@@ -15,13 +15,11 @@ class Coalition extends Organization
     {
         $subscriberIds = $this->settings()->value['invoices']['received']['subscribers'];
 
-        if (empty($subscriberIds)) {
-            return [$this->leader()];
-        }
+        $subscribers = User::find($subscriberIds);
 
-        $subscribers = [];
-        foreach ($subscriberIds as $id) {
-            $subscribers[] = User::find($id);
+        // normalize single result case
+        if ($subscribers instanceof User) {
+            $subscribers = collect($subscribers);
         }
 
         return $subscribers;

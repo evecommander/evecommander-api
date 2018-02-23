@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Membership;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Trait IsMember
@@ -12,6 +13,11 @@ use App\Membership;
  */
 trait IsMember
 {
+    /**
+     * Get any memberships the model is a part of
+     *
+     * @return MorphMany
+     */
     public function memberships()
     {
         return $this->morphMany(Membership::class, 'member');

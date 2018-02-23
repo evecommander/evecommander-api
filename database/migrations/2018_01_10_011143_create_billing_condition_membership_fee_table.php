@@ -14,8 +14,8 @@ class CreateBillingConditionMembershipFeeTable extends Migration
     public function up()
     {
         Schema::create('billing_condition_membership_fee', function (Blueprint $table) {
-            $table->unsignedInteger('billing_condition_id');
-            $table->unsignedInteger('membership_fee_id');
+            $table->uuid('billing_condition_id');
+            $table->uuid('membership_fee_id');
             $table->unsignedInteger('order')->index();
             $table->timestamps();
 

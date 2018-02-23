@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Comment;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Trait Commentable
@@ -12,7 +13,11 @@ use App\Comment;
  */
 trait Commentable
 {
-
+    /**
+     * Get any comments attached to the model
+     *
+     * @return MorphMany
+     */
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');

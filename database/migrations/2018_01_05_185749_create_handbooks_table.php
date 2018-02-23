@@ -14,7 +14,7 @@ class CreateHandbooksTable extends Migration
     public function up()
     {
         Schema::create('handbooks', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
             $table->morphs('owner');
             $table->unsignedInteger('order')->index();
             $table->string('title');
@@ -24,6 +24,7 @@ class CreateHandbooksTable extends Migration
             $table->unsignedInteger('last_updated_by')->index();
             $table->timestamps();
 
+            $table->primary('id');
             $table->foreign('created_by')->references('id')->on('characters');
             $table->foreign('last_updated_by')->references('id')->on('characters');
         });

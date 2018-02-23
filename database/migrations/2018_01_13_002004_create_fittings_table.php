@@ -14,7 +14,11 @@ class CreateFittingsTable extends Migration
     public function up()
     {
         Schema::create('fittings', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id')->primary();
+            $table->morphs('owner');
+            $table->string('name');
+            $table->text('description');
+            $table->unsignedInteger('api_id')->index();
             $table->timestamps();
         });
     }

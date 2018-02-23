@@ -3,6 +3,13 @@ namespace App\Traits;
 
 use App\Invoice;
 
+/**
+ * Trait ModifiesAmounts
+ * @package App\Traits
+ *
+ * @property string amount_type
+ * @property double amount
+ */
 trait ModifiesAmounts
 {
     /**
@@ -67,9 +74,9 @@ trait ModifiesAmounts
         if ($this->isFixed()) {
             return $this->getAmount();
         } elseif ($this->isPercent()) {
-            return $this->getAmount() * $invoice->getTotal();
+            return $this->getAmount() * $invoice->currentTotal();
         } elseif ($this->isPerMember()) {
-            $members = $invoice->recipient()->members();
+            $members = $invoice->recipient()->with('members')->get()->members;
 
             return $this->getAmount() * count($members);
         }

@@ -12,4 +12,6 @@ abstract class Organization extends Model
     use HasHandbooks;
     use HasMembers;
     use IsMember;
+
+    public $incrementing = false;
 }
