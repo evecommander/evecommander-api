@@ -16,10 +16,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [];
 
-    protected $subscribe = [
-        MembershipEventSubscriber::class,
-        InvoiceEventSubscriber::class
-    ];
+    protected $subscribe = [];
 
     /**
      * Register any events for your application.
