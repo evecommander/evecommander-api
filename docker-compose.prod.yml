@@ -6,6 +6,7 @@ services:
     image: mysql:latest
     volumes:
       - dbdata:/var/lib/mysql
+      - /env/evecommander.com:/var/www/
     environment:
       - "MYSQL_DATABASE=homestead"
       - "MYSQL_USER=homestead"

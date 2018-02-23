@@ -19,11 +19,16 @@ env:
 before_script:
   - sudo apt update
   - sudo apt install node
-  - composer install
+  - composer install --optimize-autoloader
   - npm install
   - npm run production
+  - php artisan config:cache
+  - php artisan route:cache
+  - cp .env.example .env
+  - php artisan key:generate
 
 after_success:
+  - rm .env
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
   - export REPO=wizofgoz/evecommander-php
   - export TAG=`if ["$TRAVIS_BRANCH" == "master"]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
