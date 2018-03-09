@@ -11,23 +11,13 @@ class CharacterController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function index()
     {
-        return view('characters.index', [
+        return [
             'characters' => Auth::user()->characters()
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('characters.create');
+        ];
     }
 
     /**
@@ -36,7 +26,7 @@ class CharacterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function callback(Request $request)
     {
         $character = new Character;
 
@@ -52,13 +42,13 @@ class CharacterController extends Controller
      * Display the specified resource.
      *
      * @param  Character $character
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function show(Character $character)
     {
-        return view('characters.show', [
+        return [
             'character' => $character
-        ]);
+        ];
     }
 
     /**
@@ -86,6 +76,6 @@ class CharacterController extends Controller
     {
         $character->delete();
 
-        return redirect()->route('characters.index');
+        return response('Character deleted', 204);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,4 +14,20 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::resource('characters', 'CharacterController', ['except' => [
+    'edit'
+]]);
 
+Route::prefix('characters/{id}')->middleware('auth:api')->group(function () {
+    Route::resources([
+        'coalitions' => 'CoalitionController',
+        'comments' => 'CommentController',
+        'discounts' => 'DiscountController',
+        'doctrines' => 'DoctrineController',
+        'handbooks' => 'HandbookController',
+        'invoices' => 'InvoiceController',
+        'memberships' => 'MembershipController',
+        'replacements' => 'ReplacementClaimController',
+        'settings' => 'SettingController',
+    ]);
+});
