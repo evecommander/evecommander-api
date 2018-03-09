@@ -18,10 +18,11 @@ before_script:
   - sudo apt update
   - sudo apt install node
   - composer install --optimize-autoloader
-  - npm install
-  - npm run production
   - php artisan config:cache
   - php artisan route:cache
+  - cd resources/assets/src/evecommander
+  - npm install
+  - npm run build
 
 after_success:
   - rm .env
