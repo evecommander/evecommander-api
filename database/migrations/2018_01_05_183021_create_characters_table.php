@@ -16,6 +16,7 @@ class CreateCharactersTable extends Migration
         Schema::create('characters', function (Blueprint $table) {
             $table->unsignedInteger('id')->primary();
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('eve_id');
             $table->string('name');
             $table->string('access_token');
             $table->dateTime('token_expires');

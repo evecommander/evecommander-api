@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('auth/callback', 'CharacterController@callback');
+
 Route::resource('characters', 'CharacterController', ['except' => [
     'edit'
 ]]);
