@@ -17,9 +17,12 @@ use Illuminate\Contracts\Routing\Registrar;
 |
 */
 
-Route::get('auth/callback', 'CharacterController@callback');
+Route::post('login', 'AuthController@login');
+Route::post('logout', 'AuthController@logout');
+Route::post('refresh', 'AuthController@refresh');
+Route::post('me', 'AuthController@me');
 
-Route::apiResource('characters', 'CharacterController');
+Route::get('auth/callback', 'CharacterController@callback');
 
 JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'json-api.auth:default'], function (ApiGroup $api, Registrar $router) {
     $api->resource('users', [

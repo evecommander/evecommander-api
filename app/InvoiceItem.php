@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class InvoiceItem
- * @package App
  *
  * @property string id
  * @property string name

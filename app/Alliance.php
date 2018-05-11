@@ -12,12 +12,12 @@ use Illuminate\Support\Carbon;
 
 /**
  * Class Alliance
- * @package App
  *
  * @property string id
  * @property int api_id
  * @property string name
  * @property int default_membership_level
+ * @property array settings
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -32,7 +32,7 @@ class Alliance extends Organization
      */
     public function receivedInvoiceSubscribers()
     {
-        $subscriberIds = $this->settings->value['invoices']['received']['subscribers'];
+        $subscriberIds = $this->settings['invoices']['received']['subscribers'];
 
         $subscribers = User::find($subscriberIds);
 

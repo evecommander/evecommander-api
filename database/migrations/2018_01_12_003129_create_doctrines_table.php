@@ -15,7 +15,6 @@ class CreateDoctrinesTable extends Migration
     {
         Schema::create('doctrines', function (Blueprint $table) {
             $table->uuid('id');
-            $table->morphs('owner');
             $table->uuid('owner_id');
             $table->string('owner_type');
             $table->string('name');

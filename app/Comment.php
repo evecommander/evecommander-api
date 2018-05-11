@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Comment
- * @package App
  *
  * @property string id
  * @property string commentable_id

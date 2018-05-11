@@ -4,7 +4,23 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
+/**
+ * Class Membership
+ *
+ * @property string id
+ * @property string owner_id
+ * @property string owner_type
+ * @property string member_id
+ * @property string member_type
+ * @property string membership_level_id
+ * @property string notes
+ * @property string created_by
+ * @property string last_updated_by
+ * @property Carbon created_at
+ * @property Carbon updated_at
+ */
 class Membership extends Model
 {
     use Notifiable;

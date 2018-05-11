@@ -8,7 +8,19 @@ use App\Traits\HasSRP;
 use App\Traits\ReceivesInvoices;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Carbon;
 
+/**
+ * Class Corporation
+ *
+ * @property string id
+ * @property int api_id
+ * @property string name
+ * @property string default_membership_level
+ * @property array settings
+ * @property Carbon created_at
+ * @property Carbon updated_at
+ */
 class Corporation extends Organization
 {
     use HasSRP, ReceivesInvoices, BubblesNotifications;
@@ -25,7 +37,7 @@ class Corporation extends Organization
      */
     public function receivedInvoiceSubscribers()
     {
-        $subscriberIds = $this->settings->value['invoices']['received']['subscribers'];
+        $subscriberIds = $this->settings['invoices']['received']['subscribers'];
 
         $subscribers = User::find($subscriberIds);
 

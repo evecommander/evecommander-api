@@ -5,8 +5,20 @@ namespace App;
 use App\Traits\UuidTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Carbon;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+/**
+ * Class User
+ *
+ * @property string id
+ * @property string email
+ * @property string password
+ * @property array settings
+ * @property Carbon created_at
+ * @property Carbon updated_at
+ */
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable, UuidTrait;
 
@@ -27,6 +39,26 @@ class User extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return string
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     /**
      * Get any characters that belong to the user

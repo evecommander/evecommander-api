@@ -4,7 +4,19 @@ namespace App;
 
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
+/**
+ * Class OAuth2Token
+ *
+ * @property string id
+ * @property string character_id
+ * @property string access_token
+ * @property Carbon expires_on
+ * @property string|null refresh_token
+ * @property Carbon created_on
+ * @property Carbon updated_on
+ */
 class OAuth2Token extends Model
 {
     use UuidTrait;

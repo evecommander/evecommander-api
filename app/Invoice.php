@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Events\Invoice\ForcePaymentPosted;
-use App\Events\Invoice\PaymentPosted;
+use App\Notifications\Invoice\ForcePaymentPosted;
+use App\Notifications\Invoice\PaymentPosted;
 use App\Traits\Commentable;
 use App\Traits\UuidTrait;
 use Carbon\Carbon;
@@ -12,12 +12,11 @@ use Illuminate\Notifications\Notifiable;
 
 /**
  * Class Invoice
- * @package App
  *
  * @property string $id
- * @property int $owner_id
+ * @property string $owner_id
  * @property string $owner_type
- * @property int $recipient_id
+ * @property string $recipient_id
  * @property string $recipient_type
  * @property string $code
  * @property string $title

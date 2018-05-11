@@ -11,13 +11,13 @@ use Carbon\Carbon;
 
 /**
  * Class Coalition
- * @package App
  *
  * @property string $id
  * @property int $leader_character_id
  * @property string $name
  * @property string $description
  * @property string $logo
+ * @property array settings
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -27,7 +27,7 @@ class Coalition extends Organization
 
     public function receivedInvoiceSubscribers()
     {
-        $subscriberIds = $this->settings->value['invoices']['received']['subscribers'];
+        $subscriberIds = $this->settings['invoices']['received']['subscribers'];
 
         $subscribers = User::find($subscriberIds);
 

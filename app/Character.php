@@ -12,7 +12,6 @@ use Illuminate\Support\Carbon;
 
 /**
  * Class Character
- * @package App
  *
  * @property string id
  * @property int user_id

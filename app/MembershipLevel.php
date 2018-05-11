@@ -4,7 +4,23 @@ namespace App;
 
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
+/**
+ * Class MembershipLevel
+ *
+ * @property string id
+ * @property string owner_id
+ * @property string owner_type
+ * @property string name
+ * @property string description
+ * @property double dues
+ * @property string dues_structure
+ * @property string created_by
+ * @property string updated_by
+ * @property Carbon created_at
+ * @property Carbon updated_at
+ */
 class MembershipLevel extends Model
 {
     use UuidTrait;

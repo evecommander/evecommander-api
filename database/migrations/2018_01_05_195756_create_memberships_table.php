@@ -21,7 +21,7 @@ class CreateMembershipsTable extends Migration
             $table->string('member_type');
             $table->uuid('membership_level_id');
             $table->text('notes');
-            $table->uuid('added_by');
+            $table->uuid('created_by');
             $table->uuid('last_updated_by');
             $table->timestamps();
 
