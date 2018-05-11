@@ -5,11 +5,25 @@ namespace App;
 use App\Abstracts\Organization;
 use App\Traits\HasSettings;
 use App\Traits\HasSRP;
+use App\Traits\IssuesInvoices;
 use App\Traits\ReceivesInvoices;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
+/**
+ * Class Alliance
+ * @package App
+ *
+ * @property string id
+ * @property int api_id
+ * @property string name
+ * @property int default_membership_level
+ * @property Carbon created_at
+ * @property Carbon updated_at
+ */
 class Alliance extends Organization
 {
-    use HasSettings, HasSRP, ReceivesInvoices;
+    use HasSRP, ReceivesInvoices, IssuesInvoices, Notifiable;
 
     /**
      * Get collection of subscribers for invoice events
@@ -18,7 +32,7 @@ class Alliance extends Organization
      */
     public function receivedInvoiceSubscribers()
     {
-        $subscriberIds = $this->settings()->value['invoices']['received']['subscribers'];
+        $subscriberIds = $this->settings->value['invoices']['received']['subscribers'];
 
         $subscribers = User::find($subscriberIds);
 
@@ -28,5 +42,12 @@ class Alliance extends Organization
         }
 
         return $subscribers;
+    }
+
+    public function coalition()
+    {
+        $coalitionMembership = $this->memberships()->where('owner_type', Coalition::class)
+            ->with('owner')->first();
+        return $coalitionMembership->owner();
     }
 }

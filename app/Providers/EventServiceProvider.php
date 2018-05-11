@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use App\Listeners\InvoiceEventSubscriber;
-use App\Listeners\MembershipEventSubscriber;
+use Illuminate\Notifications\Events\NotificationSent;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -14,7 +13,11 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [];
+    protected $listen = [
+        'Illuminate\Notifications\Events\NotificationSent' => [
+            'App\Listeners\BubbleNotification'
+        ]
+    ];
 
     protected $subscribe = [];
 

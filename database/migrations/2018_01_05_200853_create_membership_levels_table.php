@@ -15,13 +15,14 @@ class CreateMembershipLevelsTable extends Migration
     {
         Schema::create('membership_levels', function (Blueprint $table) {
             $table->uuid('id');
-            $table->morphs('owner');
+            $table->uuid('owner_id');
+            $table->string('owner_type');
             $table->string('name');
             $table->text('description');
             $table->decimal('dues', 20);
             $table->enum('dues_structure', ['per_day', 'per_week', 'per_month', 'per_quarter', 'per_half', 'per_year', 'upon_joining']);
-            $table->unsignedInteger('created_by');
-            $table->unsignedInteger('last_updated_by');
+            $table->uuid('created_by');
+            $table->uuid('last_updated_by');
             $table->timestamps();
 
             $table->primary('id');

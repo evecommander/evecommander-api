@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Character;
+use App\Http\Resources\CharacterResource;
+use App\Http\Resources\CharactersResource;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,16 +18,16 @@ class CharacterController extends Controller
      */
     public function index()
     {
-        return [
-            'characters' => Auth::user()->characters()
-        ];
+        /** @var User $user */
+        $user = Auth::user();
+        return (new CharactersResource($user->characters->paginate()));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return CharacterResource
      */
     public function callback(Request $request)
     {
@@ -35,20 +38,20 @@ class CharacterController extends Controller
         $character->refresh_token = $request->refresh_token;
         $character->user()->associate(Auth::user());
 
-        return redirect()->route('characters.index');
+        return $this->show($character);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  Character $character
-     * @return array
+     * @return CharacterResource
      */
     public function show(Character $character)
     {
-        return [
-            'character' => $character
-        ];
+        CharacterResource::withoutWrapping();
+
+        return new CharacterResource($character);
     }
 
     /**
@@ -56,13 +59,15 @@ class CharacterController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  Character $character
-     * @return \Illuminate\Http\Response
+     * @return CharacterResource
      */
     public function update(Request $request, Character $character)
     {
         $character->refresh_token = $request->refresh_token;
 
-        return response('Character Updated', 200);
+        CharacterResource::withoutWrapping();
+
+        return new CharacterResource($character);
     }
 
     /**

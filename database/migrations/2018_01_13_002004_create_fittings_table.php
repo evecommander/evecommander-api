@@ -15,7 +15,8 @@ class CreateFittingsTable extends Migration
     {
         Schema::create('fittings', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->morphs('owner');
+            $table->uuid('owner_id');
+            $table->string('owner_type');
             $table->string('name');
             $table->text('description');
             $table->unsignedInteger('api_id')->index();

@@ -7,6 +7,8 @@ use Ramsey\Uuid\Uuid;
 
 trait UuidTrait
 {
+    public $incrementing = false;
+
     protected static function boot ()
     {
         parent::boot();

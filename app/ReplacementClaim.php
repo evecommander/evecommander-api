@@ -11,13 +11,21 @@ class ReplacementClaim extends Model
 {
     use Commentable, Notifiable, UuidTrait;
 
-    public $incrementing = false;
-
+    /**
+     * Get Character that this ReplacementClaim belongs to
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function character()
     {
         return $this->belongsTo(Character::class);
     }
 
+    /**
+     * Get Organization that this ReplacementClaim belongs to
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
     public function organization()
     {
         return $this->morphTo();

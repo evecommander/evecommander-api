@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Model;
  * Class Comment
  * @package App
  *
- * @property int id
- * @property int commentable_id
+ * @property string id
+ * @property string commentable_id
  * @property string commentable_type
- * @property int character_id
+ * @property string character_id
  * @property string text
  * @property Carbon created_at
  * @property Carbon updated_at

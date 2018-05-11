@@ -3,14 +3,20 @@
 namespace App;
 
 use App\Abstracts\Organization;
-use App\Traits\HasSettings;
+use App\Traits\BubblesNotifications;
 use App\Traits\HasSRP;
 use App\Traits\ReceivesInvoices;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Notifications\Notification;
 
 class Corporation extends Organization
 {
-    use HasSettings, HasSRP, ReceivesInvoices;
+    use HasSRP, ReceivesInvoices, BubblesNotifications;
+
+    protected function getBubbleToModels(Notification $notification)
+    {
+        $notification;
+    }
 
     /**
      * Get collection of all
@@ -19,7 +25,7 @@ class Corporation extends Organization
      */
     public function receivedInvoiceSubscribers()
     {
-        $subscriberIds = $this->settings()->value['invoices']['received']['subscribers'];
+        $subscriberIds = $this->settings->value['invoices']['received']['subscribers'];
 
         $subscribers = User::find($subscriberIds);
 
@@ -29,5 +35,10 @@ class Corporation extends Organization
         }
 
         return $subscribers;
+    }
+
+    public function allianceMembership()
+    {
+        return $this->memberships()->where('owner_type', Alliance::class);
     }
 }

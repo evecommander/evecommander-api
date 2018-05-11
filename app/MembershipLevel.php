@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class MembershipLevel extends Model
 {
+    use UuidTrait;
+
     public function memberships()
     {
         return $this->hasMany(Membership::class);

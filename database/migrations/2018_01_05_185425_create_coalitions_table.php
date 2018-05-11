@@ -15,10 +15,11 @@ class CreateCoalitionsTable extends Migration
     {
         Schema::create('coalitions', function (Blueprint $table) {
             $table->uuid('id');
-            $table->unsignedInteger('leader_character_id');
+            $table->uuid('leader_character_id');
             $table->string('name');
             $table->text('description');
             $table->string('logo');
+            $table->json('settings');
             $table->timestamps();
 
             $table->primary('id');

@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
+use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
+use Illuminate\Contracts\Routing\Registrar;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,20 +19,37 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('auth/callback', 'CharacterController@callback');
 
-Route::resource('characters', 'CharacterController', ['except' => [
-    'edit'
-]]);
+Route::apiResource('characters', 'CharacterController');
 
-Route::prefix('characters/{id}')->middleware('auth:api')->group(function () {
-    Route::resources([
-        'coalitions' => 'CoalitionController',
-        'comments' => 'CommentController',
-        'discounts' => 'DiscountController',
-        'doctrines' => 'DoctrineController',
-        'handbooks' => 'HandbookController',
-        'invoices' => 'InvoiceController',
-        'memberships' => 'MembershipController',
-        'replacements' => 'ReplacementClaimController',
-        'settings' => 'SettingController',
+JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'json-api.auth:default'], function (ApiGroup $api, Registrar $router) {
+    $api->resource('users', [
+        'has-many' => [
+            'characters',
+            'notifications',
+            'readNotifications',
+            'unreadNotifications',
+        ]
+    ]);
+
+    $api->resource('characters', [
+        'has-one' => [
+            'user' => ['except' => 'replace'],
+            'token' => ['except' => 'replace']
+        ],
+        'has-many' => [
+            'comments',
+            'invoices',
+            'fulfilledInvoices',
+            'overdueInvoices',
+            'pendingInvoices',
+            'defaultInvoices',
+            'notifications',
+            'readNotifications',
+            'unreadNotifications',
+        ]
+    ]);
+
+    $api->resource('corporations', [
+
     ]);
 });

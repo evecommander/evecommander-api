@@ -34,7 +34,13 @@ class Updated extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        $channels = ['database', 'broadcast'];
+
+        if ($notifiable->email) {
+            $channels[] = 'mail';
+        }
+
+        return $channels;
     }
 
     /**

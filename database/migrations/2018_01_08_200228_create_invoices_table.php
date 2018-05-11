@@ -15,8 +15,10 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->uuid('id');
-            $table->morphs('owner');
-            $table->morphs('recipient');
+            $table->uuid('issuer_id');
+            $table->string('issuer_type');
+            $table->uuid('recipient_id');
+            $table->string('recipient_type');
             $table->string('title');
             $table->enum('status', ['pending', 'fulfilled', 'overdue']);
             $table->decimal('total', 20);

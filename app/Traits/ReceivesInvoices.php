@@ -2,8 +2,6 @@
 
 namespace App\Traits;
 use App\Invoice;
-use App\User;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
@@ -14,13 +12,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  */
 trait ReceivesInvoices
 {
-    /**
-     * Returns array of subscribed users
-     *
-     * @return Collection
-     */
-    abstract public function receivedInvoiceSubscribers();
-
     /**
      * Get all invoices belonging to this model
      *

@@ -15,12 +15,14 @@ class CreateMembershipsTable extends Migration
     {
         Schema::create('memberships', function (Blueprint $table) {
             $table->uuid('id');
-            $table->morphs('owner');
-            $table->morphs('member');
-            $table->unsignedInteger('membership_level_id');
+            $table->uuid('owner_id');
+            $table->string('owner_type');
+            $table->uuid('member_id');
+            $table->string('member_type');
+            $table->uuid('membership_level_id');
             $table->text('notes');
-            $table->unsignedInteger('added_by');
-            $table->unsignedInteger('last_updated_by');
+            $table->uuid('added_by');
+            $table->uuid('last_updated_by');
             $table->timestamps();
 
             $table->primary('id');

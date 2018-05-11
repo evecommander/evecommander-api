@@ -16,14 +16,18 @@ class CreateDoctrinesTable extends Migration
         Schema::create('doctrines', function (Blueprint $table) {
             $table->uuid('id');
             $table->morphs('owner');
+            $table->uuid('owner_id');
+            $table->string('owner_type');
             $table->string('name');
             $table->text('description');
             $table->unsignedInteger('priority');
-            $table->unsignedInteger('added_by');
-            $table->unsignedInteger('last_updated_by');
+            $table->uuid('added_by');
+            $table->uuid('last_updated_by');
             $table->timestamps();
 
             $table->primary('id');
+            $table->foreign('added_by')->references('id')->on('characters');
+            $table->foreign('last_updated_by')->references('id')->on('characters');
         });
     }
 

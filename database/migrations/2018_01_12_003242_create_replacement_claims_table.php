@@ -21,6 +21,7 @@ class CreateReplacementClaimsTable extends Migration
             $table->unsignedInteger('killmail_id');
             $table->string('killmail_hash');
             $table->decimal('total', 20);
+            $table->enum('status', ['pending', 'contested', 'closed', 'payed']);
             $table->timestamps();
 
             $table->primary('id');
