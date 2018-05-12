@@ -19,6 +19,8 @@ class CreateMembershipLevelPermissionTable extends Migration
             $table->timestamps();
 
             $table->primary(['membership_level_id', 'permission_id']);
+            $table->foreign('membership_level_id')->references('id')->on('membership_levels');
+            $table->foreign('permission_id')->references('id')->on('permissions');
         });
     }
 

@@ -30,17 +30,17 @@ class Membership extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function level()
+    public function membershipLevel()
     {
         return $this->belongsTo(MembershipLevel::class);
     }
 
     /**
-     * Get the owning model for this membership
+     * Get the organization model for this membership
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function owner()
+    public function organization()
     {
         return $this->morphTo();
     }
@@ -60,9 +60,9 @@ class Membership extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function addedBy()
+    public function createdBy()
     {
-        return $this->belongsTo(Character::class, 'added_by');
+        return $this->belongsTo(Character::class, 'created_by');
     }
 
     /**

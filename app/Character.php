@@ -27,7 +27,7 @@ class Character extends Model
     public $bubbleToRelation = 'user';
 
     /**
-     * Get the user that this character belongs to
+     * Get the user that this character belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -37,7 +37,7 @@ class Character extends Model
     }
 
     /**
-     * Get the OAuth2Token that is character owns
+     * Get the OAuth2Token that is character owns.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -47,7 +47,7 @@ class Character extends Model
     }
 
     /**
-     * Get all comments belonging to the character
+     * Get all comments belonging to the character.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -57,14 +57,12 @@ class Character extends Model
     }
 
     /**
-     * Get the corporation that the character is a member of
+     * Get the corporation that the character is a member of.
      *
-     * @return Corporation
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function corporation()
     {
-        $corporationMembership = $this->memberships()->where('owner_type', Corporation::class)
-            ->with('owner')->first();
-        return $corporationMembership->owner();
+        return $this->memberships()->where('owner_type', Corporation::class)->with('owner');
     }
 }

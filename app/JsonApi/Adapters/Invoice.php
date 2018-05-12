@@ -18,6 +18,22 @@ class Invoice extends AbstractAdapter
     protected $attributes = [];
 
     /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'issuer',
+        'recipient',
+        'items',
+        'payments',
+        'comments',
+        'notifications',
+        'readNotifications',
+        'unreadNotifications',
+    ];
+
+    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging
@@ -27,4 +43,43 @@ class Invoice extends AbstractAdapter
         parent::__construct(new \App\Invoice(), $paging);
     }
 
+    public function issuer()
+    {
+        return $this->hasOne();
+    }
+
+    public function recipient()
+    {
+        return $this->hasOne();
+    }
+
+    public function items()
+    {
+        return $this->hasMany();
+    }
+
+    public function payments()
+    {
+        return $this->hasMany();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany();
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function readNotifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->hasMany();
+    }
 }

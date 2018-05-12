@@ -15,12 +15,15 @@ class CreateFittingsTable extends Migration
     {
         Schema::create('fittings', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('owner_id');
-            $table->string('owner_type');
+            $table->uuid('doctrine_id');
+            $table->uuid('owner_id')->index();
+            $table->string('owner_type')->index();
             $table->string('name');
             $table->text('description');
-            $table->unsignedInteger('api_id')->index();
+            $table->unsignedInteger('api_id');
             $table->timestamps();
+
+            $table->foreign('doctrine_id')->references('id')->on('doctrines');
         });
     }
 

@@ -17,6 +17,25 @@ class ReplacementClaim extends AbstractAdapter
      */
     protected $attributes = [];
 
+    protected $guarded = [
+        'readNotifications',
+        'unreadNotifications',
+    ];
+
+    /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'character',
+        'organization',
+        'comments',
+        'notifications',
+        'readNotifications',
+        'unreadNotifications',
+    ];
+
     /**
      * Adapter constructor.
      *
@@ -27,4 +46,33 @@ class ReplacementClaim extends AbstractAdapter
         parent::__construct(new \App\ReplacementClaim(), $paging);
     }
 
+    public function character()
+    {
+        return $this->belongsTo();
+    }
+
+    public function organization()
+    {
+        return $this->hasOne();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany();
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function readNotifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->hasMany();
+    }
 }

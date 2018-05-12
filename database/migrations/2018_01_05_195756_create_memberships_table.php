@@ -14,18 +14,17 @@ class CreateMembershipsTable extends Migration
     public function up()
     {
         Schema::create('memberships', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->uuid('owner_id');
-            $table->string('owner_type');
-            $table->uuid('member_id');
-            $table->string('member_type');
+            $table->uuid('id')->primary();
+            $table->uuid('organization_id')->index();
+            $table->string('organization_type')->index();
+            $table->uuid('member_id')->index();
+            $table->string('member_type')->index();
             $table->uuid('membership_level_id');
             $table->text('notes');
             $table->uuid('created_by');
             $table->uuid('last_updated_by');
             $table->timestamps();
 
-            $table->primary('id');
             $table->foreign('membership_level_id')->references('id')->on('membership_levels');
             $table->foreign('added_by')->references('id')->on('characters');
             $table->foreign('last_updated_by')->references('id')->on('characters');

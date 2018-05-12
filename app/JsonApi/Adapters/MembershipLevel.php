@@ -17,6 +17,22 @@ class MembershipLevel extends AbstractAdapter
      */
     protected $attributes = [];
 
+    protected $guarded = [
+        'createdBy'
+    ];
+
+    /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'memberships',
+        'owner',
+        'createdBy',
+        'lastUpdatedBy',
+    ];
+
     /**
      * Adapter constructor.
      *
@@ -27,4 +43,23 @@ class MembershipLevel extends AbstractAdapter
         parent::__construct(new \App\MembershipLevel(), $paging);
     }
 
+    public function memberships()
+    {
+        return $this->hasMany();
+    }
+
+    public function owner()
+    {
+        return $this->hasOne();
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo();
+    }
+
+    public function lastUpdatedBy()
+    {
+        return $this->belongsTo();
+    }
 }

@@ -18,6 +18,15 @@ class InvoiceItem extends AbstractAdapter
     protected $attributes = [];
 
     /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'comments'
+    ];
+
+    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging
@@ -27,4 +36,8 @@ class InvoiceItem extends AbstractAdapter
         parent::__construct(new \App\InvoiceItem(), $paging);
     }
 
+    public function comments()
+    {
+        return $this->hasMany();
+    }
 }

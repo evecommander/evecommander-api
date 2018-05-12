@@ -14,15 +14,17 @@ class CreateCoalitionsTable extends Migration
     public function up()
     {
         Schema::create('coalitions', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->uuid('leader_character_id');
             $table->string('name');
             $table->text('description');
             $table->string('logo');
+            $table->uuid('default_membership_level')->nullable();
             $table->json('settings');
             $table->timestamps();
 
-            $table->primary('id');
+            $table->foreign('leader_character_id')->references('id')->on('characters');
+            $table->foreign('default_membership_level')->references('id')->on('membership_levels');
         });
     }
 

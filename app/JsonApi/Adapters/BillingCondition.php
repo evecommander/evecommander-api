@@ -18,6 +18,17 @@ class BillingCondition extends AbstractAdapter
     protected $attributes = [];
 
     /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'owner',
+        'discounts',
+        'membershipFees'
+    ];
+
+    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging
@@ -27,4 +38,18 @@ class BillingCondition extends AbstractAdapter
         parent::__construct(new \App\BillingCondition(), $paging);
     }
 
+    public function owner()
+    {
+        return $this->hasOne();
+    }
+
+    public function discounts()
+    {
+        return $this->hasMany();
+    }
+
+    public function membershipFees()
+    {
+        return $this->hasMany();
+    }
 }

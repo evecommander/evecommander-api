@@ -17,6 +17,20 @@ class Coalition extends AbstractAdapter
      */
     protected $attributes = [];
 
+    protected $guarded = [
+        'alliances',
+        'fulfilledInvoices',
+        'overdueInvoices',
+        'pendingInvoices',
+        'defaultInvoices',
+        'fulfilledIssuedInvoices',
+        'overdueIssuedInvoices',
+        'pendingIssuedInvoices',
+        'defaultIssuedInvoices',
+        'readNotifications',
+        'unreadNotifications',
+    ];
+
     /**
      * Resource relationship fields that can be filled.
      *
@@ -44,6 +58,9 @@ class Coalition extends AbstractAdapter
         'overdueIssuedInvoices',
         'pendingIssuedInvoices',
         'defaultIssuedInvoices',
+        'notifications',
+        'readNotifications',
+        'unreadNotifications',
     ];
 
     /**
@@ -127,6 +144,21 @@ class Coalition extends AbstractAdapter
     }
 
     public function defaultIssuedInvoices()
+    {
+        return $this->hasMany();
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function readNotifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function unreadNotifications()
     {
         return $this->hasMany();
     }

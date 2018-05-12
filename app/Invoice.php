@@ -4,7 +4,7 @@ namespace App;
 
 use App\Notifications\Invoice\ForcePaymentPosted;
 use App\Notifications\Invoice\PaymentPosted;
-use App\Traits\Commentable;
+use App\Traits\HasComments;
 use App\Traits\UuidTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -27,7 +27,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class Invoice extends Model
 {
-    use Commentable, Notifiable, UuidTrait;
+    use UuidTrait, HasComments, Notifiable;
 
     const STATE_PENDING = 'pending';
 
@@ -36,8 +36,6 @@ class Invoice extends Model
     const STATE_OVERDUE = 'overdue';
 
     const STATE_IN_DEFAULT = 'default';
-
-    public $incrementing = false;
 
     protected $dates = [
         'created_at',
@@ -51,7 +49,7 @@ class Invoice extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function owner()
+    public function issuer()
     {
         return $this->morphTo();
     }
@@ -83,7 +81,7 @@ class Invoice extends Model
      */
     public function payments()
     {
-        return $this->notifications()->whereIn('type', [PaymentPosted::class, ForcePaymentPosted::class])->get();
+        return $this->notifications()->whereIn('type', [PaymentPosted::class, ForcePaymentPosted::class]);
     }
 
     /**

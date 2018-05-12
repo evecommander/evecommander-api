@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Trait HasMembers
- * @package App\Traits
  *
  * @method morphMany(string $related, string $name)
  * @method belongsTo(string $related, string $foreignKey)

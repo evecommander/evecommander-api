@@ -18,6 +18,16 @@ class Discount extends AbstractAdapter
     protected $attributes = [];
 
     /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'owner',
+        'billingCondition'
+    ];
+
+    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging
@@ -27,4 +37,13 @@ class Discount extends AbstractAdapter
         parent::__construct(new \App\Discount(), $paging);
     }
 
+    public function owner()
+    {
+        return $this->hasOne();
+    }
+
+    public function billingCondition()
+    {
+        return $this->belongsTo();
+    }
 }

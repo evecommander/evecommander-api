@@ -14,18 +14,17 @@ class CreateHandbooksTable extends Migration
     public function up()
     {
         Schema::create('handbooks', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->uuid('owner_id');
-            $table->string('owner_type');
+            $table->uuid('id')->primary();
+            $table->uuid('owner_id')->index();
+            $table->string('owner_type')->index();
             $table->unsignedInteger('order')->nullable()->index();
             $table->string('title');
             $table->text('description');
             $table->longText('content');
-            $table->uuid('created_by')->index();
-            $table->uuid('last_updated_by')->index();
+            $table->uuid('created_by');
+            $table->uuid('last_updated_by');
             $table->timestamps();
 
-            $table->primary('id');
             $table->foreign('created_by')->references('id')->on('characters');
             $table->foreign('last_updated_by')->references('id')->on('characters');
         });

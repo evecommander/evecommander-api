@@ -14,7 +14,9 @@ class CreateFleetTypesTable extends Migration
     public function up()
     {
         Schema::create('fleet_types', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id')->primary();
+            $table->string('name');
+            $table->text('description');
             $table->timestamps();
         });
     }

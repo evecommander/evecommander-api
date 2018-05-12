@@ -5,7 +5,6 @@ use App\Invoice;
 
 /**
  * Trait ModifiesAmounts
- * @package App\Traits
  *
  * @property string amount_type
  * @property double amount

@@ -14,9 +14,9 @@ class CreateMembershipLevelsTable extends Migration
     public function up()
     {
         Schema::create('membership_levels', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->uuid('owner_id');
-            $table->string('owner_type');
+            $table->uuid('id')->primary();
+            $table->uuid('owner_id')->index();
+            $table->string('owner_type')->index();
             $table->string('name');
             $table->text('description');
             $table->decimal('dues', 20);
@@ -25,7 +25,8 @@ class CreateMembershipLevelsTable extends Migration
             $table->uuid('last_updated_by');
             $table->timestamps();
 
-            $table->primary('id');
+            $table->foreign('created_by')->references('id')->on('characters');
+            $table->foreign('last_updated_by')->references('id')->on('characters');
         });
     }
 

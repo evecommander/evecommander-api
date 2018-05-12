@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\Commentable;
+use App\Traits\HasComments;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,9 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class InvoiceItem extends Model
 {
-    use Commentable, UuidTrait;
-
-    public $incrementing = false;
+    use HasComments, UuidTrait;
 
     /**
      * Get the total cost of the invoice item

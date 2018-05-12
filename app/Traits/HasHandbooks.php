@@ -5,7 +5,6 @@ use App\Handbook;
 
 /**
  * Trait HasHandbooks
- * @package App\Traits
  *
  * @method morphMany(string $related, string $name)
  */

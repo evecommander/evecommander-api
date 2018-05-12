@@ -30,8 +30,12 @@ class Corporation extends Organization
         $notification;
     }
 
+    protected $casts = [
+        'settings' => 'array'
+    ];
+
     /**
-     * Get collection of all
+     * Get collection of all subscribers to invoice events on events that list this corporation as the recipient.
      *
      * @return Collection
      */
@@ -49,8 +53,23 @@ class Corporation extends Organization
         return $subscribers;
     }
 
-    public function allianceMembership()
+    /**
+     * Get relationship between this corporation and the alliance it belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function alliance()
     {
-        return $this->memberships()->where('owner_type', Alliance::class);
+        return $this->memberships()->where('owner_type', Alliance::class)->with('owner');
+    }
+
+    /**
+     * Get relation between this corporation and any characters that belong to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function characters()
+    {
+        return $this->members()->where('member_type', Character::class)->with('member');
     }
 }

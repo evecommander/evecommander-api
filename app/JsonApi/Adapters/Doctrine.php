@@ -18,6 +18,18 @@ class Doctrine extends AbstractAdapter
     protected $attributes = [];
 
     /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'owner',
+        'fittings',
+        'createdBy',
+        'lastUpdatedBy',
+    ];
+
+    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging
@@ -27,4 +39,23 @@ class Doctrine extends AbstractAdapter
         parent::__construct(new \App\Doctrine(), $paging);
     }
 
+    public function owner()
+    {
+        return $this->hasOne();
+    }
+
+    public function fittings()
+    {
+        return $this->hasMany();
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo();
+    }
+
+    public function lastUpdatedBy()
+    {
+        return $this->belongsTo();
+    }
 }

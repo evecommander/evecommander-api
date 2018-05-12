@@ -14,7 +14,7 @@ class CreateAlliancesTable extends Migration
     public function up()
     {
         Schema::create('alliances', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->unsignedInteger('api_id');
             $table->string('name');
             $table->uuid('default_membership_level')->nullable();

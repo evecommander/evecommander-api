@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\ModifiesAmounts;
+use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -19,6 +20,25 @@ use Illuminate\Support\Carbon;
  */
 class MembershipFee extends Model
 {
-    use ModifiesAmounts;
-    //
+    use UuidTrait, ModifiesAmounts;
+
+    /**
+     * Get relation between this membership fee and it's owner.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function owner()
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Get relation between this membership fee and any billing conditions that are tied to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function billingConditions()
+    {
+        return $this->belongsToMany(BillingCondition::class)->withPivotValue('sort')->orderBy('sort');
+    }
 }

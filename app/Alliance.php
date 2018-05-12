@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Abstracts\Organization;
-use App\Traits\HasSettings;
 use App\Traits\HasSRP;
 use App\Traits\IssuesInvoices;
 use App\Traits\ReceivesInvoices;
@@ -16,7 +15,7 @@ use Illuminate\Support\Carbon;
  * @property string id
  * @property int api_id
  * @property string name
- * @property int default_membership_level
+ * @property string default_membership_level
  * @property array settings
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -25,8 +24,12 @@ class Alliance extends Organization
 {
     use HasSRP, ReceivesInvoices, IssuesInvoices, Notifiable;
 
+    protected $casts = [
+        'settings' => 'array'
+    ];
+
     /**
-     * Get collection of subscribers for invoice events
+     * Get collection of subscribers for invoice events.
      *
      * @return \Illuminate\Support\Collection
      */
@@ -44,10 +47,23 @@ class Alliance extends Organization
         return $subscribers;
     }
 
+    /**
+     * Get relation between this alliance and the coalition it belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
     public function coalition()
     {
-        $coalitionMembership = $this->memberships()->where('owner_type', Coalition::class)
-            ->with('owner')->first();
-        return $coalitionMembership->owner();
+        return $this->memberships()->where('owner_type', Coalition::class)->with('owner');
+    }
+
+    /**
+     * Get relation between this alliance and any corporations that belong to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function corporations()
+    {
+        return $this->members()->where('member_type', Corporation::class)->with('member');
     }
 }

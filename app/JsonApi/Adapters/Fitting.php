@@ -18,6 +18,17 @@ class Fitting extends AbstractAdapter
     protected $attributes = [];
 
     /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'owner',
+        'doctrine',
+        'replacementClaims'
+    ];
+
+    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging
@@ -27,4 +38,18 @@ class Fitting extends AbstractAdapter
         parent::__construct(new \App\Fitting(), $paging);
     }
 
+    public function owner()
+    {
+        return $this->hasOne();
+    }
+
+    public function doctrine()
+    {
+        return $this->belongsTo();
+    }
+
+    public function replacementClaims()
+    {
+        return $this->hasMany();
+    }
 }

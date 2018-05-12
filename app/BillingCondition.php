@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -20,5 +21,35 @@ use Illuminate\Support\Carbon;
  */
 class BillingCondition extends Model
 {
-    //
+    use UuidTrait;
+
+    /**
+     * Get relation between this billing condition and it's owner.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function owner()
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Get relation between this billing condition and any discounts that belong to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function discounts()
+    {
+        return $this->hasMany(Discount::class);
+    }
+
+    /**
+     * Get relation between this billing condition and any membership fees that are tied to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function membershipFees()
+    {
+        return $this->belongsToMany(MembershipFee::class)->withPivotValue('sort')->orderBy('sort');
+    }
 }

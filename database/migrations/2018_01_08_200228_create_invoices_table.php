@@ -14,19 +14,17 @@ class CreateInvoicesTable extends Migration
     public function up()
     {
         Schema::create('invoices', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->uuid('issuer_id');
-            $table->string('issuer_type');
-            $table->uuid('recipient_id');
-            $table->string('recipient_type');
+            $table->uuid('id')->primary();
+            $table->uuid('issuer_id')->index();
+            $table->string('issuer_type')->index();
+            $table->uuid('recipient_id')->index();
+            $table->string('recipient_type')->index();
             $table->string('title');
-            $table->enum('status', ['pending', 'fulfilled', 'overdue']);
+            $table->enum('status', ['pending', 'fulfilled', 'overdue'])->index();
             $table->decimal('total', 20);
             $table->dateTime('due_date');
             $table->dateTime('hard_due_date');
             $table->timestamps();
-
-            $table->primary('id');
         });
     }
 

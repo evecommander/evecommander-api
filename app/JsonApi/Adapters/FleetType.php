@@ -18,6 +18,15 @@ class FleetType extends AbstractAdapter
     protected $attributes = [];
 
     /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'fleets'
+    ];
+
+    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging
@@ -27,4 +36,8 @@ class FleetType extends AbstractAdapter
         parent::__construct(new \App\FleetType(), $paging);
     }
 
+    public function fleets()
+    {
+        return $this->hasMany();
+    }
 }

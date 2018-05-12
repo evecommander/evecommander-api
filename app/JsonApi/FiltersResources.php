@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Schema;
 
 /**
  * Trait FiltersResources
- * @package App\JsonApi
+ *
  * @property Model model
  */
 trait FiltersResources
@@ -144,9 +144,6 @@ trait FiltersResources
 
     protected function with(Builder $query, Collection $includedResources)
     {
-        parent::with($query, $includedResources);
-        foreach($includedResources as $res) {
-            $query->with($res);
-        }
+        $query->with($includedResources);
     }
 }

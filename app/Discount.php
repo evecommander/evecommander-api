@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\ModifiesAmounts;
+use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -20,6 +21,25 @@ use Illuminate\Support\Carbon;
  */
 class Discount extends Model
 {
-    use ModifiesAmounts;
-    //
+    use ModifiesAmounts, UuidTrait;
+
+    /**
+     * Get the relation between this discount and it's owner.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function owner()
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Get relation between this discount and the billing condition that belongs to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function billingCondition()
+    {
+        return $this->belongsTo(BillingCondition::class);
+    }
 }

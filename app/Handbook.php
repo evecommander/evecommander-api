@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\HasComments;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -22,8 +23,10 @@ use Illuminate\Support\Carbon;
  */
 class Handbook extends Model
 {
+    use HasComments;
+
     /**
-     * Get the owning model of the handbook
+     * Get the owning model of the handbook.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
@@ -33,7 +36,7 @@ class Handbook extends Model
     }
 
     /**
-     * Get the character that created the handbook
+     * Get the character that created the handbook.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -43,22 +46,12 @@ class Handbook extends Model
     }
 
     /**
-     * Get the character that last updated the handbook
+     * Get the character that last updated the handbook.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function lastUpdatedBy()
     {
         return $this->belongsTo(Character::class, 'last_updated_by');
-    }
-
-    /**
-     * Get any comments that are attached to the handbook
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'commentable');
     }
 }

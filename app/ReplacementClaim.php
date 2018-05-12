@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\Commentable;
+use App\Traits\HasComments;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -25,7 +26,7 @@ use Illuminate\Support\Carbon;
  */
 class ReplacementClaim extends Model
 {
-    use Commentable, Notifiable, UuidTrait;
+    use HasComments, Notifiable, UuidTrait;
 
     /**
      * Get Character that this ReplacementClaim belongs to

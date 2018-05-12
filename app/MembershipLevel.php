@@ -25,33 +25,53 @@ class MembershipLevel extends Model
 {
     use UuidTrait;
 
+    /**
+     * Get relation between this membership level and any memberships that belong to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function memberships()
     {
         return $this->hasMany(Membership::class);
     }
 
+    /**
+     * Get relation between this membership level and it's owner.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
     public function owner()
     {
         return $this->morphTo();
     }
 
+    /**
+     * Get relation between this membership level and the character that created it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function createdBy()
     {
         return $this->belongsTo(Character::class, 'created_by');
     }
 
+    /**
+     * Get relation between this membership level and the character that last updated it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function lastUpdatedBy()
     {
         return $this->belongsTo(Character::class, 'last_updated_by');
     }
 
+    /**
+     * Get relation between this membership level and any permissions that are assigned to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function permissions()
     {
         return $this->belongsToMany(Permission::class);
-    }
-
-    public function hasPermission(string $permission_slug)
-    {
-        return $this->permissions()->where('slug', $permission_slug)->exists();
     }
 }

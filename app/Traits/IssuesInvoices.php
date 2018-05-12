@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Trait IssuesInvoices
- * @package App\Traits
  *
  * @method morphMany(string $related, string $name)
  */

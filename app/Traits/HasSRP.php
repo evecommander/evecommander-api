@@ -6,7 +6,6 @@ use App\ReplacementClaim;
 
 /**
  * Trait HasSRP
- * @package App\Traits
  *
  * @method morphMany(string $related, string $name)
  */

@@ -3,20 +3,18 @@
 namespace App\Traits;
 
 use App\Comment;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
- * Trait Commentable
- * @package App\Traits
+ * Trait HasComments
  *
  * @method morphMany(string $related, string $name)
  */
-trait Commentable
+trait HasComments
 {
     /**
-     * Get any comments attached to the model
+     * Get any comments attached to the model.
      *
-     * @return MorphMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function comments()
     {

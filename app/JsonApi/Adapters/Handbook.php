@@ -18,6 +18,17 @@ class Handbook extends AbstractAdapter
     protected $attributes = [];
 
     /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'owner',
+        'createdBy',
+        'lastUpdatedBy'
+    ];
+
+    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging
@@ -27,4 +38,18 @@ class Handbook extends AbstractAdapter
         parent::__construct(new \App\Handbook(), $paging);
     }
 
+    public function owner()
+    {
+        return $this->hasOne();
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo();
+    }
+
+    public function lastUpdatedBy()
+    {
+        return $this->belongsTo();
+    }
 }

@@ -14,7 +14,7 @@ trait UuidTrait
         parent::boot();
 
         static::creating(function (Model $model) {
-            $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, env('UUID_NAMESPACE_DNS', 'api.srv'));
+            $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, env('UUID_NAMESPACE_DNS'));
 
             $model->attributes[$model->getKeyName()] = $uuid->getHex();
         });

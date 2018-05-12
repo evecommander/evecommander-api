@@ -17,6 +17,27 @@ class Fleet extends AbstractAdapter
      */
     protected $attributes = [];
 
+    protected $guarded = [
+        'readNotifications',
+        'unreadNotifications',
+    ];
+
+    /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'fleetType',
+        'organization',
+        'createdBy',
+        'lastUpdatedBy',
+        'comments',
+        'notifications',
+        'readNotifications',
+        'unreadNotifications',
+    ];
+
     /**
      * Adapter constructor.
      *
@@ -27,4 +48,43 @@ class Fleet extends AbstractAdapter
         parent::__construct(new \App\Fleet(), $paging);
     }
 
+    public function fleetType()
+    {
+        return $this->belongsTo();
+    }
+
+    public function organization()
+    {
+        return $this->belongsTo();
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo();
+    }
+
+    public function lastUpdatedBy()
+    {
+        return $this->belongsTo();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany();
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function readNotifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->hasMany();
+    }
 }

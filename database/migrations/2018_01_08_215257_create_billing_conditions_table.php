@@ -14,16 +14,14 @@ class CreateBillingConditionsTable extends Migration
     public function up()
     {
         Schema::create('billing_conditions', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->uuid('owner_id');
-            $table->string('owner_type');
+            $table->uuid('id')->primary();
+            $table->uuid('owner_id')->index();
+            $table->string('owner_type')->index();
             $table->string('name');
             $table->text('description');
             $table->enum('type', ['joining', 'exit', 'min_members', 'max_members', 'min_amount', 'max_amount']);
             $table->unsignedInteger('quantity')->nullable();
             $table->timestamps();
-
-            $table->primary('id');
         });
     }
 

@@ -18,6 +18,17 @@ class Comment extends AbstractAdapter
     protected $attributes = [];
 
     /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'character',
+        'comments',
+        'commentable'
+    ];
+
+    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging
@@ -27,4 +38,18 @@ class Comment extends AbstractAdapter
         parent::__construct(new \App\Comment(), $paging);
     }
 
+    public function character()
+    {
+        return $this->belongsTo();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany();
+    }
+
+    public function commentable()
+    {
+        return $this->hasOne();
+    }
 }

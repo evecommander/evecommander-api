@@ -18,6 +18,15 @@ class OAuth2Token extends AbstractAdapter
     protected $attributes = [];
 
     /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'character'
+    ];
+
+    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging
@@ -27,4 +36,8 @@ class OAuth2Token extends AbstractAdapter
         parent::__construct(new \App\OAuth2Token(), $paging);
     }
 
+    public function character()
+    {
+        return $this->belongsTo();
+    }
 }

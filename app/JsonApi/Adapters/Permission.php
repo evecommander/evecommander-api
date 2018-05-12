@@ -18,6 +18,15 @@ class Permission extends AbstractAdapter
     protected $attributes = [];
 
     /**
+     * Resource relationship fields that can be filled.
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'membershipLevels'
+    ];
+
+    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging
@@ -27,4 +36,8 @@ class Permission extends AbstractAdapter
         parent::__construct(new \App\Permission(), $paging);
     }
 
+    public function membershipLevels()
+    {
+        return $this->hasMany();
+    }
 }
