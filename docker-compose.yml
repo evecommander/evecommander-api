@@ -27,19 +27,16 @@ services:
      - .:/var/www/html
     networks:
      - vessel
-  mysql:
-    image: mysql:latest
+  pgsql:
+    image: postgres:alpine
     ports:
-     - "${MYSQL_PORT}:3306"
+     - "${PGSQL_PORT}:5432"
     environment:
-      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
-      MYSQL_DATABASE: "${DB_DATABASE}"
-      MYSQL_USER: "${DB_USERNAME}"
-      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DATABASE: "${DB_DATABASE}"
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
     volumes:
-     - vesselmysql:/var/lib/mysql
-     # - ./docker/mysql/conf.d:/etc/mysql/conf.d
-     # - ./docker/mysql/logs:/var/log/mysql
+     - vesselpgsql:/var/lib/postgresql/data
     networks:
      - vessel
   redis:
@@ -61,7 +58,7 @@ networks:
   vessel:
     driver: "bridge"
 volumes:
-  vesselmysql:
+  vesselpgsql:
     driver: "local"
   vesselredis:
     driver: "local"

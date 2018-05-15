@@ -7,16 +7,21 @@ use Ramsey\Uuid\Uuid;
 
 trait UuidTrait
 {
-    public $incrementing = false;
-
     protected static function boot ()
     {
         parent::boot();
 
         static::creating(function (Model $model) {
-            $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, env('UUID_NAMESPACE_DNS'));
+            if ($model->{$model->getKeyName()}) {
+                return;
+            }
 
-            $model->attributes[$model->getKeyName()] = $uuid->getHex();
+            $model->{$model->getKeyName()} = Uuid::uuid5(Uuid::NAMESPACE_DNS, env('UUID_NAMESPACE_DNS'))->getHex();
         });
+    }
+
+    public function getIncrementing()
+    {
+        return false;
     }
 }
