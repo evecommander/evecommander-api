@@ -1,5 +1,4 @@
 <?php
-use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,27 +9,3 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'WelcomeController@index')->name('welcome');
-
-Route::resource('characters', 'CharacterController', ['except' => [
-    'edit'
-]]);
-
-Route::prefix('characters/{id}')->group(function () {
-    Route::resources([
-        'coalitions' => 'CoalitionController',
-        'comments' => 'CommentController',
-        'discounts' => 'DiscountController',
-        'doctrines' => 'DoctrineController',
-        'handbooks' => 'HandbookController',
-        'invoices' => 'InvoiceController',
-        'memberships' => 'MembershipController',
-        'replacements' => 'ReplacementClaimController',
-        'settings' => 'SettingController',
-    ]);
-});
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

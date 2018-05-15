@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Irazasyed\JwtAuthGuard\JwtAuthGuardServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -16,7 +16,9 @@ use Illuminate\Contracts\Routing\Registrar;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::get('/', function () {
+    return [];
+});
 Route::post('login', 'AuthController@login');
 Route::post('logout', 'AuthController@logout');
 Route::post('refresh', 'AuthController@refresh');
