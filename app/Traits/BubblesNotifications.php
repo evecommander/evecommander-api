@@ -13,7 +13,7 @@ trait BubblesNotifications
     public $bubbleToRelation = null;
 
     /**
-     * Get the models to bubble notifications to
+     * Get the models to bubble notifications to.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -30,7 +30,7 @@ trait BubblesNotifications
     }
 
     /**
-     * Bubble the given notification to the defined models
+     * Bubble the given notification to the defined models.
      *
      * @param NotificationSent $notificationSent
      */

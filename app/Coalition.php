@@ -10,7 +10,7 @@ use App\Traits\UuidTrait;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Coalition
+ * Class Coalition.
  *
  * @property string id
  * @property int leader_character_id
@@ -50,7 +50,7 @@ class Coalition extends Organization
     use UuidTrait, HasSRP, ReceivesInvoices, IssuesInvoices;
 
     protected $casts = [
-        'settings' => 'array'
+        'settings' => 'array',
     ];
 
     public function receivedInvoiceSubscribers()
@@ -68,7 +68,7 @@ class Coalition extends Organization
     }
 
     /**
-     * Get relation between this coalition and the character that is designated as the leader
+     * Get relation between this coalition and the character that is designated as the leader.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -78,7 +78,7 @@ class Coalition extends Organization
     }
 
     /**
-     * Get relation between this coalition and any alliances that are members of it
+     * Get relation between this coalition and any alliances that are members of it.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */

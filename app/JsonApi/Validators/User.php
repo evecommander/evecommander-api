@@ -7,7 +7,6 @@ use CloudCreativity\LaravelJsonApi\Validators\AbstractValidatorProvider;
 
 class User extends AbstractValidatorProvider
 {
-
     /**
      * @var string
      */
@@ -17,7 +16,8 @@ class User extends AbstractValidatorProvider
      * Get the validation rules for the resource attributes.
      *
      * @param object|null $record
-     *      the record being updated, or null if it is a create request.
+     *                            the record being updated, or null if it is a create request.
+     *
      * @return array
      */
     protected function attributeRules($record = null)
@@ -31,13 +31,13 @@ class User extends AbstractValidatorProvider
      * Define the validation rules for the resource relationships.
      *
      * @param RelationshipsValidatorInterface $relationships
-     * @param object|null $record
-     *      the record being updated, or null if it is a create request.
+     * @param object|null                     $record
+     *                                                       the record being updated, or null if it is a create request.
+     *
      * @return void
      */
     protected function relationshipRules(RelationshipsValidatorInterface $relationships, $record = null)
     {
         //
     }
-
 }

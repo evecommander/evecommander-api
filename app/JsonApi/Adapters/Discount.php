@@ -24,7 +24,7 @@ class Discount extends AbstractAdapter
      */
     protected $relationships = [
         'owner',
-        'billingCondition'
+        'billingCondition',
     ];
 
     /**

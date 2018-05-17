@@ -23,7 +23,7 @@ class InvoiceItem extends AbstractAdapter
      * @var array
      */
     protected $relationships = [
-        'comments'
+        'comments',
     ];
 
     /**

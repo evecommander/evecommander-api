@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Class Invoice
+ * Class Invoice.
  *
  * @property string id
  * @property string owner_id
@@ -21,7 +21,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string code
  * @property string title
  * @property string status
- * @property double total
+ * @property float total
  * @property Carbon due_date
  * @property Carbon hard_due_date
  * @property Carbon created_at
@@ -53,11 +53,11 @@ class Invoice extends Model
         'created_at',
         'updated_at',
         'due_date',
-        'hard_due_date'
+        'hard_due_date',
     ];
 
     /**
-     * Get the issuer of the invoice
+     * Get the issuer of the invoice.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
@@ -67,7 +67,7 @@ class Invoice extends Model
     }
 
     /**
-     * Get the recipient of the invoice
+     * Get the recipient of the invoice.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
@@ -77,7 +77,7 @@ class Invoice extends Model
     }
 
     /**
-     * Get any invoice items attached to the invoice
+     * Get any invoice items attached to the invoice.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -87,7 +87,7 @@ class Invoice extends Model
     }
 
     /**
-     * Get any payments posted for the invoice
+     * Get any payments posted for the invoice.
      *
      * @return mixed
      */
@@ -97,7 +97,7 @@ class Invoice extends Model
     }
 
     /**
-     * Get the amount still owed on the invoice
+     * Get the amount still owed on the invoice.
      *
      * @return float
      */

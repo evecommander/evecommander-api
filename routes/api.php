@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
 use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 use Illuminate\Contracts\Routing\Registrar;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,13 +32,13 @@ JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'json-api.auth:de
             'notifications',
             'readNotifications',
             'unreadNotifications',
-        ]
+        ],
     ]);
 
     $api->resource('characters', [
         'has-one' => [
-            'user' => ['except' => 'replace'],
-            'token' => ['except' => 'replace']
+            'user'  => ['except' => 'replace'],
+            'token' => ['except' => 'replace'],
         ],
         'has-many' => [
             'comments',
@@ -51,7 +50,7 @@ JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'json-api.auth:de
             'notifications',
             'readNotifications',
             'unreadNotifications',
-        ]
+        ],
     ]);
 
     $api->resource('corporations', [

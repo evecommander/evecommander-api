@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Alliance
+ * Class Alliance.
  *
  * @property string id
  * @property int api_id
@@ -48,7 +48,7 @@ class Alliance extends Organization
     use UuidTrait, HasSRP, ReceivesInvoices, IssuesInvoices, Notifiable;
 
     protected $casts = [
-        'settings' => 'array'
+        'settings' => 'array',
     ];
 
     /**

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Class FleetType
+ * Class FleetType.
  *
  * @property string id
  * @property string name

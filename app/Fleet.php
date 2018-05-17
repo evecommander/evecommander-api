@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Fleet
+ * Class Fleet.
  *
  * @property string id
  * @property string fleet_type_id
@@ -43,7 +43,7 @@ class Fleet extends Model
         'start_time',
         'end_time',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**

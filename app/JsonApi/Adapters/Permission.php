@@ -23,7 +23,7 @@ class Permission extends AbstractAdapter
      * @var array
      */
     protected $relationships = [
-        'membershipLevels'
+        'membershipLevels',
     ];
 
     /**

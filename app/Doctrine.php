@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Doctrine
+ * Class Doctrine.
  *
  * @property string id
  * @property string owner_id

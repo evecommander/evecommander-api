@@ -1,18 +1,19 @@
 <?php
 
 namespace App\Traits;
+
 use App\Invoice;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
- * Trait IssuesInvoices
+ * Trait IssuesInvoices.
  *
  * @method morphMany(string $related, string $name)
  */
 trait IssuesInvoices
 {
     /**
-     * Get all invoices where this model is the issuer
+     * Get all invoices where this model is the issuer.
      *
      * @return MorphMany
      */
@@ -22,7 +23,7 @@ trait IssuesInvoices
     }
 
     /**
-     * Get all fulfilled invoices belonging to this model
+     * Get all fulfilled invoices belonging to this model.
      *
      * @return MorphMany
      */
@@ -32,7 +33,7 @@ trait IssuesInvoices
     }
 
     /**
-     * Get all overdue invoices belonging to this model
+     * Get all overdue invoices belonging to this model.
      *
      * @return MorphMany
      */
@@ -42,7 +43,7 @@ trait IssuesInvoices
     }
 
     /**
-     * Get all pending invoices belonging to this model
+     * Get all pending invoices belonging to this model.
      *
      * @return MorphMany
      */
@@ -52,7 +53,7 @@ trait IssuesInvoices
     }
 
     /**
-     * Get all invoices that are in default belonging to this model
+     * Get all invoices that are in default belonging to this model.
      *
      * @return MorphMany
      */

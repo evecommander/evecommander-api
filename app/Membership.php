@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Membership
+ * Class Membership.
  *
  * @property string id
  * @property string owner_id
@@ -36,7 +36,7 @@ class Membership extends Model
     use Notifiable;
 
     /**
-     * Get the membership level that this membership belongs to
+     * Get the membership level that this membership belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -46,7 +46,7 @@ class Membership extends Model
     }
 
     /**
-     * Get the organization model for this membership
+     * Get the organization model for this membership.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
@@ -56,7 +56,7 @@ class Membership extends Model
     }
 
     /**
-     * Get the member model for this membership
+     * Get the member model for this membership.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
@@ -66,7 +66,7 @@ class Membership extends Model
     }
 
     /**
-     * Get the character that created this membership
+     * Get the character that created this membership.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -76,7 +76,7 @@ class Membership extends Model
     }
 
     /**
-     * Get the character that last edited this membership
+     * Get the character that last edited this membership.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

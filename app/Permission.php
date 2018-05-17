@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Permission
+ * Class Permission.
  *
  * @property string id
  * @property string name

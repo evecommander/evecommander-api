@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Comment
+ * Class Comment.
  *
  * @property string id
  * @property string commentable_id

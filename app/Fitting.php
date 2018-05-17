@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Fitting
+ * Class Fitting.
  *
  * @property string id
  * @property string owner_id

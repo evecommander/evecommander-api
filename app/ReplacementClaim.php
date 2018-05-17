@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 /**
- * Class ReplacementClaim
+ * Class ReplacementClaim.
  *
  * @property string id
  * @property string character_id
@@ -18,7 +18,7 @@ use Illuminate\Support\Carbon;
  * @property string fitting_id
  * @property int killmail_id
  * @property string killmail_hash
- * @property double total
+ * @property float total
  * @property string status
  * @property Carbon created_at
  * @property Carbon updated_at

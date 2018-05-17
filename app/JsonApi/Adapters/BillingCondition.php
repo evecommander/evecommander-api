@@ -25,7 +25,7 @@ class BillingCondition extends AbstractAdapter
     protected $relationships = [
         'owner',
         'discounts',
-        'membershipFees'
+        'membershipFees',
     ];
 
     /**

@@ -5,7 +5,7 @@ namespace App\Traits;
 use App\ReplacementClaim;
 
 /**
- * Trait HasSRP
+ * Trait HasSRP.
  *
  * @method morphMany(string $related, string $name)
  */

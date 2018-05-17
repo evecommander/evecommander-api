@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Traits;
+
 use App\Handbook;
 
 /**
- * Trait HasHandbooks
+ * Trait HasHandbooks.
  *
  * @method morphMany(string $related, string $name)
  */

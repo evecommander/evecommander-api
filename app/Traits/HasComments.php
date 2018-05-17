@@ -5,7 +5,7 @@ namespace App\Traits;
 use App\Comment;
 
 /**
- * Trait HasComments
+ * Trait HasComments.
  *
  * @method morphMany(string $related, string $name)
  */
