@@ -14,8 +14,11 @@ use Illuminate\Support\Carbon;
  * @property string access_token
  * @property Carbon expires_on
  * @property string|null refresh_token
- * @property Carbon created_on
- * @property Carbon updated_on
+ * @property Carbon created_at
+ * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo character
  */
 class OAuth2Token extends Model
 {

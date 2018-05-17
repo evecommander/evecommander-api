@@ -17,6 +17,12 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property array settings
  * @property Carbon created_at
  * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany notifications
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany readNotifications
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany unreadNotifications
+ * @property \Illuminate\Database\Eloquent\Relations\HasMany characters
  */
 class User extends Authenticatable implements JWTSubject
 {

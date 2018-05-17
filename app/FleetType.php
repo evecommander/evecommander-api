@@ -12,8 +12,14 @@ use Illuminate\Support\Carbon;
  * @property string id
  * @property string name
  * @property string description
+ * @property string owner_id
+ * @property string owner_type
  * @property Carbon created_at
  * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\HasMany fleets
+ * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
  */
 class FleetType extends Model
 {
@@ -27,5 +33,15 @@ class FleetType extends Model
     public function fleets()
     {
         return $this->hasMany(Fleet::class);
+    }
+
+    /**
+     * Get relation between this fleet type and the organization that owns it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function owner()
+    {
+        return $this->morphTo();
     }
 }

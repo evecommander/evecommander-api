@@ -19,6 +19,12 @@ use Illuminate\Support\Carbon;
  * @property string last_updated_by
  * @property Carbon created_at
  * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
+ * @property \Illuminate\Database\Eloquent\Relations\HasMany fittings
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo createdBy
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo lastUpdatedBy
  */
 class Doctrine extends Model
 {

@@ -13,7 +13,7 @@ class Coalition extends SchemaProvider
     protected $resourceType = 'coalitions';
 
     /**
-     * @param $resource
+     * @param \App\Coalition $resource
      *      the domain record being serialized.
      * @return string
      */
@@ -30,7 +30,6 @@ class Coalition extends SchemaProvider
     public function getAttributes($resource)
     {
         return [
-            'leader-character-id' => $resource->leader_character_id,
             'name' => $resource->name,
             'description' => $resource->description,
             'logo' => $resource->logo,

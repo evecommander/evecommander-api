@@ -19,6 +19,21 @@ use Illuminate\Support\Carbon;
  * @property string name
  * @property Carbon created_at
  * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany notifications
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany readNotifications
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany unreadNotifications
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany invoices
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany fulfilledInvoices
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany overdueInvoices
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany pendingInvoices
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany defaultInvoices
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany memberships
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo user
+ * @property \Illuminate\Database\Eloquent\Relations\HasOne token
+ * @property \Illuminate\Database\Eloquent\Relations\HasMany comments
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany corporation
  */
 class Character extends Model
 {

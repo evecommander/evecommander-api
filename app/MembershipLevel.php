@@ -20,6 +20,13 @@ use Illuminate\Support\Carbon;
  * @property string updated_by
  * @property Carbon created_at
  * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\HasMany memberships
+ * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo createdBy
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo lastUpdatedBy
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany permissions
  */
 class MembershipLevel extends Model
 {

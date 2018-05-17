@@ -10,6 +10,11 @@ use App\Handbook;
  */
 trait HasHandbooks
 {
+    /**
+     * Get relation between this model and any handbooks that it owns.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
     public function handbooks()
     {
         return $this->morphMany(Handbook::class, 'owner');

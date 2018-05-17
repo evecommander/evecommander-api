@@ -13,7 +13,7 @@ class Comment extends SchemaProvider
     protected $resourceType = 'comments';
 
     /**
-     * @param $resource
+     * @param \App\Comment $resource
      *      the domain record being serialized.
      * @return string
      */
@@ -30,9 +30,7 @@ class Comment extends SchemaProvider
     public function getAttributes($resource)
     {
         return [
-            'name' => $resource->name,
-            'eve-id' => $resource->eve_id,
-            'user-id' => $resource->user_id,
+            'text' => $resource->text,
             'created-at' => $resource->created_at->toIso8601String(),
             'updated-at' => $resource->updated_at->toIso8601String(),
         ];
@@ -46,7 +44,19 @@ class Comment extends SchemaProvider
      */
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
-        return [];
+        return [
+            'character' => [
+                self::SHOW_SELF => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA => true
+            ],
+
+            'commentable' => [
+                self::SHOW_SELF => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA => true
+            ]
+        ];
     }
 }
 

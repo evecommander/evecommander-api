@@ -13,7 +13,7 @@ class Alliance extends SchemaProvider
     protected $resourceType = 'alliances';
 
     /**
-     * @param $resource
+     * @param \App\Alliance $resource
      *      the domain record being serialized.
      * @return string
      */
@@ -32,14 +32,14 @@ class Alliance extends SchemaProvider
         return [
             'api-id' => $resource->api_id,
             'name' => $resource->name,
-            'default-membership-level' => $resource->default_membership_level,
+            'settings' => $resource->settings,
             'created-at' => $resource->created_at->toIso8601String(),
             'updated-at' => $resource->updated_at->toIso8601String(),
         ];
     }
 
     /**
-     * @param \App\Coalition $resource
+     * @param \App\Alliance $resource
      * @param bool $isPrimary
      * @param array $includeRelationships
      * @return array
@@ -145,7 +145,10 @@ class Alliance extends SchemaProvider
             'coalition' => [
                 self::SHOW_SELF => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => true
+                self::SHOW_DATA => isset($includeRelationships['coalition']),
+                self::DATA => function () use ($resource) {
+                    return $resource->coalition;
+                }
             ]
         ];
     }

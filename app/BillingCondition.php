@@ -18,6 +18,11 @@ use Illuminate\Support\Carbon;
  * @property int|null quantity
  * @property Carbon created_at
  * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
+ * @property \Illuminate\Database\Eloquent\Relations\HasMany discounts
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany membershipFees
  */
 class BillingCondition extends Model
 {

@@ -2,9 +2,9 @@
 
 namespace App;
 
-use App\Traits\Commentable;
 use App\Traits\HasComments;
 use App\Traits\UuidTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,20 +15,24 @@ use Illuminate\Database\Eloquent\Model;
  * @property string description
  * @property int quantity
  * @property double cost
- * @property string created_at
- * @property string updated_at
+ * @property Carbon created_at
+ * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany comments
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo invoice
  */
 class InvoiceItem extends Model
 {
     use HasComments, UuidTrait;
 
     /**
-     * Get the total cost of the invoice item
+     * Get relation between this invoice item and the invoice it belongs to.
      *
-     * @return float|int
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function getTotal()
+    public function invoice()
     {
-        return $this->quantity * $this->cost;
+        return $this->belongsTo(Invoice::class);
     }
 }

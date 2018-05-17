@@ -2,9 +2,9 @@
 
 namespace App\JsonApi\Schemas;
 
-use CloudCreativity\LaravelJsonApi\Eloquent\AbstractSchema;
+use Neomerx\JsonApi\Schema\SchemaProvider;
 
-class InvoiceItem extends AbstractSchema
+class InvoiceItem extends SchemaProvider
 {
 
     /**
@@ -13,18 +13,55 @@ class InvoiceItem extends AbstractSchema
     protected $resourceType = 'invoice-items';
 
     /**
-     * Model attributes to serialize.
-     *
-     * @var array|null
+     * @param \App\InvoiceItem $resource
+     *      the domain record being serialized.
+     * @return string
      */
-    protected $attributes = null;
+    public function getId($resource)
+    {
+        return (string) $resource->getKey();
+    }
 
     /**
-     * Model relationships to serialize.
-     *
-     * @var array
+     * @param \App\InvoiceItem $resource
+     *      the domain record being serialized.
+     * @return array
      */
-    protected $relationships = [];
+    public function getAttributes($resource)
+    {
+        return [
+            'name' => $resource->name,
+            'description' => $resource->description,
+            'quantity' => $resource->quantity,
+            'cost' => $resource->cost,
+            'created-at' => $resource->created_at->toIso8601String(),
+            'updated-at' => $resource->updated_at->toIso8601String(),
+        ];
+    }
 
+    /**
+     * @param \App\InvoiceItem $resource
+     * @param bool $isPrimary
+     * @param array $includeRelationships
+     * @return array
+     */
+    public function getRelationships($resource, $isPrimary, array $includeRelationships)
+    {
+        return [
+            'comments' => [
+                self::SHOW_SELF => true,
+                self::SHOW_RELATED => true
+            ],
+
+            'invoice' => [
+                self::SHOW_SELF => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA => isset($includeRelationships['invoice']),
+                self::DATA => function () use ($resource) {
+                    return $resource->invoice;
+                }
+            ]
+        ];
+    }
 }
 

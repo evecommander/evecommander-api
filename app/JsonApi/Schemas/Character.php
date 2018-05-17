@@ -13,7 +13,7 @@ class Character extends SchemaProvider
     protected $resourceType = 'characters';
 
     /**
-     * @param $resource
+     * @param \App\Character $resource
      *      the domain record being serialized.
      * @return string
      */
@@ -32,7 +32,6 @@ class Character extends SchemaProvider
         return [
             'name' => $resource->name,
             'eve-id' => $resource->eve_id,
-            'user-id' => $resource->user_id,
             'created-at' => $resource->created_at->toIso8601String(),
             'updated-at' => $resource->updated_at->toIso8601String(),
         ];

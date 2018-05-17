@@ -13,17 +13,29 @@ use Illuminate\Notifications\Notifiable;
 /**
  * Class Invoice
  *
- * @property string $id
- * @property string $owner_id
- * @property string $owner_type
- * @property string $recipient_id
- * @property string $recipient_type
- * @property string $code
- * @property string $title
- * @property string $status
- * @property double $total
- * @property Carbon $due_date
- * @property Carbon $hard_due_date
+ * @property string id
+ * @property string owner_id
+ * @property string owner_type
+ * @property string recipient_id
+ * @property string recipient_type
+ * @property string code
+ * @property string title
+ * @property string status
+ * @property double total
+ * @property Carbon due_date
+ * @property Carbon hard_due_date
+ * @property Carbon created_at
+ * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany comments
+ * @property \Illuminate\Database\Eloquent\Relations\MorphTo issuer
+ * @property \Illuminate\Database\Eloquent\Relations\MorphTo recipient
+ * @property \Illuminate\Database\Eloquent\Relations\HasMany items
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany notifications
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany readNotifications
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany unreadNotifications
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany payments
  */
 class Invoice extends Model
 {

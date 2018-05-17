@@ -2,9 +2,9 @@
 
 namespace App\JsonApi\Schemas;
 
-use CloudCreativity\LaravelJsonApi\Eloquent\AbstractSchema;
+use Neomerx\JsonApi\Schema\SchemaProvider;
 
-class BillingCondition extends AbstractSchema
+class BillingCondition extends SchemaProvider
 {
 
     /**
@@ -13,18 +13,58 @@ class BillingCondition extends AbstractSchema
     protected $resourceType = 'billing-conditions';
 
     /**
-     * Model attributes to serialize.
-     *
-     * @var array|null
+     * @param \App\BillingCondition $resource
+     *      the domain record being serialized.
+     * @return string
      */
-    protected $attributes = null;
+    public function getId($resource)
+    {
+        return (string) $resource->getKey();
+    }
 
     /**
-     * Model relationships to serialize.
-     *
-     * @var array
+     * @param \App\BillingCondition $resource
+     *      the domain record being serialized.
+     * @return array
      */
-    protected $relationships = [];
+    public function getAttributes($resource)
+    {
+        return [
+            'name' => $resource->name,
+            'description' => $resource->description,
+            'type' => $resource->type,
+            'quantity' => $resource->quantity,
+            'created-at' => $resource->created_at->toIso8601String(),
+            'updated-at' => $resource->updated_at->toIso8601String(),
+        ];
+    }
+
+    /**
+     * @param \App\BillingCondition $resource
+     * @param bool $isPrimary
+     * @param array $includeRelationships
+     * @return array
+     */
+    public function getRelationships($resource, $isPrimary, array $includeRelationships)
+    {
+        return [
+            'owner' => [
+                self::SHOW_SELF => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA => true,
+            ],
+
+            'discounts' => [
+                self::SHOW_SELF => true,
+                self::SHOW_RELATED => true,
+            ],
+
+            'membership-fees' => [
+                self::SHOW_SELF => true,
+                self::SHOW_RELATED => true,
+            ]
+        ];
+    }
 
 }
 
