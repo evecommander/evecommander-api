@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Corporation
+ * Class Corporation.
  *
  * @property string id
  * @property int api_id
@@ -54,7 +54,7 @@ class Corporation extends Organization
     }
 
     protected $casts = [
-        'settings' => 'array'
+        'settings' => 'array',
     ];
 
     /**

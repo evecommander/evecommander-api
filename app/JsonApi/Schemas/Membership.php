@@ -6,7 +6,6 @@ use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class Membership extends SchemaProvider
 {
-
     /**
      * @var string
      */
@@ -14,7 +13,8 @@ class Membership extends SchemaProvider
 
     /**
      * @param \App\Membership $resource
-     *      the domain record being serialized.
+     *                                  the domain record being serialized.
+     *
      * @return string
      */
     public function getId($resource)
@@ -24,13 +24,14 @@ class Membership extends SchemaProvider
 
     /**
      * @param \App\Membership $resource
-     *      the domain record being serialized.
+     *                                  the domain record being serialized.
+     *
      * @return array
      */
     public function getAttributes($resource)
     {
         return [
-            'notes' => $resource->notes,
+            'notes'      => $resource->notes,
             'created-at' => $resource->created_at->toIso8601String(),
             'updated-at' => $resource->updated_at->toIso8601String(),
         ];
@@ -38,73 +39,73 @@ class Membership extends SchemaProvider
 
     /**
      * @param \App\Membership $resource
-     * @param bool $isPrimary
-     * @param array $includeRelationships
+     * @param bool            $isPrimary
+     * @param array           $includeRelationships
+     *
      * @return array
      */
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
         return [
             'notifications' => [
-                self::SHOW_SELF => true,
-                self::SHOW_RELATED => true
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
             ],
 
             'readNotifications' => [
-                self::SHOW_SELF => true,
-                self::SHOW_RELATED => true
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
             ],
 
             'unreadNotifications' => [
-                self::SHOW_SELF => true,
-                self::SHOW_RELATED => true
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
             ],
 
             'membershipLevel' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['membershipLevel']),
-                self::DATA => function () use ($resource) {
+                self::SHOW_DATA    => isset($includeRelationships['membershipLevel']),
+                self::DATA         => function () use ($resource) {
                     return $resource->membershipLevel;
-                }
+                },
             ],
 
             'organization' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['organization']),
-                self::DATA => function () use ($resource) {
+                self::SHOW_DATA    => isset($includeRelationships['organization']),
+                self::DATA         => function () use ($resource) {
                     return $resource->organization;
-                }
+                },
             ],
 
             'member' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['member']),
-                self::DATA => function () use ($resource) {
+                self::SHOW_DATA    => isset($includeRelationships['member']),
+                self::DATA         => function () use ($resource) {
                     return $resource->member;
-                }
+                },
             ],
 
             'createdBy' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['createdBy']),
-                self::DATA => function () use ($resource) {
+                self::SHOW_DATA    => isset($includeRelationships['createdBy']),
+                self::DATA         => function () use ($resource) {
                     return $resource->createdBy;
-                }
+                },
             ],
 
             'lastUpdatedBy' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['lastUpdatedBy']),
-                self::DATA => function () use ($resource) {
+                self::SHOW_DATA    => isset($includeRelationships['lastUpdatedBy']),
+                self::DATA         => function () use ($resource) {
                     return $resource->lastUpdatedBy;
-                }
-            ]
+                },
+            ],
         ];
     }
 }
-

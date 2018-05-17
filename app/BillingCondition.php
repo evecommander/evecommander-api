@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Class BillingCondition
+ * Class BillingCondition.
  *
  * @property string id
  * @property string owner_id

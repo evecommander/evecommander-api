@@ -3,13 +3,13 @@
 namespace App;
 
 use App\Traits\UuidTrait;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
- * Class User
+ * Class User.
  *
  * @property string id
  * @property string email
@@ -43,7 +43,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password'
+        'password',
     ];
 
     /**
@@ -67,7 +67,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Get any characters that belong to the user
+     * Get any characters that belong to the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

@@ -6,7 +6,6 @@ use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class ReplacementClaim extends SchemaProvider
 {
-
     /**
      * @var string
      */
@@ -14,7 +13,8 @@ class ReplacementClaim extends SchemaProvider
 
     /**
      * @param \App\ReplacementClaim $resource
-     *      the domain record being serialized.
+     *                                        the domain record being serialized.
+     *
      * @return string
      */
     public function getId($resource)
@@ -24,62 +24,63 @@ class ReplacementClaim extends SchemaProvider
 
     /**
      * @param \App\ReplacementClaim $resource
-     *      the domain record being serialized.
+     *                                        the domain record being serialized.
+     *
      * @return array
      */
     public function getAttributes($resource)
     {
         return [
-            'killmail-id' => $resource->killmail_id,
+            'killmail-id'   => $resource->killmail_id,
             'killmail-hash' => $resource->killmail_hash,
-            'total' => $resource->total,
-            'status' => $resource->status,
-            'created-at' => $resource->created_at->toIso8601String(),
-            'updated-at' => $resource->updated_at->toIso8601String(),
+            'total'         => $resource->total,
+            'status'        => $resource->status,
+            'created-at'    => $resource->created_at->toIso8601String(),
+            'updated-at'    => $resource->updated_at->toIso8601String(),
         ];
     }
 
     /**
      * @param \App\ReplacementClaim $resource
-     * @param bool $isPrimary
-     * @param array $includeRelationships
+     * @param bool                  $isPrimary
+     * @param array                 $includeRelationships
+     *
      * @return array
      */
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
         return [
             'comments' => [
-                self::SHOW_SELF => true,
-                self::SHOW_RELATED => true
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
             ],
 
             'character' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['character']),
-                self::DATA => function () use ($resource) {
+                self::SHOW_DATA    => isset($includeRelationships['character']),
+                self::DATA         => function () use ($resource) {
                     return $resource->character;
-                }
+                },
             ],
 
             'organization' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['organization']),
-                self::DATA => function () use ($resource) {
+                self::SHOW_DATA    => isset($includeRelationships['organization']),
+                self::DATA         => function () use ($resource) {
                     return $resource->organization;
-                }
+                },
             ],
 
             'fitting' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['fitting']),
-                self::DATA => function () use ($resource) {
+                self::SHOW_DATA    => isset($includeRelationships['fitting']),
+                self::DATA         => function () use ($resource) {
                     return $resource->fitting;
-                }
+                },
             ],
         ];
     }
 }
-

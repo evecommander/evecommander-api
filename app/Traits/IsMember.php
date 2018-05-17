@@ -6,14 +6,14 @@ use App\Membership;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
- * Trait IsMember
+ * Trait IsMember.
  *
  * @method morphMany(string $related, string $name)
  */
 trait IsMember
 {
     /**
-     * Get any memberships the model is a part of
+     * Get any memberships the model is a part of.
      *
      * @return MorphMany
      */

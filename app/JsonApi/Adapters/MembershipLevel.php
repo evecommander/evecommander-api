@@ -18,7 +18,7 @@ class MembershipLevel extends AbstractAdapter
     protected $attributes = [];
 
     protected $guarded = [
-        'createdBy'
+        'createdBy',
     ];
 
     /**

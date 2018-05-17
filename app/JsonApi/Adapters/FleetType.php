@@ -23,7 +23,7 @@ class FleetType extends AbstractAdapter
      * @var array
      */
     protected $relationships = [
-        'fleets'
+        'fleets',
     ];
 
     /**

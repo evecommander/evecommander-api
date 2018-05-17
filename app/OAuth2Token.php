@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Class OAuth2Token
+ * Class OAuth2Token.
  *
  * @property string id
  * @property string character_id
@@ -25,7 +25,7 @@ class OAuth2Token extends Model
     use UuidTrait;
 
     /**
-     * Get the character that owns this OAuth2Token
+     * Get the character that owns this OAuth2Token.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

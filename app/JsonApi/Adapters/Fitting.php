@@ -25,7 +25,7 @@ class Fitting extends AbstractAdapter
     protected $relationships = [
         'owner',
         'doctrine',
-        'replacementClaims'
+        'replacementClaims',
     ];
 
     /**

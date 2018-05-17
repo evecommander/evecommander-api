@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Character
+ * Class Character.
  *
  * @property string id
  * @property int user_id
