@@ -8,15 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Class MembershipFee
+ * Class MembershipFee.
  *
  * @property string id
  * @property string owner_id
  * @property string owner_type
  * @property string amount_type
- * @property double amount
+ * @property float amount
  * @property Carbon created_at
  * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany billingConditions
  */
 class MembershipFee extends Model
 {

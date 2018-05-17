@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Fitting
+ * Class Fitting.
  *
  * @property string id
  * @property string owner_id
@@ -18,6 +18,12 @@ use Illuminate\Support\Carbon;
  * @property int api_id
  * @property Carbon created_at
  * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany comments
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo doctrine
+ * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
+ * @property \Illuminate\Database\Eloquent\Relations\HasMany replacementClaims
  */
 class Fitting extends Model
 {

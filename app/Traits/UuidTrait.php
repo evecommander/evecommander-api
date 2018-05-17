@@ -7,7 +7,7 @@ use Ramsey\Uuid\Uuid;
 
 trait UuidTrait
 {
-    protected static function boot ()
+    protected static function boot()
     {
         parent::boot();
 

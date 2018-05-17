@@ -2,29 +2,61 @@
 
 namespace App\JsonApi\Schemas;
 
-use CloudCreativity\LaravelJsonApi\Eloquent\AbstractSchema;
+use Neomerx\JsonApi\Schema\SchemaProvider;
 
-class OAuth2Token extends AbstractSchema
+class OAuth2Token extends SchemaProvider
 {
-
     /**
      * @var string
      */
     protected $resourceType = 'o-auth2-tokens';
 
     /**
-     * Model attributes to serialize.
+     * @param \App\OAuth2Token $resource
+     *                                   the domain record being serialized.
      *
-     * @var array|null
+     * @return string
      */
-    protected $attributes = null;
+    public function getId($resource)
+    {
+        return (string) $resource->getKey();
+    }
 
     /**
-     * Model relationships to serialize.
+     * @param \App\OAuth2Token $resource
+     *                                   the domain record being serialized.
      *
-     * @var array
+     * @return array
      */
-    protected $relationships = [];
+    public function getAttributes($resource)
+    {
+        return [
+            'access-token'  => $resource->access_token,
+            'refresh-token' => $resource->refresh_token,
+            'expires-on'    => $resource->expires_on->toIso8601String(),
+            'created-at'    => $resource->created_at->toIso8601String(),
+            'updated-at'    => $resource->updated_at->toIso8601String(),
+        ];
+    }
 
+    /**
+     * @param \App\OAuth2Token $resource
+     * @param bool             $isPrimary
+     * @param array            $includeRelationships
+     *
+     * @return array
+     */
+    public function getRelationships($resource, $isPrimary, array $includeRelationships)
+    {
+        return [
+            'character' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => isset($includeRelationships['character']),
+                self::DATA         => function () use ($resource) {
+                    return $resource->character;
+                },
+            ],
+        ];
+    }
 }
-

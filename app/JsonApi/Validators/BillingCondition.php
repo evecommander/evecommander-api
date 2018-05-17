@@ -7,7 +7,6 @@ use CloudCreativity\LaravelJsonApi\Validators\AbstractValidatorProvider;
 
 class BillingCondition extends AbstractValidatorProvider
 {
-
     /**
      * @var string
      */
@@ -18,6 +17,7 @@ class BillingCondition extends AbstractValidatorProvider
      *
      * @param $record
      *      the record being updated, or null if it is a create request.
+     *
      * @return array
      */
     protected function attributeRules($record = null)
@@ -33,11 +33,11 @@ class BillingCondition extends AbstractValidatorProvider
      * @param RelationshipsValidatorInterface $relationships
      * @param $record
      *      the record being updated, or null if it is a create request.
+     *
      * @return void
      */
     protected function relationshipRules(RelationshipsValidatorInterface $relationships, $record = null)
     {
         //
     }
-
 }

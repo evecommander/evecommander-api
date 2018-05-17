@@ -35,6 +35,7 @@ class Character extends AbstractAdapter
         'notifications',
         'readNotifications',
         'unreadNotifications',
+        'corporation',
     ];
 
     /**
@@ -47,62 +48,67 @@ class Character extends AbstractAdapter
         parent::__construct(new \App\Character(), $paging);
     }
 
-    protected function user()
+    public function user()
     {
         return $this->belongsTo();
     }
 
-    protected function token()
+    public function token()
     {
-        return$this->hasOne();
+        return $this->hasOne();
     }
 
-    protected function comments()
-    {
-        return $this->hasMany();
-    }
-
-    protected function memberships()
+    public function comments()
     {
         return $this->hasMany();
     }
 
-    protected function invoices()
+    public function memberships()
     {
         return $this->hasMany();
     }
 
-    protected function fulfilledInvoices()
+    public function invoices()
     {
         return $this->hasMany();
     }
 
-    protected function overdueInvoices()
+    public function fulfilledInvoices()
     {
         return $this->hasMany();
     }
 
-    protected function pendingInvoices()
+    public function overdueInvoices()
     {
         return $this->hasMany();
     }
 
-    protected function defaultInvoices()
+    public function pendingInvoices()
     {
         return $this->hasMany();
     }
 
-    protected function notifications()
+    public function defaultInvoices()
     {
         return $this->hasMany();
     }
 
-    protected function readNotifications()
+    public function notifications()
     {
         return $this->hasMany();
     }
 
-    protected function unreadNotifications()
+    public function readNotifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function corporation()
     {
         return $this->hasMany();
     }

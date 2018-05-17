@@ -15,52 +15,52 @@ class PermissionsTableSeeder extends Seeder
         DB::table('permissions')->insert([
             // Memberships
             [
-                'name' => 'Add Memberships',
+                'name'        => 'Add Memberships',
                 'description' => 'Can add new memberships to the organization',
-                'slug' => 'membership_add'
+                'slug'        => 'membership_add',
             ],
 
             [
-                'name' => 'Delete Memberships',
+                'name'        => 'Delete Memberships',
                 'description' => 'Can add delete memberships from the organization',
-                'slug' => 'membership_delete'
+                'slug'        => 'membership_delete',
             ],
 
             [
-                'name' => 'Edit Memberships',
+                'name'        => 'Edit Memberships',
                 'description' => 'Can edit memberships for the organization',
-                'slug' => 'membership_edit'
+                'slug'        => 'membership_edit',
             ],
 
             [
-                'name' => 'View Memberships',
+                'name'        => 'View Memberships',
                 'description' => 'Can view memberships for the organization',
-                'slug' => 'membership_view'
+                'slug'        => 'membership_view',
             ],
 
             // Handbooks
             [
-                'name' => 'Add Handbooks',
+                'name'        => 'Add Handbooks',
                 'description' => 'Can add new handbooks to the organization',
-                'slug' => 'handbook_add'
+                'slug'        => 'handbook_add',
             ],
 
             [
-                'name' => 'Delete Handbooks',
+                'name'        => 'Delete Handbooks',
                 'description' => 'Can delete handbooks from the organization',
-                'slug' => 'handbook_edit'
+                'slug'        => 'handbook_edit',
             ],
 
             [
-                'name' => 'Edit Handbooks',
+                'name'        => 'Edit Handbooks',
                 'description' => 'Can edit handbooks for the organization',
-                'slug' => 'handbook_edit'
+                'slug'        => 'handbook_edit',
             ],
 
             [
-                'name' => 'View Handbooks',
+                'name'        => 'View Handbooks',
                 'description' => 'Can edit handbooks for the organization',
-                'slug' => 'handbook_edit'
+                'slug'        => 'handbook_edit',
             ],
 
             // Discounts

@@ -9,17 +9,18 @@ use Illuminate\Http\Request;
 
 class DefaultAuthorizer extends AbstractAuthorizer
 {
-
     /**
      * Authorize a resource index request.
      *
-     * @param string $type
-     *      the domain record type.
+     * @param string  $type
+     *                         the domain record type.
      * @param Request $request
-     *      the inbound request.
-     * @return void
+     *                         the inbound request.
+     *
      * @throws AuthenticationException|AuthorizationException
-     *      if the request is not authorized.
+     *                                                        if the request is not authorized.
+     *
+     * @return void
      */
     public function index($type, $request)
     {
@@ -29,13 +30,15 @@ class DefaultAuthorizer extends AbstractAuthorizer
     /**
      * Authorize a resource create request.
      *
-     * @param string $type
-     *      the domain record type.
+     * @param string  $type
+     *                         the domain record type.
      * @param Request $request
-     *      the inbound request.
-     * @return void
+     *                         the inbound request.
+     *
      * @throws AuthenticationException|AuthorizationException
-     *      if the request is not authorized.
+     *                                                        if the request is not authorized.
+     *
+     * @return void
      */
     public function create($type, $request)
     {
@@ -45,13 +48,15 @@ class DefaultAuthorizer extends AbstractAuthorizer
     /**
      * Authorize a resource read request.
      *
-     * @param object $record
-     *      the domain record.
+     * @param object  $record
+     *                         the domain record.
      * @param Request $request
-     *      the inbound request.
-     * @return void
+     *                         the inbound request.
+     *
      * @throws AuthenticationException|AuthorizationException
-     *      if the request is not authorized.
+     *                                                        if the request is not authorized.
+     *
+     * @return void
      */
     public function read($record, $request)
     {
@@ -61,13 +66,15 @@ class DefaultAuthorizer extends AbstractAuthorizer
     /**
      * Authorize a resource update request.
      *
-     * @param object $record
-     *      the domain record.
+     * @param object  $record
+     *                         the domain record.
      * @param Request $request
-     *      the inbound request.
-     * @return void
+     *                         the inbound request.
+     *
      * @throws AuthenticationException|AuthorizationException
-     *      if the request is not authorized.
+     *                                                        if the request is not authorized.
+     *
+     * @return void
      */
     public function update($record, $request)
     {
@@ -77,17 +84,18 @@ class DefaultAuthorizer extends AbstractAuthorizer
     /**
      * Authorize a resource read request.
      *
-     * @param object $record
-     *      the domain record.
+     * @param object  $record
+     *                         the domain record.
      * @param Request $request
-     *      the inbound request.
-     * @return void
+     *                         the inbound request.
+     *
      * @throws AuthenticationException|AuthorizationException
-     *      if the request is not authorized.
+     *                                                        if the request is not authorized.
+     *
+     * @return void
      */
     public function delete($record, $request)
     {
         $this->can('delete', $record);
     }
-
 }

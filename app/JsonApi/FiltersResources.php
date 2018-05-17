@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Trait FiltersResources
+ * Trait FiltersResources.
  *
  * @property Model model
  */
@@ -31,13 +31,13 @@ trait FiltersResources
             }
         } elseif (strtolower($filter) === 'or') {
             foreach ($value as $k => $v) {
-                $query->orWhere(function($query) use ($k, $v) {
+                $query->orWhere(function ($query) use ($k, $v) {
                     $this->doFilter($query, $k, $v);
                 });
             }
         } elseif (strtolower($filter) === 'and') {
             foreach ($value as $k => $v) {
-                $query->where(function($query) use ($k, $v) {
+                $query->where(function ($query) use ($k, $v) {
                     $this->doFilter($query, $k, $v);
                 });
             }
@@ -54,15 +54,15 @@ trait FiltersResources
             } else {
                 throw new ValidationException(Error::create([
                     'status' => 422,
-                    'title' => "Unknown value passed for filter",
+                    'title'  => 'Unknown value passed for filter',
                     'detail' => "Unknown value {{$name}}",
-                    'source' => ['parameter' => "filter[{$name}]=$value"]]));
+                    'source' => ['parameter' => "filter[{$name}]=$value"], ]));
             }
 
             if (!Schema::connection($this->model->getConnectionName())->hasColumn($this->model->getTable(), $name)) {
                 throw new ValidationException(Error::create([
                     'status' => 422,
-                    'title' => "Unknown key passed for filter: {$name}"]));
+                    'title'  => "Unknown key passed for filter: {$name}", ]));
             }
 
             $this->applyFilter($query, $operator, $name, $value);
@@ -74,7 +74,7 @@ trait FiltersResources
         switch ($operator) {
             case null:
             case 'is':
-                if(in_array(strtolower($value),['true', 'false', '0', '1'])) {
+                if (in_array(strtolower($value), ['true', 'false', '0', '1'])) {
                     $filterQuery->where($name, filter_var($value, FILTER_VALIDATE_BOOLEAN));
                 } else {
                     $filterQuery->where($name, $value);
@@ -101,7 +101,7 @@ trait FiltersResources
                 $filterQuery->whereNull($name);
                 break;
             case 'null':
-                if (filter_var($value,FILTER_VALIDATE_BOOLEAN)) {
+                if (filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
                     $filterQuery->whereNull($name);
                 } else {
                     $filterQuery->whereNotNull($name);

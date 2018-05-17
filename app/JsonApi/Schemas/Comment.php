@@ -6,15 +6,15 @@ use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class Comment extends SchemaProvider
 {
-
     /**
      * @var string
      */
     protected $resourceType = 'comments';
 
     /**
-     * @param $resource
-     *      the domain record being serialized.
+     * @param \App\Comment $resource
+     *                               the domain record being serialized.
+     *
      * @return string
      */
     public function getId($resource)
@@ -24,15 +24,14 @@ class Comment extends SchemaProvider
 
     /**
      * @param \App\Comment $resource
-     *      the domain record being serialized.
+     *                               the domain record being serialized.
+     *
      * @return array
      */
     public function getAttributes($resource)
     {
         return [
-            'name' => $resource->name,
-            'eve-id' => $resource->eve_id,
-            'user-id' => $resource->user_id,
+            'text'       => $resource->text,
             'created-at' => $resource->created_at->toIso8601String(),
             'updated-at' => $resource->updated_at->toIso8601String(),
         ];
@@ -40,13 +39,25 @@ class Comment extends SchemaProvider
 
     /**
      * @param \App\Comment $resource
-     * @param bool $isPrimary
-     * @param array $includeRelationships
+     * @param bool         $isPrimary
+     * @param array        $includeRelationships
+     *
      * @return array
      */
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
-        return [];
+        return [
+            'character' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => true,
+            ],
+
+            'commentable' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => true,
+            ],
+        ];
     }
 }
-

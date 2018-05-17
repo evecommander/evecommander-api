@@ -21,7 +21,7 @@ return [
     |   - e.g. \App\JsonApi\Hydrators\{User, Post, Comment}
     |
     */
-    'namespace' => null,
+    'namespace'   => null,
     'by-resource' => false,
 
     /*
@@ -38,28 +38,28 @@ return [
     | `'posts' => App\Post::class`
     */
     'resources' => [
-        'users' => \App\User::class,
-        'characters' => \App\Character::class,
-        'corporations' => \App\Corporation::class,
-        'alliances' => \App\Alliance::class,
-        'coalitions' => \App\Coalition::class,
-        'comments' => \App\Comment::class,
-        'doctrines' => \App\Doctrine::class,
-        'fittings' => \App\Fitting::class,
-        'fleets' => \App\Fleet::class,
-        'fleet-types' => \App\FleetType::class,
-        'handbooks' => \App\Handbook::class,
+        'users'              => \App\User::class,
+        'characters'         => \App\Character::class,
+        'corporations'       => \App\Corporation::class,
+        'alliances'          => \App\Alliance::class,
+        'coalitions'         => \App\Coalition::class,
+        'comments'           => \App\Comment::class,
+        'doctrines'          => \App\Doctrine::class,
+        'fittings'           => \App\Fitting::class,
+        'fleets'             => \App\Fleet::class,
+        'fleet-types'        => \App\FleetType::class,
+        'handbooks'          => \App\Handbook::class,
         'replacement-claims' => \App\ReplacementClaim::class,
-        'discounts' => \App\Discount::class,
+        'discounts'          => \App\Discount::class,
         'billing-conditions' => \App\BillingCondition::class,
-        'invoices' => \App\Invoice::class,
-        'invoice-items' => \App\InvoiceItem::class,
-        'memberships' => \App\Membership::class,
-        'membership-fees' => \App\MembershipFee::class,
-        'membership-levels' => \App\MembershipLevel::class,
-        'permissions' => \App\Permission::class,
-        'settings' => \App\Setting::class,
-        'oauth2-tokens' => \App\OAuth2Token::class,
+        'invoices'           => \App\Invoice::class,
+        'invoice-items'      => \App\InvoiceItem::class,
+        'memberships'        => \App\Membership::class,
+        'membership-fees'    => \App\MembershipFee::class,
+        'membership-levels'  => \App\MembershipLevel::class,
+        'permissions'        => \App\Permission::class,
+        'settings'           => \App\Setting::class,
+        'oauth2-tokens'      => \App\OAuth2Token::class,
     ],
 
     /*
@@ -95,9 +95,9 @@ return [
     |
     */
     'url' => [
-        'host' => null,
+        'host'      => null,
         'namespace' => '/api/v1',
-        'name' => 'api:v1:',
+        'name'      => 'api:v1:',
     ],
 
     /*
