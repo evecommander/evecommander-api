@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
 use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
 use Illuminate\Contracts\Routing\Registrar;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +15,9 @@ use Illuminate\Contracts\Routing\Registrar;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::get('/', function () {
+    return [];
+});
 Route::post('login', 'AuthController@login');
 Route::post('logout', 'AuthController@logout');
 Route::post('refresh', 'AuthController@refresh');
@@ -31,13 +32,13 @@ JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'json-api.auth:de
             'notifications',
             'readNotifications',
             'unreadNotifications',
-        ]
+        ],
     ]);
 
     $api->resource('characters', [
         'has-one' => [
-            'user' => ['except' => 'replace'],
-            'token' => ['except' => 'replace']
+            'user'  => ['except' => 'replace'],
+            'token' => ['except' => 'replace'],
         ],
         'has-many' => [
             'comments',
@@ -49,7 +50,7 @@ JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'json-api.auth:de
             'notifications',
             'readNotifications',
             'unreadNotifications',
-        ]
+        ],
     ]);
 
     $api->resource('corporations', [

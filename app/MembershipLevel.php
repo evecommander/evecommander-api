@@ -7,19 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Class MembershipLevel
+ * Class MembershipLevel.
  *
  * @property string id
  * @property string owner_id
  * @property string owner_type
  * @property string name
  * @property string description
- * @property double dues
+ * @property float dues
  * @property string dues_structure
  * @property string created_by
  * @property string updated_by
  * @property Carbon created_at
  * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\HasMany memberships
+ * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo createdBy
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo lastUpdatedBy
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany permissions
  */
 class MembershipLevel extends Model
 {

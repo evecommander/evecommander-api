@@ -1,18 +1,19 @@
 <?php
+
 namespace App\Traits;
 
 use App\Invoice;
 
 /**
- * Trait ModifiesAmounts
+ * Trait ModifiesAmounts.
  *
  * @property string amount_type
- * @property double amount
+ * @property float amount
  */
 trait ModifiesAmounts
 {
     /**
-     * Returns the type of the modification
+     * Returns the type of the modification.
      *
      * @return string
      */
@@ -22,9 +23,9 @@ trait ModifiesAmounts
     }
 
     /**
-     * Returns the amount of the modification
+     * Returns the amount of the modification.
      *
-     * @return double
+     * @return float
      */
     protected function getAmount()
     {
@@ -32,7 +33,7 @@ trait ModifiesAmounts
     }
 
     /**
-     * Returns whether the modifier is meant to be a flat amount
+     * Returns whether the modifier is meant to be a flat amount.
      *
      * @return bool
      */
@@ -42,7 +43,7 @@ trait ModifiesAmounts
     }
 
     /**
-     * Returns whether the modifier is meant to be calculated as a percent of the invoice's total
+     * Returns whether the modifier is meant to be calculated as a percent of the invoice's total.
      *
      * @return bool
      */
@@ -52,7 +53,7 @@ trait ModifiesAmounts
     }
 
     /**
-     * Returns whether the modifier is meant to be calculated on a per member basis
+     * Returns whether the modifier is meant to be calculated on a per member basis.
      *
      * @return bool
      */
@@ -62,7 +63,7 @@ trait ModifiesAmounts
     }
 
     /**
-     * Calculates and returns the amount of the modification this represents
+     * Calculates and returns the amount of the modification this represents.
      *
      * @param Invoice $invoice
      *

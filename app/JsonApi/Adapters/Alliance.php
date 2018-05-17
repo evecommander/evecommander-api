@@ -97,7 +97,7 @@ class Alliance extends AbstractAdapter
 
     public function coalition()
     {
-        return $this->belongsTo();
+        return $this->hasMany();
     }
 
     public function claims()

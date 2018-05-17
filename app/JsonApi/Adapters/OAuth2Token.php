@@ -23,7 +23,7 @@ class OAuth2Token extends AbstractAdapter
      * @var array
      */
     protected $relationships = [
-        'character'
+        'character',
     ];
 
     /**

@@ -2,13 +2,12 @@
 
 namespace App;
 
-use App\Traits\Commentable;
 use App\Traits\HasComments;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Comment
+ * Class Comment.
  *
  * @property string id
  * @property string commentable_id
@@ -17,6 +16,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string text
  * @property Carbon created_at
  * @property Carbon updated_at
+ *
+ * Relationships
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany comments
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo character
+ * @property \Illuminate\Database\Eloquent\Relations\MorphTo commentable
  */
 class Comment extends Model
 {
@@ -35,7 +39,7 @@ class Comment extends Model
     /**
      * Get the owning commentable model.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function commentable()
     {

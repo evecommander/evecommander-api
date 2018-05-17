@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Fleet
+ * Class Fleet.
  *
  * @property string id
  * @property string fleet_type_id
@@ -24,6 +24,16 @@ use Illuminate\Support\Carbon;
  * @property string last_updated_by
  * @property Carbon created_at
  * @property Carbon updated_at
+ *
+ * Relations
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany notifications
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany readNotifications
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany unreadNotifications
+ * @property \Illuminate\Database\Eloquent\Relations\MorphMany comments
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo fleetType
+ * @property \Illuminate\Database\Eloquent\Relations\MorphTo organization
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo createdBy
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo lastUpdatedBy
  */
 class Fleet extends Model
 {
@@ -33,7 +43,7 @@ class Fleet extends Model
         'start_time',
         'end_time',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**

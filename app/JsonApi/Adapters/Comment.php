@@ -25,7 +25,7 @@ class Comment extends AbstractAdapter
     protected $relationships = [
         'character',
         'comments',
-        'commentable'
+        'commentable',
     ];
 
     /**

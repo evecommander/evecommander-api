@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
- * Trait HasMembers
+ * Trait HasMembers.
  *
  * @method morphMany(string $related, string $name)
  * @method belongsTo(string $related, string $foreignKey)
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 trait HasMembers
 {
     /**
-     * Get any memberships that belong to the model
+     * Get any memberships that belong to the model.
      *
      * @return MorphMany
      */
@@ -26,7 +26,7 @@ trait HasMembers
     }
 
     /**
-     * Get the membership level that is set as the default for joining this model
+     * Get the membership level that is set as the default for joining this model.
      *
      * @return BelongsTo
      */
@@ -36,7 +36,7 @@ trait HasMembers
     }
 
     /**
-     * Get any membership levels that belong to this model
+     * Get any membership levels that belong to this model.
      *
      * @return MorphMany
      */

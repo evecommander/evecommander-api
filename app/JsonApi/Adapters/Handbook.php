@@ -25,7 +25,7 @@ class Handbook extends AbstractAdapter
     protected $relationships = [
         'owner',
         'createdBy',
-        'lastUpdatedBy'
+        'lastUpdatedBy',
     ];
 
     /**
