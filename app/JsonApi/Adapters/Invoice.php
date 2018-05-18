@@ -45,12 +45,12 @@ class Invoice extends AbstractAdapter
 
     public function issuer()
     {
-        return $this->hasOne();
+        return $this->belongsTo();
     }
 
     public function recipient()
     {
-        return $this->hasOne();
+        return $this->belongsTo();
     }
 
     public function items()

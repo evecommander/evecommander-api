@@ -50,7 +50,7 @@ class MembershipLevel extends AbstractAdapter
 
     public function owner()
     {
-        return $this->hasOne();
+        return $this->belongsTo();
     }
 
     public function createdBy()

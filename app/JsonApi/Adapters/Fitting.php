@@ -40,7 +40,7 @@ class Fitting extends AbstractAdapter
 
     public function owner()
     {
-        return $this->hasOne();
+        return $this->belongsTo();
     }
 
     public function doctrine()

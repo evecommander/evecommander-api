@@ -41,7 +41,7 @@ class Doctrine extends AbstractAdapter
 
     public function owner()
     {
-        return $this->hasOne();
+        return $this->belongsTo();
     }
 
     public function fittings()

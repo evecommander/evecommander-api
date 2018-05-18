@@ -54,12 +54,12 @@ class Membership extends AbstractAdapter
 
     public function organization()
     {
-        return $this->hasOne();
+        return $this->belongsTo();
     }
 
     public function member()
     {
-        return $this->hasOne();
+        return $this->belongsTo();
     }
 
     public function createdBy()

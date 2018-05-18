@@ -53,7 +53,7 @@ class ReplacementClaim extends AbstractAdapter
 
     public function organization()
     {
-        return $this->hasOne();
+        return $this->belongsTo();
     }
 
     public function comments()

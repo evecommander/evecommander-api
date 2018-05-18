@@ -24,6 +24,7 @@ class InvoiceItem extends AbstractAdapter
      */
     protected $relationships = [
         'comments',
+        'invoice',
     ];
 
     /**
@@ -39,5 +40,10 @@ class InvoiceItem extends AbstractAdapter
     public function comments()
     {
         return $this->hasMany();
+    }
+
+    public function invoice()
+    {
+        return $this->belongsTo();
     }
 }
