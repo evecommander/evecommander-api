@@ -7,6 +7,7 @@
     "require": {
         "php": ">=7.0.0",
         "cloudcreativity/laravel-json-api": ">=1.0.0-alpha.1",
+        "evecommander/esi-client-php": "^0.8.1",
         "fideloper/proxy": "~4.0",
         "irazasyed/jwt-auth-guard": "^1.0",
         "laravel/framework": "5.6.*",
@@ -29,14 +30,12 @@
             "database/factories"
         ],
         "psr-4": {
-            "App\\": "app/",
-            "Swagger\\Client\\" : "SwaggerClient-php/lib/"
+            "App\\": "app/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/",
-            "Swagger\\Client\\" : "SwaggerClient-php/test/"
+            "Tests\\": "tests/"
         }
     },
     "extra": {
