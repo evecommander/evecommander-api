@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Character;
-use App\OAuth2Token;
+use App\Jobs\ProcessAuthCallback;
+use App\Jobs\ProcessTokenRefresh;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,17 +19,19 @@ class CharacterController extends Controller
      */
     public function callback(Request $request)
     {
-        $token = new OAuth2Token();
-        $token->access_token = $request->get('access_token');
-        $token->refresh_token = $request->get('refresh_token');
-        $token->expires_on = $request->get('expires_on');
+        $user = Auth::user();
+        ProcessAuthCallback::dispatch($user, $request->get('code'));
+    }
 
-        $character = new Character();
-        $character->eve_id = $request->get('id');
-        $character->name = $request->get('name');
-        $character->user()->associate(Auth::user());
-        $character->token()->associate($token);
-
-        broadcast();
+    /**
+     * Refresh a Character's OAuth2 Token and broadcast it back to them.
+     *
+     * @param Request $request
+     * @param Character $character
+     */
+    public function refreshToken(Request $request, Character $character)
+    {
+        $user = Auth::user();
+        ProcessTokenRefresh::dispatch($user, $character);
     }
 }
