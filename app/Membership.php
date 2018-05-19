@@ -10,8 +10,8 @@ use Illuminate\Support\Carbon;
  * Class Membership.
  *
  * @property string id
- * @property string owner_id
- * @property string owner_type
+ * @property string organization_id
+ * @property string organization_type
  * @property string member_id
  * @property string member_type
  * @property string membership_level_id

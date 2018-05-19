@@ -23,7 +23,10 @@ Route::post('logout', 'AuthController@logout');
 Route::post('refresh', 'AuthController@refresh');
 Route::post('me', 'AuthController@me');
 
-Route::get('auth/callback', 'CharacterController@callback')->middleware('auth.callback');
+Route::get('characters/callback', 'CharacterController@callback')
+    ->middleware('auth.callback');
+Route::get('characters/{character}/refresh', 'CharacterController@refreshToken')
+    ->middleware('json-api.auth:default');
 
 JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'json-api.auth:default'], function (ApiGroup $api, Registrar $router) {
     $api->resource('users', [
