@@ -32,6 +32,14 @@ class MembershipLevel extends Model
 {
     use UuidTrait;
 
+    const DUES_STRUCTURE_PER_DAY = 'per_day';
+    const DUES_STRUCTURE_PER_WEEK = 'per_week';
+    const DUES_STRUCTURE_PER_MONTH = 'per_month';
+    const DUES_STRUCTURE_PER_QUARTER = 'per_quarter';
+    const DUES_STRUCTURE_PER_HALF = 'per_half';
+    const DUES_STRUCTURE_PER_YEAR = 'per_year';
+    const DUES_STRUCTURE_UPON_JOINING = 'upon_joining';
+
     /**
      * Get relation between this membership level and any memberships that belong to it.
      *

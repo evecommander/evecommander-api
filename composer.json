@@ -29,12 +29,14 @@
             "database/factories"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Swagger\\Client\\" : "SwaggerClient-php/lib/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Swagger\\Client\\" : "SwaggerClient-php/test/"
         }
     },
     "extra": {
