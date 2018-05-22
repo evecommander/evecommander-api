@@ -11,11 +11,11 @@ use App\MembershipLevel;
 use App\OAuth2Token;
 use App\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
 use Swagger\Client\ApiException;
 
@@ -30,8 +30,9 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param User $user
+     * @param User   $user
      * @param string $authorizationCode
+     *
      * @return void
      */
     public function __construct(User $user, string $authorizationCode)
@@ -85,13 +86,13 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
     {
         $curl = curl_init(self::EVE_AUTH_URL);
         curl_setopt_array($curl, [
-            CURLOPT_USERAGENT => env('EVE_USERAGENT'),
-            CURLOPT_HTTPHEADER => $this->getBasicAuthHeader(),
-            CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => 'grant_type=authorization_code&code='.$this->authorizationCode,
+            CURLOPT_USERAGENT      => env('EVE_USERAGENT'),
+            CURLOPT_HTTPHEADER     => $this->getBasicAuthHeader(),
+            CURLOPT_POST           => 1,
+            CURLOPT_POSTFIELDS     => 'grant_type=authorization_code&code='.$this->authorizationCode,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_SSL_VERIFYHOST => 2
+            CURLOPT_SSL_VERIFYHOST => 2,
         ]);
         $response = json_decode(curl_exec($curl), true);
         curl_close($curl);
@@ -110,11 +111,11 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
     {
         $curl = curl_init('https://esi.tech.ccp.is/verify/');
         curl_setopt_array($curl, [
-            CURLOPT_USERAGENT => env('EVE_USERAGENT'),
-            CURLOPT_HTTPHEADER => 'Authorization: Bearer '.$token->access_token,
+            CURLOPT_USERAGENT      => env('EVE_USERAGENT'),
+            CURLOPT_HTTPHEADER     => 'Authorization: Bearer '.$token->access_token,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_SSL_VERIFYHOST => 2
+            CURLOPT_SSL_VERIFYHOST => 2,
         ]);
         $response = json_decode(curl_exec($curl), true);
         curl_close($curl);
@@ -126,8 +127,10 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
 
     /**
      * @param $characterID
-     * @return Character
+     *
      * @throws ApiException
+     *
+     * @return Character
      */
     private function getCharacterInformation($characterID)
     {
@@ -142,8 +145,9 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
     }
 
     /**
-     * @return Corporation
      * @throws ApiException
+     *
+     * @return Corporation
      */
     private function checkCorporation()
     {
@@ -169,9 +173,10 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
     }
 
     /**
-     * @param Organization $organization
-     * @param Model $member
+     * @param Organization    $organization
+     * @param Model           $member
      * @param MembershipLevel $membershipLevel
+     *
      * @return Membership
      */
     private function createMembership(Organization $organization, Model $member, MembershipLevel $membershipLevel)
@@ -188,6 +193,7 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
 
     /**
      * @param Model $owner
+     *
      * @return MembershipLevel
      */
     private function createDefaultMembershipLevel(Model $owner)
@@ -205,8 +211,10 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
 
     /**
      * @param $allianceID
-     * @return Alliance
+     *
      * @throws ApiException
+     *
+     * @return Alliance
      */
     private function checkAlliance($allianceID)
     {

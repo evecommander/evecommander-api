@@ -6,10 +6,10 @@ use App\Character;
 use App\OAuth2Token;
 use App\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class ProcessTokenRefresh extends AuthorizesAPI implements ShouldQueue
 {
@@ -21,8 +21,9 @@ class ProcessTokenRefresh extends AuthorizesAPI implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param User $user
+     * @param User      $user
      * @param Character $character
+     *
      * @return void
      */
     public function __construct(User $user, Character $character)
@@ -42,13 +43,13 @@ class ProcessTokenRefresh extends AuthorizesAPI implements ShouldQueue
         $token = $this->character->token()->first();
         $curl = curl_init(self::EVE_AUTH_URL);
         curl_setopt_array($curl, [
-            CURLOPT_USERAGENT => env('EVE_USERAGENT'),
-            CURLOPT_HTTPHEADER => $this->getBasicAuthHeader(),
-            CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => 'grant_type=refresh_token&refresh_token='.$token->refresh_token,
+            CURLOPT_USERAGENT      => env('EVE_USERAGENT'),
+            CURLOPT_HTTPHEADER     => $this->getBasicAuthHeader(),
+            CURLOPT_POST           => 1,
+            CURLOPT_POSTFIELDS     => 'grant_type=refresh_token&refresh_token='.$token->refresh_token,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_SSL_VERIFYHOST => 2
+            CURLOPT_SSL_VERIFYHOST => 2,
         ]);
         $response = json_decode(curl_exec($curl), true);
         curl_close($curl);

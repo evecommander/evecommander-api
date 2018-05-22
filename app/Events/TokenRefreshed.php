@@ -5,11 +5,9 @@ namespace App\Events;
 use App\Character;
 use App\User;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Queue\SerializesModels;
 
 class TokenRefreshed implements ShouldBroadcast
 {
@@ -21,8 +19,9 @@ class TokenRefreshed implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @param User $user
+     * @param User      $user
      * @param Character $character
+     *
      * @return void
      */
     public function __construct(User $user, Character $character)
@@ -50,7 +49,7 @@ class TokenRefreshed implements ShouldBroadcast
     {
         return [
             'character' => $this->character,
-            'token' => $this->character->token
+            'token'     => $this->character->token,
         ];
     }
 }
