@@ -18,287 +18,291 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return [];
 });
+
 Route::post('login', 'AuthController@login');
-Route::post('logout', 'AuthController@logout');
-Route::post('refresh', 'AuthController@refresh');
-Route::post('me', 'AuthController@me');
 
-Route::get('characters/callback', 'CharacterController@callback')
-    ->middleware('auth.callback');
-Route::get('characters/{character}/refresh', 'CharacterController@refreshToken')
-    ->middleware('json-api.auth:default');
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
 
-JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'json-api.auth:default'], function (ApiGroup $api, Registrar $router) {
-    $api->resource('users', [
-        'has-many' => [
-            'characters',
-            'notifications',
-            'readNotifications',
-            'unreadNotifications',
-        ],
-    ]);
+    Route::get('characters/callback', 'CharacterController@callback')
+        ->middleware('auth.callback');
+    Route::get('characters/{character}/refresh', 'CharacterController@refreshToken')
+        ->middleware('json-api.auth:default');
 
-    $api->resource('characters', [
-        'has-one' => [
-            'user'  => ['except' => 'replace'],
-            'token' => ['except' => 'replace'],
-        ],
-        'has-many' => [
-            'comments',
-            'invoices',
-            'fulfilledInvoices',
-            'overdueInvoices',
-            'pendingInvoices',
-            'defaultInvoices',
-            'notifications',
-            'readNotifications',
-            'unreadNotifications',
-            'corporation',
-        ],
-    ]);
+    JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'json-api.auth:default'], function (ApiGroup $api, Registrar $router) {
+        $api->resource('users', [
+            'has-many' => [
+                'characters',
+                'notifications',
+                'readNotifications',
+                'unreadNotifications',
+            ],
+        ]);
 
-    $api->resource('corporations', [
-        'has-one' => [
-            'defaultMembershipLevel',
-        ],
-        'has-many' => [
-            'handbooks',
-            'members',
-            'membershipLevels',
-            'memberships',
-            'alliance',
-            'characters',
-            'claims',
-            'invoices',
-            'fulfilledInvoices',
-            'overdueInvoices',
-            'pendingInvoices',
-            'defaultInvoices',
-            'issuedInvoices',
-            'fulfilledIssuedInvoices',
-            'overdueIssuedInvoices',
-            'pendingIssuedInvoices',
-            'defaultIssuedInvoices',
-            'notifications',
-            'readNotifications',
-            'unreadNotifications',
-        ],
-    ]);
+        $api->resource('characters', [
+            'has-one' => [
+                'user' => ['except' => 'replace'],
+                'token' => ['except' => 'replace'],
+            ],
+            'has-many' => [
+                'comments',
+                'invoices',
+                'fulfilledInvoices',
+                'overdueInvoices',
+                'pendingInvoices',
+                'defaultInvoices',
+                'notifications',
+                'readNotifications',
+                'unreadNotifications',
+                'corporation',
+            ],
+        ]);
 
-    $api->resource('alliances', [
-        'has-one' => [
-            'defaultMembershipLevel',
-        ],
-        'has-many' => [
-            'handbooks',
-            'members',
-            'membershipLevels',
-            'memberships',
-            'coalition',
-            'claims',
-            'invoices',
-            'fulfilledInvoices',
-            'overdueInvoices',
-            'pendingInvoices',
-            'defaultInvoices',
-            'issuedInvoices',
-            'fulfilledIssuedInvoices',
-            'overdueIssuedInvoices',
-            'pendingIssuedInvoices',
-            'defaultIssuedInvoices',
-            'notifications',
-            'readNotifications',
-            'unreadNotifications',
-            'corporations',
-        ],
-    ]);
+        $api->resource('corporations', [
+            'has-one' => [
+                'defaultMembershipLevel',
+            ],
+            'has-many' => [
+                'handbooks',
+                'members',
+                'membershipLevels',
+                'memberships',
+                'alliance',
+                'characters',
+                'claims',
+                'invoices',
+                'fulfilledInvoices',
+                'overdueInvoices',
+                'pendingInvoices',
+                'defaultInvoices',
+                'issuedInvoices',
+                'fulfilledIssuedInvoices',
+                'overdueIssuedInvoices',
+                'pendingIssuedInvoices',
+                'defaultIssuedInvoices',
+                'notifications',
+                'readNotifications',
+                'unreadNotifications',
+            ],
+        ]);
 
-    $api->resource('coalitions', [
-        'has-one' => [
-            'defaultMembershipLevel',
-            'leader',
-        ],
-        'has-many' => [
-            'handbooks',
-            'members',
-            'membershipLevels',
-            'memberships',
-            'claims',
-            'invoices',
-            'fulfilledInvoices',
-            'overdueInvoices',
-            'pendingInvoices',
-            'defaultInvoices',
-            'fulfilledInvoices',
-            'overdueInvoices',
-            'pendingInvoices',
-            'defaultInvoices',
-            'issuedInvoices',
-            'fulfilledIssuedInvoices',
-            'overdueIssuedInvoices',
-            'pendingIssuedInvoices',
-            'defaultIssuedInvoices',
-            'notifications',
-            'readNotifications',
-            'unreadNotifications',
-        ]
-    ]);
+        $api->resource('alliances', [
+            'has-one' => [
+                'defaultMembershipLevel',
+            ],
+            'has-many' => [
+                'handbooks',
+                'members',
+                'membershipLevels',
+                'memberships',
+                'coalition',
+                'claims',
+                'invoices',
+                'fulfilledInvoices',
+                'overdueInvoices',
+                'pendingInvoices',
+                'defaultInvoices',
+                'issuedInvoices',
+                'fulfilledIssuedInvoices',
+                'overdueIssuedInvoices',
+                'pendingIssuedInvoices',
+                'defaultIssuedInvoices',
+                'notifications',
+                'readNotifications',
+                'unreadNotifications',
+                'corporations',
+            ],
+        ]);
 
-    $api->resource('billing-conditions', [
-        'has-one' => [
-            'owner',
-        ],
-        'has-many' => [
-            'discounts',
-            'membershipFees',
-        ],
-    ]);
+        $api->resource('coalitions', [
+            'has-one' => [
+                'defaultMembershipLevel',
+                'leader',
+            ],
+            'has-many' => [
+                'handbooks',
+                'members',
+                'membershipLevels',
+                'memberships',
+                'claims',
+                'invoices',
+                'fulfilledInvoices',
+                'overdueInvoices',
+                'pendingInvoices',
+                'defaultInvoices',
+                'fulfilledInvoices',
+                'overdueInvoices',
+                'pendingInvoices',
+                'defaultInvoices',
+                'issuedInvoices',
+                'fulfilledIssuedInvoices',
+                'overdueIssuedInvoices',
+                'pendingIssuedInvoices',
+                'defaultIssuedInvoices',
+                'notifications',
+                'readNotifications',
+                'unreadNotifications',
+            ]
+        ]);
 
-    $api->resource('comments', [
-        'has-one' => [
-            'character',
-            'commentable',
-        ],
-        'has-many' => [
-            'comments',
-        ],
-    ]);
+        $api->resource('billing-conditions', [
+            'has-one' => [
+                'owner',
+            ],
+            'has-many' => [
+                'discounts',
+                'membershipFees',
+            ],
+        ]);
 
-    $api->resource('discounts', [
-        'has-one' => [
-            'owner',
-            'billingCondition',
-        ]
-    ]);
+        $api->resource('comments', [
+            'has-one' => [
+                'character',
+                'commentable',
+            ],
+            'has-many' => [
+                'comments',
+            ],
+        ]);
 
-    $api->resource('doctrines', [
-        'has-one' => [
-            'owner',
-            'createdBy',
-            'lastUpdatedBy',
-        ],
-        'has-many' => [
-            'fittings',
-        ],
-    ]);
+        $api->resource('discounts', [
+            'has-one' => [
+                'owner',
+                'billingCondition',
+            ]
+        ]);
 
-    $api->resource('fittings', [
-        'has-one' => [
-            'owner',
-            'doctrine',
-        ],
-        'has-many' => [
-            'replacementClaims',
-        ],
-    ]);
+        $api->resource('doctrines', [
+            'has-one' => [
+                'owner',
+                'createdBy',
+                'lastUpdatedBy',
+            ],
+            'has-many' => [
+                'fittings',
+            ],
+        ]);
 
-    $api->resource('fleets', [
-        'has-one' => [
-            'fleetType',
-            'organization',
-            'createdBy',
-            'lastUpdatedBy',
-        ],
-        'has-many' => [
-            'comments',
-            'notifications',
-            'readNotifications',
-            'unreadNotifications',
-        ],
-    ]);
+        $api->resource('fittings', [
+            'has-one' => [
+                'owner',
+                'doctrine',
+            ],
+            'has-many' => [
+                'replacementClaims',
+            ],
+        ]);
 
-    $api->resource('fleet-types', [
-        'has-one' => [
-            'owner'
-        ],
-        'has-many' => [
-            'fleets'
-        ],
-    ]);
+        $api->resource('fleets', [
+            'has-one' => [
+                'fleetType',
+                'organization',
+                'createdBy',
+                'lastUpdatedBy',
+            ],
+            'has-many' => [
+                'comments',
+                'notifications',
+                'readNotifications',
+                'unreadNotifications',
+            ],
+        ]);
 
-    $api->resource('handbooks', [
-        'has-one' => [
-            'owner',
-            'createdBy',
-            'lastUpdatedBy',
-        ],
-    ]);
+        $api->resource('fleet-types', [
+            'has-one' => [
+                'owner'
+            ],
+            'has-many' => [
+                'fleets'
+            ],
+        ]);
 
-    $api->resource('invoices', [
-        'has-one' => [
-            'issuer',
-            'recipient',
-        ],
-        'has-many' => [
-            'items',
-            'payments',
-            'comments',
-            'notifications',
-            'readNotifications',
-            'unreadNotifications',
-        ],
-    ]);
+        $api->resource('handbooks', [
+            'has-one' => [
+                'owner',
+                'createdBy',
+                'lastUpdatedBy',
+            ],
+        ]);
 
-    $api->resource('invoice-items', [
-        'has-one' => [
-            'invoice',
-        ],
-        'has-many' => [
-            'comments',
-        ]
-    ]);
+        $api->resource('invoices', [
+            'has-one' => [
+                'issuer',
+                'recipient',
+            ],
+            'has-many' => [
+                'items',
+                'payments',
+                'comments',
+                'notifications',
+                'readNotifications',
+                'unreadNotifications',
+            ],
+        ]);
 
-    $api->resource('memberships', [
-        'has-one' => [
-            'membershipLevel',
-            'organization',
-            'member',
-            'createdBy',
-            'lastUpdatedBy',
-        ],
-        'has-many' => [
-            'notifications',
-            'readNotifications',
-            'unreadNotifications',
-        ]
-    ]);
+        $api->resource('invoice-items', [
+            'has-one' => [
+                'invoice',
+            ],
+            'has-many' => [
+                'comments',
+            ]
+        ]);
 
-    $api->resource('membership-fees', [
-        'has-one' => [
-            'owner',
-        ],
-        'has-many' => [
-            'billingConditions',
-        ],
-    ]);
+        $api->resource('memberships', [
+            'has-one' => [
+                'membershipLevel',
+                'organization',
+                'member',
+                'createdBy',
+                'lastUpdatedBy',
+            ],
+            'has-many' => [
+                'notifications',
+                'readNotifications',
+                'unreadNotifications',
+            ]
+        ]);
 
-    $api->resource('membership-levels', [
-        'has-one' => [
-            'owner',
-            'createdBy',
-            'lastUpdatedBy',
-        ],
-        'has-many' => [
-            'memberships',
-        ],
-    ]);
+        $api->resource('membership-fees', [
+            'has-one' => [
+                'owner',
+            ],
+            'has-many' => [
+                'billingConditions',
+            ],
+        ]);
 
-    $api->resource('permissions', [
-        'has-many' => [
-            'membershipLevels',
-        ],
-    ]);
+        $api->resource('membership-levels', [
+            'has-one' => [
+                'owner',
+                'createdBy',
+                'lastUpdatedBy',
+            ],
+            'has-many' => [
+                'memberships',
+            ],
+        ]);
 
-    $api->resource('replacement-claims', [
-        'has-one' => [
-            'character',
-            'organization',
-        ],
-        'has-many' => [
-            'comments',
-            'notifications',
-            'readNotifications',
-            'unreadNotifications',
-        ],
-    ]);
+        $api->resource('permissions', [
+            'has-many' => [
+                'membershipLevels',
+            ],
+        ]);
+
+        $api->resource('replacement-claims', [
+            'has-one' => [
+                'character',
+                'organization',
+            ],
+            'has-many' => [
+                'comments',
+                'notifications',
+                'readNotifications',
+                'unreadNotifications',
+            ],
+        ]);
+    });
 });

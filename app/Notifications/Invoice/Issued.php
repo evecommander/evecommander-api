@@ -9,7 +9,7 @@ use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Created extends Notification implements ShouldQueue
+class Issued extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -36,7 +36,13 @@ class Created extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'broadcast', 'database'];
+        $channels = ['broadcast', 'database'];
+
+        if (isset($notifiable->email)) {
+            $channels[] = 'mail';
+        }
+
+        return $channels;
     }
 
     /**
@@ -49,16 +55,15 @@ class Created extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line("You have received a new invoice for {$this->invoice->recipient()->first()->name}.")
+                    ->action('View Invoice', url('/invoices/'.$this->invoice->id));
     }
 
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
             'invoice_id' => $this->invoice->id,
-            'from'       => $this->invoice->owner()->first()->name,
+            'from'       => $this->invoice->issuer()->first()->name,
             'to'         => $this->invoice->recipient()->first()->name,
             'amount'     => $this->invoice->total,
             'due'        => $this->invoice->due_date,
@@ -75,7 +80,11 @@ class Created extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            'invoice_id' => $this->invoice->id,
+            'from'       => $this->invoice->issuer()->first()->name,
+            'to'         => $this->invoice->recipient()->first()->name,
+            'amount'     => $this->invoice->total,
+            'due'        => $this->invoice->due_date,
         ];
     }
 }
