@@ -26,7 +26,7 @@ class CharacterController extends Controller
     /**
      * Refresh a Character's OAuth2 Token and broadcast it back to them.
      *
-     * @param Request $request
+     * @param Request   $request
      * @param Character $character
      */
     public function refreshToken(Request $request, Character $character)

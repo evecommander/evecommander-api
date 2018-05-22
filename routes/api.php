@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         $api->resource('characters', [
             'has-one' => [
-                'user' => ['except' => 'replace'],
+                'user'  => ['except' => 'replace'],
                 'token' => ['except' => 'replace'],
             ],
             'has-many' => [
@@ -144,7 +144,7 @@ Route::group(['middleware' => 'auth'], function () {
                 'notifications',
                 'readNotifications',
                 'unreadNotifications',
-            ]
+            ],
         ]);
 
         $api->resource('billing-conditions', [
@@ -171,7 +171,7 @@ Route::group(['middleware' => 'auth'], function () {
             'has-one' => [
                 'owner',
                 'billingCondition',
-            ]
+            ],
         ]);
 
         $api->resource('doctrines', [
@@ -212,10 +212,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         $api->resource('fleet-types', [
             'has-one' => [
-                'owner'
+                'owner',
             ],
             'has-many' => [
-                'fleets'
+                'fleets',
             ],
         ]);
 
@@ -248,7 +248,7 @@ Route::group(['middleware' => 'auth'], function () {
             ],
             'has-many' => [
                 'comments',
-            ]
+            ],
         ]);
 
         $api->resource('memberships', [
@@ -263,7 +263,7 @@ Route::group(['middleware' => 'auth'], function () {
                 'notifications',
                 'readNotifications',
                 'unreadNotifications',
-            ]
+            ],
         ]);
 
         $api->resource('membership-fees', [
