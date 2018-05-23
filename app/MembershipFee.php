@@ -19,8 +19,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
- * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany billingConditions
+ * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection billingConditions
  */
 class MembershipFee extends Model
 {

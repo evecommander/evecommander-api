@@ -20,8 +20,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo billingCondition
+ * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection billingCondition
  */
 class Discount extends Model
 {

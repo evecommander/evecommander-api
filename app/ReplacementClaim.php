@@ -24,10 +24,10 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany comments
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo character
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo organization
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo fitting
+ * @property \Illuminate\Database\Eloquent\Collection comments
+ * @property \Illuminate\Database\Eloquent\Collection character
+ * @property \Illuminate\Database\Eloquent\Collection organization
+ * @property \Illuminate\Database\Eloquent\Collection fitting
  */
 class ReplacementClaim extends Model
 {

@@ -18,8 +18,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\HasMany fleets
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
+ * @property \Illuminate\Database\Eloquent\Collection fleets
+ * @property \Illuminate\Database\Eloquent\Collection owner
  */
 class FleetType extends Model
 {

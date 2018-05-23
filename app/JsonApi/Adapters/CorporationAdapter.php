@@ -59,6 +59,7 @@ class CorporationAdapter extends AbstractAdapter
         'notifications',
         'readNotifications',
         'unreadNotifications',
+        'roles',
     ];
 
     /**
@@ -172,6 +173,11 @@ class CorporationAdapter extends AbstractAdapter
     }
 
     public function unreadNotifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function roles()
     {
         return $this->hasMany();
     }

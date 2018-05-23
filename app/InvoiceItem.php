@@ -19,8 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany comments
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo invoice
+ * @property \Illuminate\Database\Eloquent\Collection comments
+ * @property \Illuminate\Database\Eloquent\Collection invoice
  */
 class InvoiceItem extends Model
 {

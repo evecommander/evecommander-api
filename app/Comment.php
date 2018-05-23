@@ -18,9 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany comments
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo character
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo commentable
+ * @property \Illuminate\Database\Eloquent\Collection comments
+ * @property \Illuminate\Database\Eloquent\Collection character
+ * @property \Illuminate\Database\Eloquent\Collection commentable
  */
 class Comment extends Model
 {

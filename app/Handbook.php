@@ -22,10 +22,10 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany comments
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo createdBy
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo lastUpdatedBy
+ * @property \Illuminate\Database\Eloquent\Collection comments
+ * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection createdBy
+ * @property \Illuminate\Database\Eloquent\Collection lastUpdatedBy
  */
 class Handbook extends Model
 {

@@ -59,6 +59,7 @@ class AllianceAdapter extends AbstractAdapter
         'readNotifications',
         'unreadNotifications',
         'corporations',
+        'roles',
     ];
 
     /**
@@ -172,6 +173,11 @@ class AllianceAdapter extends AbstractAdapter
     }
 
     public function unreadNotifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function roles()
     {
         return $this->hasMany();
     }

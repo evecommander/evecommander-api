@@ -22,11 +22,11 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\HasMany memberships
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo createdBy
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo lastUpdatedBy
- * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany permissions
+ * @property \Illuminate\Database\Eloquent\Collection memberships
+ * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection createdBy
+ * @property \Illuminate\Database\Eloquent\Collection lastUpdatedBy
+ * @property \Illuminate\Database\Eloquent\Collection permissions
  */
 class MembershipLevel extends Model
 {

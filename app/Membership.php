@@ -22,14 +22,14 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany notifications
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany readNotifications
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany unreadNotifications
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo membershipLevel
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo organization
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo member
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo createdBy
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo lastUpdatedBy
+ * @property \Illuminate\Database\Eloquent\Collection notifications
+ * @property \Illuminate\Database\Eloquent\Collection readNotifications
+ * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
+ * @property \Illuminate\Database\Eloquent\Collection membershipLevel
+ * @property \Illuminate\Database\Eloquent\Collection organization
+ * @property \Illuminate\Database\Eloquent\Collection member
+ * @property \Illuminate\Database\Eloquent\Collection createdBy
+ * @property \Illuminate\Database\Eloquent\Collection lastUpdatedBy
  */
 class Membership extends Model
 {

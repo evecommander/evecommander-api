@@ -20,10 +20,10 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany comments
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo doctrine
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
- * @property \Illuminate\Database\Eloquent\Relations\HasMany replacementClaims
+ * @property \Illuminate\Database\Eloquent\Collection comments
+ * @property \Illuminate\Database\Eloquent\Collection doctrine
+ * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection replacementClaims
  */
 class Fitting extends Model
 {

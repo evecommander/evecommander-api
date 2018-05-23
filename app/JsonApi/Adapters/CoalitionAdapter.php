@@ -61,6 +61,7 @@ class CoalitionAdapter extends AbstractAdapter
         'notifications',
         'readNotifications',
         'unreadNotifications',
+        'roles',
     ];
 
     /**
@@ -166,5 +167,10 @@ class CoalitionAdapter extends AbstractAdapter
     public function leader()
     {
         return $this->belongsTo();
+    }
+
+    public function roles()
+    {
+        return $this->hasMany();
     }
 }

@@ -17,7 +17,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * \Illuminate\Database\Eloquent\Relations\BelongsToMany membershipLevels
+ * @property \Illuminate\Database\Eloquent\Collection membershipLevels
+ * @property \Illuminate\Database\Eloquent\Collection roles
  */
 class Permission extends Model
 {
@@ -31,5 +32,15 @@ class Permission extends Model
     public function membershipLevels()
     {
         return $this->belongsToMany(MembershipLevel::class);
+    }
+
+    /**
+     * Get relation between this permission and any roles that it belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 }

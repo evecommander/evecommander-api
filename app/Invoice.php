@@ -2,20 +2,23 @@
 
 namespace App;
 
+use App\Abstracts\Organization;
 use App\Notifications\Invoice\ForcePaymentPosted;
 use App\Notifications\Invoice\PaymentPosted;
+use App\Traits\BubblesNotifications;
 use App\Traits\HasComments;
 use App\Traits\UuidTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 
 /**
  * Class Invoice.
  *
  * @property string id
- * @property string owner_id
- * @property string owner_type
+ * @property string issuer_id
+ * @property string issuer_type
  * @property string recipient_id
  * @property string recipient_type
  * @property string code
@@ -28,18 +31,18 @@ use Illuminate\Notifications\Notifiable;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany comments
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo issuer
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo recipient
- * @property \Illuminate\Database\Eloquent\Relations\HasMany items
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany notifications
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany readNotifications
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany unreadNotifications
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany payments
+ * @property \Illuminate\Database\Eloquent\Collection comments
+ * @property \Illuminate\Database\Eloquent\Collection issuer
+ * @property \Illuminate\Database\Eloquent\Collection recipient
+ * @property \Illuminate\Database\Eloquent\Collection items
+ * @property \Illuminate\Database\Eloquent\Collection notifications
+ * @property \Illuminate\Database\Eloquent\Collection readNotifications
+ * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
+ * @property \Illuminate\Database\Eloquent\Collection payments
  */
 class Invoice extends Model
 {
-    use UuidTrait, HasComments, Notifiable;
+    use UuidTrait, HasComments, Notifiable, BubblesNotifications;
 
     const STATE_PENDING = 'pending';
 
@@ -55,6 +58,12 @@ class Invoice extends Model
         'due_date',
         'hard_due_date',
     ];
+
+    protected function getBubbleToModels(Notification $notification)
+    {
+        /** @var Organization $issuer */
+        $issuer = $this->issuer()->first();
+    }
 
     /**
      * Get the issuer of the invoice.

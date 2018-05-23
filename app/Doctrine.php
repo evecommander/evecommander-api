@@ -21,10 +21,10 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphTo owner
- * @property \Illuminate\Database\Eloquent\Relations\HasMany fittings
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo createdBy
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo lastUpdatedBy
+ * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection fittings
+ * @property \Illuminate\Database\Eloquent\Collection createdBy
+ * @property \Illuminate\Database\Eloquent\Collection lastUpdatedBy
  */
 class Doctrine extends Model
 {

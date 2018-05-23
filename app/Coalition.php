@@ -23,27 +23,28 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany handbooks
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany members
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo defaultMembershipLevel
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany membershipLevels
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany memberships
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany claims
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany invoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany fulfilledInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany overdueInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany pendingInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany defaultInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany issuedInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany fulfilledIssuedInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany overdueIssuedInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany pendingIssuedInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany defaultIssuedInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany notifications
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany readNotifications
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany unreadNotifications
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo leader
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany alliances
+ * @property \Illuminate\Database\Eloquent\Collection handbooks
+ * @property \Illuminate\Database\Eloquent\Collection members
+ * @property \Illuminate\Database\Eloquent\Collection defaultMembershipLevel
+ * @property \Illuminate\Database\Eloquent\Collection membershipLevels
+ * @property \Illuminate\Database\Eloquent\Collection memberships
+ * @property \Illuminate\Database\Eloquent\Collection claims
+ * @property \Illuminate\Database\Eloquent\Collection invoices
+ * @property \Illuminate\Database\Eloquent\Collection fulfilledInvoices
+ * @property \Illuminate\Database\Eloquent\Collection overdueInvoices
+ * @property \Illuminate\Database\Eloquent\Collection pendingInvoices
+ * @property \Illuminate\Database\Eloquent\Collection defaultInvoices
+ * @property \Illuminate\Database\Eloquent\Collection issuedInvoices
+ * @property \Illuminate\Database\Eloquent\Collection fulfilledIssuedInvoices
+ * @property \Illuminate\Database\Eloquent\Collection overdueIssuedInvoices
+ * @property \Illuminate\Database\Eloquent\Collection pendingIssuedInvoices
+ * @property \Illuminate\Database\Eloquent\Collection defaultIssuedInvoices
+ * @property \Illuminate\Database\Eloquent\Collection notifications
+ * @property \Illuminate\Database\Eloquent\Collection readNotifications
+ * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
+ * @property \Illuminate\Database\Eloquent\Collection leader
+ * @property \Illuminate\Database\Eloquent\Collection alliances
+ * @property \Illuminate\Database\Eloquent\Collection roles
  */
 class Coalition extends Organization
 {
@@ -52,20 +53,6 @@ class Coalition extends Organization
     protected $casts = [
         'settings' => 'array',
     ];
-
-    public function receivedInvoiceSubscribers()
-    {
-        $subscriberIds = $this->settings['invoices']['received']['subscribers'];
-
-        $subscribers = User::find($subscriberIds);
-
-        // normalize single result case
-        if ($subscribers instanceof User) {
-            $subscribers = collect($subscribers);
-        }
-
-        return $subscribers;
-    }
 
     /**
      * Get relation between this coalition and the character that is designated as the leader.

@@ -149,6 +149,11 @@ class CoalitionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::SHOW_DATA    => true,
             ],
+
+            'roles' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+            ],
         ];
     }
 }

@@ -19,10 +19,10 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany notifications
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany readNotifications
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany unreadNotifications
- * @property \Illuminate\Database\Eloquent\Relations\HasMany characters
+ * @property \Illuminate\Database\Eloquent\Collection notifications
+ * @property \Illuminate\Database\Eloquent\Collection readNotifications
+ * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
+ * @property \Illuminate\Database\Eloquent\Collection characters
  */
 class User extends Authenticatable implements JWTSubject
 {

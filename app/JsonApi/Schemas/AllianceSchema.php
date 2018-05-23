@@ -152,6 +152,11 @@ class AllianceSchema extends SchemaProvider
                     return $resource->coalition;
                 },
             ],
+
+            'roles' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+            ],
         ];
     }
 }

@@ -21,19 +21,20 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany notifications
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany readNotifications
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany unreadNotifications
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany invoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany fulfilledInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany overdueInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany pendingInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany defaultInvoices
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany memberships
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo user
- * @property \Illuminate\Database\Eloquent\Relations\HasOne token
- * @property \Illuminate\Database\Eloquent\Relations\HasMany comments
- * @property \Illuminate\Database\Eloquent\Relations\MorphMany corporation
+ * @property \Illuminate\Database\Eloquent\Collection notifications
+ * @property \Illuminate\Database\Eloquent\Collection readNotifications
+ * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
+ * @property \Illuminate\Database\Eloquent\Collection invoices
+ * @property \Illuminate\Database\Eloquent\Collection fulfilledInvoices
+ * @property \Illuminate\Database\Eloquent\Collection overdueInvoices
+ * @property \Illuminate\Database\Eloquent\Collection pendingInvoices
+ * @property \Illuminate\Database\Eloquent\Collection defaultInvoices
+ * @property \Illuminate\Database\Eloquent\Collection memberships
+ * @property \Illuminate\Database\Eloquent\Collection user
+ * @property \Illuminate\Database\Eloquent\Collection token
+ * @property \Illuminate\Database\Eloquent\Collection comments
+ * @property \Illuminate\Database\Eloquent\Collection corporation
+ * @property \Illuminate\Database\Eloquent\Collection roles
  */
 class Character extends Model
 {
@@ -79,5 +80,15 @@ class Character extends Model
     public function corporation()
     {
         return $this->memberships()->where('owner_type', Corporation::class)->with('owner');
+    }
+
+    /**
+     * Get relation between this character and any roles they are assigned.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 }
