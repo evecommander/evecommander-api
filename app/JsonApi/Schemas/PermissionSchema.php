@@ -57,7 +57,7 @@ class PermissionSchema extends SchemaProvider
             'roles' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-            ]
+            ],
         ];
     }
 }

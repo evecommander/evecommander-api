@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Abstracts\Organization;
 use App\Notifications\Invoice\Fulfilled;
 use App\Notifications\Invoice\Issued;
 use App\Notifications\Invoice\PaymentPosted;

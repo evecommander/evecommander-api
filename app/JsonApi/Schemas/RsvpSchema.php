@@ -6,7 +6,6 @@ use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class RsvpSchema extends SchemaProvider
 {
-
     /**
      * @var string
      */
@@ -14,7 +13,8 @@ class RsvpSchema extends SchemaProvider
 
     /**
      * @param \App\Rsvp $resource
-     *      the domain record being serialized.
+     *                            the domain record being serialized.
+     *
      * @return string
      */
     public function getId($resource)
@@ -24,25 +24,26 @@ class RsvpSchema extends SchemaProvider
 
     /**
      * @param \App\Rsvp $resource
-     *      the domain record being serialized.
+     *                            the domain record being serialized.
+     *
      * @return array
      */
     public function getAttributes($resource)
     {
         return [
-            'response' => $resource->response,
-            'notes' => $resource->notes,
-            'confirmed' => $resource->confirmed,
+            'response'           => $resource->response,
+            'notes'              => $resource->notes,
+            'confirmed'          => $resource->confirmed,
             'confirmation-notes' => $resource->confirmation_notes,
-            'created-at' => $resource->created_at->toAtomString(),
-            'updated-at' => $resource->updated_at->toAtomString(),
+            'created-at'         => $resource->created_at->toAtomString(),
+            'updated-at'         => $resource->updated_at->toAtomString(),
         ];
     }
 
     /**
      * @param \App\Rsvp $resource
-     * @param bool           $isPrimary
-     * @param array          $includeRelationships
+     * @param bool      $isPrimary
+     * @param array     $includeRelationships
      *
      * @return array
      */

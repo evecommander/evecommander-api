@@ -2,7 +2,6 @@
 
 namespace App\Notifications\Invoice;
 
-use App\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;

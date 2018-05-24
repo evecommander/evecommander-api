@@ -24,7 +24,7 @@ class RsvpAdapter extends AbstractAdapter
      */
     protected $relationships = [
         'fleet',
-        'character'
+        'character',
     ];
 
     /**

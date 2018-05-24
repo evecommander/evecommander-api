@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Subscription
+ * Class Subscription.
  *
  * @property string id
  * @property string character_id
@@ -26,7 +26,7 @@ class Subscription extends Model
     use UuidTrait;
 
     protected $casts = [
-        'settings' => 'array'
+        'settings' => 'array',
     ];
 
     /**

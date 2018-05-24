@@ -19,9 +19,9 @@ class PaymentPosted extends Notification
      * Create a new notification instance.
      *
      * @param Character $processor
-     * @param float $amount
-     * @param int $transactionID
-     * @param bool $forced
+     * @param float     $amount
+     * @param int       $transactionID
+     * @param bool      $forced
      *
      * @return void
      */

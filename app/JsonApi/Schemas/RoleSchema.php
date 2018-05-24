@@ -6,7 +6,6 @@ use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class RoleSchema extends SchemaProvider
 {
-
     /**
      * @var string
      */
@@ -14,7 +13,8 @@ class RoleSchema extends SchemaProvider
 
     /**
      * @param \App\Role $resource
-     *      the domain record being serialized.
+     *                            the domain record being serialized.
+     *
      * @return string
      */
     public function getId($resource)
@@ -24,7 +24,8 @@ class RoleSchema extends SchemaProvider
 
     /**
      * @param \App\Role $resource
-     *      the domain record being serialized.
+     *                            the domain record being serialized.
+     *
      * @return array
      */
     public function getAttributes($resource)
@@ -39,8 +40,8 @@ class RoleSchema extends SchemaProvider
 
     /**
      * @param \App\Role $resource
-     * @param bool          $isPrimary
-     * @param array         $includeRelationships
+     * @param bool      $isPrimary
+     * @param array     $includeRelationships
      *
      * @return array
      */
@@ -48,21 +49,21 @@ class RoleSchema extends SchemaProvider
     {
         return [
             'owner' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['owner']),
-                self::SHOW_DATA => function () use ($resource) {
+                self::SHOW_DATA    => isset($includeRelationships['owner']),
+                self::SHOW_DATA    => function () use ($resource) {
                     return $resource->owner;
                 },
             ],
 
             'permissions' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
 
             'characters' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
         ];

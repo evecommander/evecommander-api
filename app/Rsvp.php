@@ -6,14 +6,14 @@ use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Rsvp
+ * Class Rsvp.
  *
  * @property string id
  * @property string fleet_id
  * @property string character_id
  * @property int response
  * @property string notes
- * @property boolean confirmed
+ * @property bool confirmed
  * @property string confirmation_notes
  * @property \Illuminate\Support\Carbon created_at
  * @property \Illuminate\Support\Carbon updated_at
@@ -27,7 +27,7 @@ class Rsvp extends Model
     use UuidTrait;
 
     protected $casts = [
-        'confirmed' => 'boolean'
+        'confirmed' => 'boolean',
     ];
 
     /**

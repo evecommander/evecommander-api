@@ -6,7 +6,6 @@ use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class SubscriptionSchema extends SchemaProvider
 {
-
     /**
      * @var string
      */
@@ -14,7 +13,8 @@ class SubscriptionSchema extends SchemaProvider
 
     /**
      * @param \App\Subscription $resource
-     *      the domain record being serialized.
+     *                                    the domain record being serialized.
+     *
      * @return string
      */
     public function getId($resource)
@@ -24,13 +24,14 @@ class SubscriptionSchema extends SchemaProvider
 
     /**
      * @param \App\Subscription $resource
-     *      the domain record being serialized.
+     *                                    the domain record being serialized.
+     *
      * @return array
      */
     public function getAttributes($resource)
     {
         return [
-            'settings' => $resource->settings,
+            'settings'   => $resource->settings,
             'created-at' => $resource->created_at->toAtomString(),
             'updated-at' => $resource->updated_at->toAtomString(),
         ];
@@ -38,8 +39,8 @@ class SubscriptionSchema extends SchemaProvider
 
     /**
      * @param \App\Subscription $resource
-     * @param bool $isPrimary
-     * @param array $includeRelationships
+     * @param bool              $isPrimary
+     * @param array             $includeRelationships
      *
      * @return array
      */
@@ -47,19 +48,19 @@ class SubscriptionSchema extends SchemaProvider
     {
         return [
             'character' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['character']),
-                self::DATA => function () use ($resource) {
+                self::SHOW_DATA    => isset($includeRelationships['character']),
+                self::DATA         => function () use ($resource) {
                     return $resource->character;
                 },
             ],
 
             'organization' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['organization']),
-                self::DATA => function () use ($resource) {
+                self::SHOW_DATA    => isset($includeRelationships['organization']),
+                self::DATA         => function () use ($resource) {
                     return $resource->organization;
                 },
             ],

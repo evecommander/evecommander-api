@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Notifications\ReplacementClaim\Approved;
 use App\Notifications\ReplacementClaim\Submitted;
 use App\Traits\BubblesNotifications;
 use App\Traits\HasComments;
