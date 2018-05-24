@@ -8,6 +8,7 @@ use App\Traits\ReceivesInvoices;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 
 /**
@@ -35,6 +36,7 @@ use Illuminate\Support\Carbon;
  * @property \Illuminate\Database\Eloquent\Collection comments
  * @property \Illuminate\Database\Eloquent\Collection corporation
  * @property \Illuminate\Database\Eloquent\Collection roles
+ * @property \Illuminate\Database\Eloquent\Collection rsvps
  */
 class Character extends Model
 {
@@ -90,5 +92,15 @@ class Character extends Model
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * Get relation between this character and any RSVPs that it owns.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rsvps()
+    {
+        return $this->hasMany(Rsvp::class);
     }
 }

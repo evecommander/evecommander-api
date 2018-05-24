@@ -31,11 +31,12 @@ class CoalitionSchema extends SchemaProvider
     public function getAttributes($resource)
     {
         return [
-            'name'        => $resource->name,
-            'description' => $resource->description,
-            'logo'        => $resource->logo,
-            'created-at'  => $resource->created_at->toIso8601String(),
-            'updated-at'  => $resource->updated_at->toIso8601String(),
+            'name'               => $resource->name,
+            'description'        => $resource->description,
+            'logo'               => $resource->logo,
+            'mass-subscribables' => $resource->mass_subscribables,
+            'created-at'         => $resource->created_at->toIso8601String(),
+            'updated-at'         => $resource->updated_at->toIso8601String(),
         ];
     }
 
@@ -151,6 +152,11 @@ class CoalitionSchema extends SchemaProvider
             ],
 
             'roles' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+            ],
+
+            'subscriptions' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],

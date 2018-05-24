@@ -58,8 +58,10 @@ return [
         'membership-fees'    => \App\MembershipFee::class,
         'membership-levels'  => \App\MembershipLevel::class,
         'permissions'        => \App\Permission::class,
-        'settings'           => \App\Setting::class,
         'oauth2-tokens'      => \App\OAuth2Token::class,
+        'roles'              => \App\Role::class,
+        'subscriptions'      => \App\Subscription::class,
+        'rsvps'              => \App\Rsvp::class,
     ],
 
     /*

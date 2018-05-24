@@ -6,8 +6,6 @@ use App\Abstracts\Organization;
 use App\Traits\BubblesNotifications;
 use App\Traits\HasSRP;
 use App\Traits\ReceivesInvoices;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 
 /**
@@ -47,7 +45,7 @@ use Illuminate\Support\Carbon;
  */
 class Corporation extends Organization
 {
-    use HasSRP, ReceivesInvoices, BubblesNotifications;
+    use HasSRP, ReceivesInvoices;
 
     protected $casts = [
         'settings' => 'array',

@@ -62,6 +62,7 @@ class CoalitionAdapter extends AbstractAdapter
         'readNotifications',
         'unreadNotifications',
         'roles',
+        'subscriptions',
     ];
 
     /**
@@ -170,6 +171,11 @@ class CoalitionAdapter extends AbstractAdapter
     }
 
     public function roles()
+    {
+        return $this->hasMany();
+    }
+
+    public function subscriptions()
     {
         return $this->hasMany();
     }

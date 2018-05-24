@@ -122,6 +122,11 @@ class CharacterSchema extends SchemaProvider
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
+
+            'rsvps' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+            ],
         ];
     }
 }

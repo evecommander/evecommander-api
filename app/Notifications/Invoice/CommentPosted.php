@@ -2,6 +2,8 @@
 
 namespace App\Notifications\Invoice;
 
+use App\Comment;
+use App\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,14 +13,21 @@ class CommentPosted extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    public $invoice;
+    public $comment;
+
     /**
      * Create a new notification instance.
      *
+     * @param Invoice $invoice
+     * @param Comment $comment
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(Invoice $invoice, Comment $comment)
     {
-        //
+        $this->invoice = $invoice;
+        $this->comment = $comment;
     }
 
     /**
@@ -30,7 +39,13 @@ class CommentPosted extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        $channels = ['broadcast', 'database'];
+
+        if (isset($notifiable->email)) {
+            $channels[] = 'mail';
+        }
+
+        return $channels;
     }
 
     /**
@@ -43,9 +58,8 @@ class CommentPosted extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('A new comment has been posted on your invoice by '.$this->comment->character()->first()->name.'.')
+                    ->action('View Comment', url('/invoices/'.$this->invoice->id));
     }
 
     /**
@@ -57,8 +71,13 @@ class CommentPosted extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
+        $author = $this->comment->character()->first();
+
         return [
-            //
+            'invoice_id' => $this->invoice->id,
+            'author_id'  => $author->id,
+            'author_name'=> $author->name,
+            'content'    => $this->comment->text,
         ];
     }
 }

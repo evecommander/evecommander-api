@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Notifications\Invoice;
+namespace App\Notifications\ReplacementClaim;
 
-use App\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Fulfilled extends Notification
+class Submitted extends Notification
 {
     use Queueable;
-
-    public $invoice;
 
     /**
      * Create a new notification instance.
@@ -20,7 +17,7 @@ class Fulfilled extends Notification
      */
     public function __construct()
     {
-        $this->invoice = $invoice;
+        //
     }
 
     /**
@@ -32,7 +29,7 @@ class Fulfilled extends Notification
      */
     public function via($notifiable)
     {
-        return ['broadcast', 'database'];
+        return ['mail'];
     }
 
     /**
