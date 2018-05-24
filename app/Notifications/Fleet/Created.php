@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications\ReplacementClaim;
+namespace App\Notifications\Fleet;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;

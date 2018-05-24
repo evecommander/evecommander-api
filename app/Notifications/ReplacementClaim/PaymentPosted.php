@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Dispersed extends Notification
+class PaymentPosted extends Notification
 {
     use Queueable;
 

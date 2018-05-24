@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Notifications\Invoice;
+namespace App\Notifications\Fleet;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ForcePaymentPosted extends Notification
+class Updated extends Notification
 {
     use Queueable;
 

@@ -7,6 +7,7 @@ use App\Traits\HasComments;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 
 /**
@@ -34,6 +35,7 @@ use Illuminate\Support\Carbon;
  * @property \Illuminate\Database\Eloquent\Collection organization
  * @property \Illuminate\Database\Eloquent\Collection createdBy
  * @property \Illuminate\Database\Eloquent\Collection lastUpdatedBy
+ * @property \Illuminate\Database\Eloquent\Collection rsvps
  */
 class Fleet extends Model
 {
@@ -45,6 +47,15 @@ class Fleet extends Model
         'created_at',
         'updated_at',
     ];
+
+    protected function getBubbleToModels(Notification $notification)
+    {
+        $rsvps = $this->rsvps()->where('response', '>=', 0)->with('character')->get();
+
+        return $rsvps->map(function (Rsvp $rsvp) {
+            return $rsvp->character;
+        });
+    }
 
     /**
      * Get relation between this fleet and the fleet type it belongs to.
@@ -84,5 +95,15 @@ class Fleet extends Model
     public function lastUpdatedBy()
     {
         return $this->belongsTo(Character::class);
+    }
+
+    /**
+     * Get relation between this fleet and any RSVPs that are attributed to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rsvps()
+    {
+        return $this->hasMany(Rsvp::class);
     }
 }

@@ -5,12 +5,12 @@ namespace App\JsonApi\Validators;
 use CloudCreativity\LaravelJsonApi\Contracts\Validators\RelationshipsValidatorInterface;
 use CloudCreativity\LaravelJsonApi\Validators\AbstractValidatorProvider;
 
-class RoleValidator extends AbstractValidatorProvider
+class RsvpValidator extends AbstractValidatorProvider
 {
     /**
      * @var string
      */
-    protected $resourceType = 'roles';
+    protected $resourceType = 'rsvps';
 
     /**
      * Get the validation rules for the resource attributes.

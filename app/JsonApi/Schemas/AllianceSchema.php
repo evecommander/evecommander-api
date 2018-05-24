@@ -31,11 +31,12 @@ class AllianceSchema extends SchemaProvider
     public function getAttributes($resource)
     {
         return [
-            'api-id'     => $resource->api_id,
-            'name'       => $resource->name,
-            'settings'   => $resource->settings,
-            'created-at' => $resource->created_at->toIso8601String(),
-            'updated-at' => $resource->updated_at->toIso8601String(),
+            'api-id'             => $resource->api_id,
+            'name'               => $resource->name,
+            'settings'           => $resource->settings,
+            'mass-subscribables' => $resource->mass_subscribables,
+            'created-at'         => $resource->created_at->toIso8601String(),
+            'updated-at'         => $resource->updated_at->toIso8601String(),
         ];
     }
 
@@ -154,6 +155,11 @@ class AllianceSchema extends SchemaProvider
             ],
 
             'roles' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+            ],
+
+            'subscriptions' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],

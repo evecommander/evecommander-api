@@ -20,7 +20,7 @@ class CreateCoalitionsTable extends Migration
             $table->text('description');
             $table->string('logo');
             $table->uuid('default_membership_level')->nullable();
-            $table->json('settings');
+            $table->jsonb('settings');
             $table->timestamps();
 
             $table->foreign('leader_character_id')->references('id')->on('characters');

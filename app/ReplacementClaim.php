@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Notifications\ReplacementClaim\Submitted;
+use App\Traits\BubblesNotifications;
 use App\Traits\HasComments;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 
 /**
@@ -31,7 +34,18 @@ use Illuminate\Support\Carbon;
  */
 class ReplacementClaim extends Model
 {
-    use HasComments, Notifiable, UuidTrait;
+    use HasComments, Notifiable, UuidTrait, BubblesNotifications;
+
+    protected function getBubbleToModels(Notification $notification)
+    {
+        // when a claim is submitted, we only want to alert the organization
+        if ($notification instanceof Submitted) {
+            return $this->organization;
+        }
+
+        // otherwise, we want to notify the character
+        return $this->character;
+    }
 
     /**
      * Get Character that this ReplacementClaim belongs to.

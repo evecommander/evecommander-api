@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCharactersRolesTable extends Migration
+class CreateRsvpsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateCharactersRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('characters_roles', function (Blueprint $table) {
+        Schema::create('rsvps', function (Blueprint $table) {
+            $table->uuid('id');
+            $table->uuid('fleet_id');
             $table->uuid('character_id');
-            $table->uuid('role_id');
+            $table->enum('response', [1, 0, -1]);
+            $table->text('notes');
+            $table->boolean('confirmed');
+            $table->text('confirmation_notes');
             $table->timestamps();
-
-            $table->primary(['character_id', 'role_id']);
-            $table->foreign('character_id')->references('id')->on('characters');
-            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 
@@ -31,6 +32,6 @@ class CreateCharactersRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('characters_roles');
+        Schema::dropIfExists('rsvps');
     }
 }

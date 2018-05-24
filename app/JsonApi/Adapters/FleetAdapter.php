@@ -36,6 +36,7 @@ class FleetAdapter extends AbstractAdapter
         'notifications',
         'readNotifications',
         'unreadNotifications',
+        'rsvps',
     ];
 
     /**
@@ -84,6 +85,11 @@ class FleetAdapter extends AbstractAdapter
     }
 
     public function unreadNotifications()
+    {
+        return $this->hasMany();
+    }
+
+    public function rsvps()
     {
         return $this->hasMany();
     }

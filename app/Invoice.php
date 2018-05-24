@@ -2,9 +2,10 @@
 
 namespace App;
 
-use App\Abstracts\Organization;
-use App\Notifications\Invoice\ForcePaymentPosted;
+use App\Notifications\Invoice\Fulfilled;
+use App\Notifications\Invoice\Issued;
 use App\Notifications\Invoice\PaymentPosted;
+use App\Notifications\Invoice\Updated;
 use App\Traits\BubblesNotifications;
 use App\Traits\HasComments;
 use App\Traits\UuidTrait;
@@ -61,8 +62,18 @@ class Invoice extends Model
 
     protected function getBubbleToModels(Notification $notification)
     {
-        /** @var Organization $issuer */
-        $issuer = $this->issuer()->first();
+        // when an invoice is issued or updated, we only want to alert the recipient
+        if ($notification instanceof Issued || $notification instanceof Updated) {
+            return $this->recipient;
+        }
+
+        // when an invoice is fulfilled, we only want to alert the issuer
+        if ($notification instanceof Fulfilled) {
+            return $this->issuer;
+        }
+
+        // otherwise we want to alert both the issuer and recipient
+        return $this->issuer->merge($this->recipient);
     }
 
     /**
@@ -98,11 +109,11 @@ class Invoice extends Model
     /**
      * Get any payments posted for the invoice.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function payments()
     {
-        return $this->notifications()->whereIn('type', [PaymentPosted::class, ForcePaymentPosted::class]);
+        return $this->notifications()->where('type', PaymentPosted::class);
     }
 
     /**

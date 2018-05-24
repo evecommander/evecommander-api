@@ -6,7 +6,7 @@ use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 
-class RoleAdapter extends AbstractAdapter
+class SubscriptionAdapter extends AbstractAdapter
 {
     use FiltersResources;
 
@@ -17,15 +17,9 @@ class RoleAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
     protected $relationships = [
-        'owner',
-        'permissions',
-        'characters',
+        'character',
+        'organization',
     ];
 
     /**
@@ -35,21 +29,16 @@ class RoleAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Role(), $paging);
+        parent::__construct(new \App\Subscription(), $paging);
     }
 
-    public function owner()
+    public function character()
     {
         return $this->belongsTo();
     }
 
-    public function permissions()
+    public function organization()
     {
-        return $this->hasMany();
-    }
-
-    public function characters()
-    {
-        return $this->hasMany();
+        return $this->belongsTo();
     }
 }

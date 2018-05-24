@@ -5,7 +5,6 @@ namespace App\Notifications\Invoice;
 use App\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -59,17 +58,6 @@ class Issued extends Notification implements ShouldQueue
                     ->action('View Invoice', url('/invoices/'.$this->invoice->id));
     }
 
-    public function toBroadcast($notifiable)
-    {
-        return new BroadcastMessage([
-            'invoice_id' => $this->invoice->id,
-            'from'       => $this->invoice->issuer()->first()->name,
-            'to'         => $this->invoice->recipient()->first()->name,
-            'amount'     => $this->invoice->total,
-            'due'        => $this->invoice->due_date,
-        ]);
-    }
-
     /**
      * Get the array representation of the notification.
      *
@@ -81,8 +69,12 @@ class Issued extends Notification implements ShouldQueue
     {
         return [
             'invoice_id' => $this->invoice->id,
-            'from'       => $this->invoice->issuer()->first()->name,
-            'to'         => $this->invoice->recipient()->first()->name,
+            'from_name'  => $this->invoice->issuer()->first()->name,
+            'from_id'    => $this->invoice->issuer_id,
+            'from_type'  => $this->invoice->issuer_type,
+            'to_name'    => $this->invoice->recipient()->first()->name,
+            'to_id'      => $this->invoice->recipient_id,
+            'to_type'    => $this->invoice->recipient_type,
             'amount'     => $this->invoice->total,
             'due'        => $this->invoice->due_date,
         ];

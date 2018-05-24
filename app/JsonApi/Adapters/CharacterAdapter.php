@@ -37,6 +37,8 @@ class CharacterAdapter extends AbstractAdapter
         'unreadNotifications',
         'corporation',
         'roles',
+        'subscriptions',
+        'rsvps',
     ];
 
     /**
@@ -115,6 +117,16 @@ class CharacterAdapter extends AbstractAdapter
     }
 
     public function roles()
+    {
+        return $this->hasMany();
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany();
+    }
+
+    public function rsvps()
     {
         return $this->hasMany();
     }

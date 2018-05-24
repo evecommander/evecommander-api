@@ -35,6 +35,7 @@ class CorporationSchema extends SchemaProvider
             'name'                     => $resource->name,
             'default-membership-level' => $resource->default_membership_level,
             'settings'                 => $resource->settings,
+            'mass-subscribables'       => $resource->mass_subscribables,
             'created-at'               => $resource->created_at->toIso8601String(),
             'updated-at'               => $resource->updated_at->toIso8601String(),
         ];
@@ -157,6 +158,11 @@ class CorporationSchema extends SchemaProvider
             ],
 
             'roles' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+            ],
+
+            'subscriptions' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],

@@ -18,7 +18,7 @@ class CreateCorporationsTable extends Migration
             $table->unsignedInteger('api_id');
             $table->string('name');
             $table->uuid('default_membership_level')->nullable();
-            $table->json('settings');
+            $table->jsonb('settings');
             $table->timestamps();
 
             $table->foreign('default_membership_level')->references('id')->on('membership_levels');
