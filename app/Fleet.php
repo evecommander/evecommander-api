@@ -51,6 +51,7 @@ class Fleet extends Model
     protected function getBubbleToModels(Notification $notification)
     {
         $rsvps = $this->rsvps()->where('response', '>=', 0)->with('character')->get();
+
         return $rsvps->map(function (Rsvp $rsvp) {
             return $rsvp->character;
         });

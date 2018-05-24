@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Abstracts\Organization;
-use App\Traits\BubblesNotifications;
 use App\Traits\HasSRP;
 use App\Traits\ReceivesInvoices;
 use Illuminate\Support\Carbon;

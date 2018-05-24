@@ -25,7 +25,7 @@ class RoleAdapter extends AbstractAdapter
     protected $relationships = [
         'owner',
         'permissions',
-        'characters'
+        'characters',
     ];
 
     /**
