@@ -2,22 +2,28 @@
 
 namespace App\Notifications\ReplacementClaim;
 
+use App\ReplacementClaim;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Submitted extends Notification
+class Submitted extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    public $claim;
 
     /**
      * Create a new notification instance.
      *
+     * @param ReplacementClaim $claim
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(ReplacementClaim $claim)
     {
-        //
+        $this->claim = $claim;
     }
 
     /**
@@ -29,7 +35,13 @@ class Submitted extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        $channels = ['broadcast', 'database'];
+
+        if (isset($notifiable->email)) {
+            $channels[] = 'mail';
+        }
+
+        return $channels;
     }
 
     /**
@@ -42,9 +54,9 @@ class Submitted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line("A new replacement claim has been filed by {$this->claim->character->first()->name}")
+                    ->line("against {$this->claim->organization->first()->name}")
+                    ->action('View Claim', url('/replacement-claims/'.$this->claim->id));
     }
 
     /**
@@ -57,7 +69,12 @@ class Submitted extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'claim_id'          => $this->claim->id,
+            'character_id'      => $this->claim->character_id,
+            'character_name'    => $this->claim->character->first()->name,
+            'organization_id'   => $this->claim->organization_id,
+            'organization_type' => $this->claim->organization_type,
+            'organization_name' => $this->claim->organization->first()->name,
         ];
     }
 }

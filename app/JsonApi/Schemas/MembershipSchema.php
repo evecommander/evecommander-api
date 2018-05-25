@@ -34,6 +34,7 @@ class MembershipSchema extends SchemaProvider
             'notes'      => $resource->notes,
             'created-at' => $resource->created_at->toIso8601String(),
             'updated-at' => $resource->updated_at->toIso8601String(),
+            'deleted-at' => !is_null($resource->deleted_at) ? $resource->deleted_at->toIso8601String() : null,
         ];
     }
 

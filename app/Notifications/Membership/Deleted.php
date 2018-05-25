@@ -2,22 +2,28 @@
 
 namespace App\Notifications\Membership;
 
+use App\Membership;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Deleted extends Notification
+class Deleted extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    public $membership;
 
     /**
      * Create a new notification instance.
      *
+     * @param Membership $membership
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(Membership $membership)
     {
-        //
+        $this->membership = $membership;
     }
 
     /**
@@ -29,7 +35,13 @@ class Deleted extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        $channels = ['broadcast', 'database'];
+
+        if (isset($notifiable->email)) {
+            $channels[] = 'mail';
+        }
+
+        return $channels;
     }
 
     /**
@@ -42,9 +54,9 @@ class Deleted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line("The membership between {$this->membership->member->first()->name} and {$this->membership->organization->first()->name}")
+                    ->line('has been deactivated.')
+                    ->action('View Deactivated Membership', url('/memberships/'.$this->membership->id));
     }
 
     /**
@@ -57,7 +69,13 @@ class Deleted extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'membership_id'     => $this->membership->id,
+            'member_id'         => $this->membership->member_id,
+            'member_type'       => $this->membership->member_type,
+            'member_name'       => $this->membership->member->first()->name,
+            'organization_id'   => $this->membership->organization_id,
+            'organization_type' => $this->membership->organization_type,
+            'organization_name' => $this->membership->organization->first()->name,
         ];
     }
 }

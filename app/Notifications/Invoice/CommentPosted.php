@@ -2,6 +2,7 @@
 
 namespace App\Notifications\Invoice;
 
+use App\Character;
 use App\Comment;
 use App\Invoice;
 use Illuminate\Bus\Queueable;
@@ -59,7 +60,7 @@ class CommentPosted extends Notification implements ShouldQueue
     {
         return (new MailMessage())
                     ->line('A new comment has been posted on your invoice by '.$this->comment->character()->first()->name.'.')
-                    ->action('View Comment', url('/invoices/'.$this->invoice->id));
+                    ->action('View Invoice', url('/invoices/'.$this->invoice->id));
     }
 
     /**
@@ -71,13 +72,15 @@ class CommentPosted extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
-        $author = $this->comment->character()->first();
+        /** @var Character $author */
+        $author = $this->comment->character->first();
 
         return [
-            'invoice_id' => $this->invoice->id,
-            'author_id'  => $author->id,
-            'author_name'=> $author->name,
-            'content'    => $this->comment->text,
+            'invoice_id'   => $this->invoice->id,
+            'invoice_name' => $this->invoice->title,
+            'author_id'    => $author->id,
+            'author_name'  => $author->name,
+            'comment_text' => $this->comment->text,
         ];
     }
 }

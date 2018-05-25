@@ -1,40 +1,39 @@
 <?php
 
-namespace App\Notifications\Handbook;
+namespace App\Notifications\Fleet;
 
 use App\Character;
-use App\Handbook;
+use App\Fleet;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
-class Updated extends Notification implements ShouldQueue
+class StatusChanged extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $handbook;
+    public $fleet;
     public $editor;
 
     /**
      * Create a new notification instance.
      *
-     * @param Handbook $handbook
+     * @param Fleet $fleet
      * @param Character $editor
      *
      * @return void
      */
-    public function __construct(Handbook $handbook, Character $editor)
+    public function __construct(Fleet $fleet, Character $editor)
     {
-        $this->handbook = $handbook;
+        $this->fleet = $fleet;
         $this->editor = $editor;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -51,31 +50,30 @@ class Updated extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage())
-                    ->line("{$this->editor->name} has updated the {$this->handbook->title}.")
-                    ->action('View Handbook', url('/handbooks/'.$this->handbook->id));
+        return (new MailMessage)
+                    ->line("{$this->editor->name} has updated the {$this->fleet->title} fleets status.")
+                    ->action('View Fleet', url('/fleets/'.$this->fleet->id));
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return array
      */
     public function toArray($notifiable)
     {
         return [
-            'handbook_id'   => $this->handbook->id,
-            'handbook_name' => $this->handbook->title,
-            'editor_id'     => $this->editor->id,
-            'editor_name'   => $this->editor->name
+            'fleet_id' => $this->fleet->id,
+            'fleet_name' => $this->fleet->title,
+            'editor_id' => $this->editor->id,
+            'editor_name' => $this->editor->name,
+            'new_status' => $this->fleet->status,
         ];
     }
 }

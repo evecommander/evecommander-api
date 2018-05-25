@@ -2,22 +2,33 @@
 
 namespace App\Notifications\Fleet;
 
+use App\Character;
+use App\Comment;
+use App\Fleet;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CommentPosted extends Notification
+class CommentPosted extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    public $comment;
+    public $fleet;
 
     /**
      * Create a new notification instance.
      *
+     * @param Comment $comment
+     * @param Fleet $fleet
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(Comment $comment, Fleet $fleet)
     {
-        //
+        $this->comment = $comment;
+        $this->fleet = $fleet;
     }
 
     /**
@@ -29,7 +40,13 @@ class CommentPosted extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        $channels = ['broadcast', 'database'];
+
+        if (isset($notifiable->email)) {
+            $channels[] = 'mail';
+        }
+
+        return $channels;
     }
 
     /**
@@ -42,9 +59,8 @@ class CommentPosted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line("A comment has been posted on the {$this->fleet->title} fleet.")
+                    ->action('View Comment', url('/fleets/'.$this->fleet->id));
     }
 
     /**
@@ -56,8 +72,14 @@ class CommentPosted extends Notification
      */
     public function toArray($notifiable)
     {
+        /** @var Character $author */
+        $author = $this->comment->character;
         return [
-            //
+            'fleet_id'     => $this->fleet->id,
+            'fleet_name'   => $this->fleet->title,
+            'comment_text' => $this->comment->text,
+            'author_id'    => $author->id,
+            'author_name'  => $author->name,
         ];
     }
 }
