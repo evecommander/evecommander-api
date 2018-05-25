@@ -2,7 +2,6 @@
 
 namespace App\Notifications\Invoice;
 
-use App\Character;
 use App\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,10 +19,10 @@ class PaymentPosted extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      *
-     * @param Invoice   $invoice
-     * @param float     $amount
-     * @param int       $transactionID
-     * @param bool      $forced
+     * @param Invoice $invoice
+     * @param float   $amount
+     * @param int     $transactionID
+     * @param bool    $forced
      *
      * @return void
      */

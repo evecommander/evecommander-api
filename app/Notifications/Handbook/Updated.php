@@ -19,7 +19,7 @@ class Updated extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      *
-     * @param Handbook $handbook
+     * @param Handbook  $handbook
      * @param Character $editor
      *
      * @return void
@@ -75,7 +75,7 @@ class Updated extends Notification implements ShouldQueue
             'handbook_id'   => $this->handbook->id,
             'handbook_name' => $this->handbook->title,
             'editor_id'     => $this->editor->id,
-            'editor_name'   => $this->editor->name
+            'editor_name'   => $this->editor->name,
         ];
     }
 }

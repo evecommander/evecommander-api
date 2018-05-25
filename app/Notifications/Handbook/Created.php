@@ -19,7 +19,7 @@ class Created extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      *
-     * @param Handbook $handbook
+     * @param Handbook  $handbook
      * @param Character $creator
      *
      * @return void
