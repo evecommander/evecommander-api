@@ -10,8 +10,8 @@ use Illuminate\Support\Carbon;
  * Class Handbook.
  *
  * @property string id
- * @property string owner_id
- * @property string owner_type
+ * @property string organization_id
+ * @property string organization_type
  * @property int|null order
  * @property string title
  * @property string description
@@ -23,7 +23,7 @@ use Illuminate\Support\Carbon;
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection comments
- * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection organization
  * @property \Illuminate\Database\Eloquent\Collection createdBy
  * @property \Illuminate\Database\Eloquent\Collection lastUpdatedBy
  */
@@ -32,17 +32,17 @@ class Handbook extends Model
     use HasComments;
 
     /**
-     * Get the owning model of the handbook.
+     * Get relation between this handbook and the organization that owns it.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function owner()
+    public function organization()
     {
         return $this->morphTo();
     }
 
     /**
-     * Get the character that created the handbook.
+     * Get relation between this handbook and the character that created it.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -52,7 +52,7 @@ class Handbook extends Model
     }
 
     /**
-     * Get the character that last updated the handbook.
+     * Get relation between this handbook and the character that last updated it.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

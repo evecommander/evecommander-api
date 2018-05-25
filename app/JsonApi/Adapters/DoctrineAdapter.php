@@ -23,7 +23,7 @@ class DoctrineAdapter extends AbstractAdapter
      * @var array
      */
     protected $relationships = [
-        'owner',
+        'organization',
         'fittings',
         'createdBy',
         'lastUpdatedBy',
@@ -39,7 +39,7 @@ class DoctrineAdapter extends AbstractAdapter
         parent::__construct(new \App\Doctrine(), $paging);
     }
 
-    public function owner()
+    public function organization()
     {
         return $this->belongsTo();
     }

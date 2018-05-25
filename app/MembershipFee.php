@@ -11,15 +11,15 @@ use Illuminate\Support\Carbon;
  * Class MembershipFee.
  *
  * @property string id
- * @property string owner_id
- * @property string owner_type
+ * @property string organization_id
+ * @property string organization_type
  * @property string amount_type
  * @property float amount
  * @property Carbon created_at
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection organization
  * @property \Illuminate\Database\Eloquent\Collection billingConditions
  */
 class MembershipFee extends Model
@@ -27,11 +27,11 @@ class MembershipFee extends Model
     use UuidTrait, ModifiesAmounts;
 
     /**
-     * Get relation between this membership fee and it's owner.
+     * Get relation between this membership fee and the organization that owns it.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function owner()
+    public function organization()
     {
         return $this->morphTo();
     }

@@ -59,7 +59,7 @@ class Alliance extends Organization
      */
     public function coalition()
     {
-        return $this->memberships()->where('owner_type', Coalition::class)->with('owner');
+        return $this->memberships()->where('organization_type', Coalition::class)->with('organization');
     }
 
     /**

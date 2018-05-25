@@ -12,14 +12,14 @@ use Illuminate\Support\Carbon;
  * @property string id
  * @property string name
  * @property string description
- * @property string owner_id
- * @property string owner_type
+ * @property string organization_id
+ * @property string organization_type
  * @property Carbon created_at
  * @property Carbon updated_at
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection fleets
- * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection organization
  */
 class FleetType extends Model
 {
@@ -40,7 +40,7 @@ class FleetType extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function owner()
+    public function organization()
     {
         return $this->morphTo();
     }

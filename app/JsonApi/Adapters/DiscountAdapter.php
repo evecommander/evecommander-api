@@ -23,7 +23,7 @@ class DiscountAdapter extends AbstractAdapter
      * @var array
      */
     protected $relationships = [
-        'owner',
+        'organization',
         'billingCondition',
     ];
 
@@ -37,7 +37,7 @@ class DiscountAdapter extends AbstractAdapter
         parent::__construct(new \App\Discount(), $paging);
     }
 
-    public function owner()
+    public function organization()
     {
         return $this->belongsTo();
     }

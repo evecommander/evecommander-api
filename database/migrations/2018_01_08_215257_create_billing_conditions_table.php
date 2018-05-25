@@ -15,8 +15,8 @@ class CreateBillingConditionsTable extends Migration
     {
         Schema::create('billing_conditions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('owner_id')->index();
-            $table->string('owner_type')->index();
+            $table->uuid('organization_id')->index();
+            $table->string('organization_type')->index();
             $table->string('name');
             $table->text('description');
             $table->enum('type', ['joining', 'exit', 'min_members', 'max_members', 'min_amount', 'max_amount']);

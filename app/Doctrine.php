@@ -10,8 +10,8 @@ use Illuminate\Support\Carbon;
  * Class Doctrine.
  *
  * @property string id
- * @property string owner_id
- * @property string owner_type
+ * @property string organization_id
+ * @property string organization_type
  * @property string name
  * @property string description
  * @property int priority
@@ -21,7 +21,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection organization
  * @property \Illuminate\Database\Eloquent\Collection fittings
  * @property \Illuminate\Database\Eloquent\Collection createdBy
  * @property \Illuminate\Database\Eloquent\Collection lastUpdatedBy
@@ -31,11 +31,11 @@ class Doctrine extends Model
     use UuidTrait;
 
     /**
-     * Get relation between this doctrine and it's owner.
+     * Get relation between this doctrine and the organization that owns it.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function owner()
+    public function organization()
     {
         return $this->morphTo();
     }

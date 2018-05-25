@@ -80,7 +80,7 @@ class Character extends Model
      */
     public function corporation()
     {
-        return $this->memberships()->where('owner_type', Corporation::class)->with('owner');
+        return $this->memberships()->where('organization_type', Corporation::class)->with('organization');
     }
 
     /**

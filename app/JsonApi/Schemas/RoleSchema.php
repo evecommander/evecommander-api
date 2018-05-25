@@ -48,12 +48,12 @@ class RoleSchema extends SchemaProvider
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
         return [
-            'owner' => [
-                self::SHOW_SELF    => true,
+            'organization' => [
+                self::SHOW_SELF => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset($includeRelationships['owner']),
-                self::SHOW_DATA    => function () use ($resource) {
-                    return $resource->owner;
+                self::SHOW_DATA => isset($includeRelationships['organization']),
+                self::SHOW_DATA => function () use ($resource) {
+                    return $resource->organization;
                 },
             ],
 

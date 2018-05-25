@@ -11,8 +11,8 @@ use Illuminate\Support\Carbon;
  * Class Discount.
  *
  * @property string id
- * @property string owner_id
- * @property string owner_type
+ * @property string organization_id
+ * @property string organization_type
  * @property string billing_condition_id
  * @property string amount_type
  * @property float amount
@@ -20,7 +20,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection organization
  * @property \Illuminate\Database\Eloquent\Collection billingCondition
  */
 class Discount extends Model
@@ -28,11 +28,11 @@ class Discount extends Model
     use ModifiesAmounts, UuidTrait;
 
     /**
-     * Get the relation between this discount and it's owner.
+     * Get the relation between this discount and the organization that owns it.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function owner()
+    public function organization()
     {
         return $this->morphTo();
     }

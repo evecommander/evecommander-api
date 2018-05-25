@@ -22,7 +22,7 @@ trait HasMembers
      */
     public function members()
     {
-        return $this->morphMany(Membership::class, 'owner');
+        return $this->morphMany(Membership::class, 'organization');
     }
 
     /**
@@ -42,6 +42,6 @@ trait HasMembers
      */
     public function membershipLevels()
     {
-        return $this->morphMany(MembershipLevel::class, 'owner');
+        return $this->morphMany(MembershipLevel::class, 'organization');
     }
 }

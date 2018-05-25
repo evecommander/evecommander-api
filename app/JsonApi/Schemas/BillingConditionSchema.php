@@ -50,10 +50,13 @@ class BillingConditionSchema extends SchemaProvider
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
         return [
-            'owner' => [
+            'organization' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::SHOW_DATA    => true,
+                self::DATA         => function () use ($resource) {
+                    return $resource->organization;
+                }
             ],
 
             'discounts' => [

@@ -10,8 +10,8 @@ use Illuminate\Support\Carbon;
  * Class Role.
  *
  * @property string id
- * @property string owner_id
- * @property string owner_type
+ * @property string organization_id
+ * @property string organization_type
  * @property string name
  * @property string description
  * @property string created_by
@@ -20,7 +20,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection organization
  * @property \Illuminate\Database\Eloquent\Collection permissions
  * @property \Illuminate\Database\Eloquent\Collection characters
  */
@@ -33,7 +33,7 @@ class Role extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function owner()
+    public function organization()
     {
         return $this->morphTo();
     }

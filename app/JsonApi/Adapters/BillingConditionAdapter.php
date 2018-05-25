@@ -23,7 +23,7 @@ class BillingConditionAdapter extends AbstractAdapter
      * @var array
      */
     protected $relationships = [
-        'owner',
+        'organization',
         'discounts',
         'membershipFees',
     ];
@@ -38,7 +38,7 @@ class BillingConditionAdapter extends AbstractAdapter
         parent::__construct(new \App\BillingCondition(), $paging);
     }
 
-    public function owner()
+    public function organization()
     {
         return $this->hasOne();
     }

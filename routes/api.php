@@ -149,7 +149,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         $api->resource('billing-conditions', [
             'has-one' => [
-                'owner',
+                'organization',
             ],
             'has-many' => [
                 'discounts',
@@ -169,14 +169,14 @@ Route::group(['middleware' => 'auth'], function () {
 
         $api->resource('discounts', [
             'has-one' => [
-                'owner',
+                'organization',
                 'billingCondition',
             ],
         ]);
 
         $api->resource('doctrines', [
             'has-one' => [
-                'owner',
+                'organization',
                 'createdBy',
                 'lastUpdatedBy',
             ],
@@ -187,7 +187,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         $api->resource('fittings', [
             'has-one' => [
-                'owner',
+                'organization',
                 'doctrine',
             ],
             'has-many' => [
@@ -212,7 +212,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         $api->resource('fleet-types', [
             'has-one' => [
-                'owner',
+                'organization',
             ],
             'has-many' => [
                 'fleets',
@@ -221,7 +221,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         $api->resource('handbooks', [
             'has-one' => [
-                'owner',
+                'organization',
                 'createdBy',
                 'lastUpdatedBy',
             ],
@@ -268,7 +268,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         $api->resource('membership-fees', [
             'has-one' => [
-                'owner',
+                'organization',
             ],
             'has-many' => [
                 'billingConditions',
@@ -277,7 +277,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         $api->resource('membership-levels', [
             'has-one' => [
-                'owner',
+                'organization',
                 'createdBy',
                 'lastUpdatedBy',
             ],

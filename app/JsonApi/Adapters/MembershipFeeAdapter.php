@@ -23,7 +23,7 @@ class MembershipFeeAdapter extends AbstractAdapter
      * @var array
      */
     protected $relationships = [
-        'owner',
+        'organization',
         'billingConditions',
     ];
 
@@ -37,7 +37,7 @@ class MembershipFeeAdapter extends AbstractAdapter
         parent::__construct(new \App\MembershipFee(), $paging);
     }
 
-    public function owner()
+    public function organization()
     {
         return $this->belongsTo();
     }

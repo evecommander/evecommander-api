@@ -23,7 +23,7 @@ class FittingAdapter extends AbstractAdapter
      * @var array
      */
     protected $relationships = [
-        'owner',
+        'organization',
         'doctrine',
         'replacementClaims',
     ];
@@ -38,7 +38,7 @@ class FittingAdapter extends AbstractAdapter
         parent::__construct(new \App\Fitting(), $paging);
     }
 
-    public function owner()
+    public function organization()
     {
         return $this->belongsTo();
     }

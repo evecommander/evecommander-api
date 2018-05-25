@@ -28,7 +28,7 @@ class MembershipLevelAdapter extends AbstractAdapter
      */
     protected $relationships = [
         'memberships',
-        'owner',
+        'organization',
         'createdBy',
         'lastUpdatedBy',
     ];
@@ -48,7 +48,7 @@ class MembershipLevelAdapter extends AbstractAdapter
         return $this->hasMany();
     }
 
-    public function owner()
+    public function organization()
     {
         return $this->belongsTo();
     }

@@ -57,7 +57,7 @@ class Corporation extends Organization
      */
     public function alliance()
     {
-        return $this->memberships()->where('owner_type', Alliance::class)->with('owner');
+        return $this->memberships()->where('organization_type', Alliance::class)->with('organization');
     }
 
     /**

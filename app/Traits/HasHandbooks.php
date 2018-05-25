@@ -18,6 +18,6 @@ trait HasHandbooks
      */
     public function handbooks()
     {
-        return $this->morphMany(Handbook::class, 'owner');
+        return $this->morphMany(Handbook::class, 'organization');
     }
 }

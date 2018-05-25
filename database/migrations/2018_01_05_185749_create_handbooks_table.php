@@ -15,8 +15,8 @@ class CreateHandbooksTable extends Migration
     {
         Schema::create('handbooks', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('owner_id')->index();
-            $table->string('owner_type')->index();
+            $table->uuid('organization_id')->index();
+            $table->string('organization_type')->index();
             $table->unsignedInteger('order')->nullable()->index();
             $table->string('title');
             $table->text('description');

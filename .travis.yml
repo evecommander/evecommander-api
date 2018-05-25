@@ -14,17 +14,18 @@ env:
     - COMMIT=${TRAVIS_COMMIT::8}
 
 before_script:
-  - sudo apt update
   - composer install --optimize-autoloader
   - php artisan config:cache
 
 after_success:
   - rm .env
-  - if ["" == "master"]; then
-    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
-    export REPO=wizofgoz/evecommander-php;
-    docker build -t $REPO:$COMMIT .;
-    docker tag $REPO:$COMMIT $REPO:latest;
-    docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER;
-    docker push $REPO;
-    fi
+  - export REPO=$DOCKER_USERNAME/evecommander-php;
+  - docker build -t $REPO:$COMMIT .;
+  - docker tag $REPO:$COMMIT $REPO:latest;
+  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER;
+
+deploy:
+  provider: script
+  script: bash docker_push
+  on:
+    branch: master

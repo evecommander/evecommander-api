@@ -48,7 +48,7 @@ abstract class Organization extends Model
      */
     public function roles()
     {
-        return $this->morphMany(Role::class, 'owner');
+        return $this->morphMany(Role::class, 'organization');
     }
 
     /**
@@ -58,7 +58,7 @@ abstract class Organization extends Model
      */
     public function fleetTypes()
     {
-        return $this->morphMany(FleetType::class, 'owner');
+        return $this->morphMany(FleetType::class, 'organization');
     }
 
     /**

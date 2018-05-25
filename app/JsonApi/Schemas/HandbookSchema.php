@@ -55,12 +55,12 @@ class HandbookSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
             ],
 
-            'owner' => [
+            'organization' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset($includeRelationships['owner']),
+                self::SHOW_DATA    => isset($includeRelationships['organization']),
                 self::DATA         => function () use ($resource) {
-                    return $resource->owner;
+                    return $resource->organization;
                 },
             ],
 

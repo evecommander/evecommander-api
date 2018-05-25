@@ -11,8 +11,8 @@ use Illuminate\Support\Carbon;
  * Class Fitting.
  *
  * @property string id
- * @property string owner_id
- * @property string owner_type
+ * @property string organization_id
+ * @property string organization_type
  * @property string name
  * @property string description
  * @property int api_id
@@ -22,7 +22,7 @@ use Illuminate\Support\Carbon;
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection comments
  * @property \Illuminate\Database\Eloquent\Collection doctrine
- * @property \Illuminate\Database\Eloquent\Collection owner
+ * @property \Illuminate\Database\Eloquent\Collection organization
  * @property \Illuminate\Database\Eloquent\Collection replacementClaims
  */
 class Fitting extends Model
@@ -40,11 +40,11 @@ class Fitting extends Model
     }
 
     /**
-     * Get relation between this fitting and it's owner.
+     * Get relation between this fitting and the organization that owns it.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function owner()
+    public function organization()
     {
         return $this->morphTo();
     }

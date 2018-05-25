@@ -24,7 +24,7 @@ class FleetTypeAdapter extends AbstractAdapter
      */
     protected $relationships = [
         'fleets',
-        'owner',
+        'organization',
     ];
 
     /**
@@ -42,7 +42,7 @@ class FleetTypeAdapter extends AbstractAdapter
         return $this->hasMany();
     }
 
-    public function owner()
+    public function organization()
     {
         return $this->belongsTo();
     }
