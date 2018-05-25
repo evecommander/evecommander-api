@@ -56,7 +56,7 @@ class BillingConditionSchema extends SchemaProvider
                 self::SHOW_DATA    => true,
                 self::DATA         => function () use ($resource) {
                     return $resource->organization;
-                }
+                },
             ],
 
             'discounts' => [

@@ -21,7 +21,7 @@ class CommentPosted extends Notification implements ShouldQueue
      * Create a new notification instance.
      *
      * @param Comment $comment
-     * @param Fleet $fleet
+     * @param Fleet   $fleet
      *
      * @return void
      */
@@ -74,6 +74,7 @@ class CommentPosted extends Notification implements ShouldQueue
     {
         /** @var Character $author */
         $author = $this->comment->character;
+
         return [
             'fleet_id'     => $this->fleet->id,
             'fleet_name'   => $this->fleet->title,

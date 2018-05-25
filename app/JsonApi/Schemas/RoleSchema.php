@@ -49,10 +49,10 @@ class RoleSchema extends SchemaProvider
     {
         return [
             'organization' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['organization']),
-                self::SHOW_DATA => function () use ($resource) {
+                self::SHOW_DATA    => isset($includeRelationships['organization']),
+                self::SHOW_DATA    => function () use ($resource) {
                     return $resource->organization;
                 },
             ],

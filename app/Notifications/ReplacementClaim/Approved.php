@@ -20,7 +20,7 @@ class Approved extends Notification implements ShouldQueue
      * Create a new notification instance.
      *
      * @param ReplacementClaim $claim
-     * @param Character $approver
+     * @param Character        $approver
      *
      * @return void
      */

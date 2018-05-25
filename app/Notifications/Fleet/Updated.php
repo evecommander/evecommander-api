@@ -19,7 +19,7 @@ class Updated extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      *
-     * @param Fleet $fleet
+     * @param Fleet     $fleet
      * @param Character $editor
      *
      * @return void

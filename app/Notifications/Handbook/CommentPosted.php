@@ -20,7 +20,7 @@ class CommentPosted extends Notification implements ShouldQueue
      * Create a new notification instance.
      *
      * @param Handbook $handbook
-     * @param Comment $comment
+     * @param Comment  $comment
      *
      * @return void
      */
