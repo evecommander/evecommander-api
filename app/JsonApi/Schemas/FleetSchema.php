@@ -33,6 +33,7 @@ class FleetSchema extends SchemaProvider
         return [
             'title'       => $resource->title,
             'description' => $resource->description,
+            'status'      => $resource->status,
             'start-time'  => $resource->start_time->toIso8601String(),
             'end-time'    => $resource->end_time->toIso8601String(),
             'created-at'  => $resource->created_at->toIso8601String(),

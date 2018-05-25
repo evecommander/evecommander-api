@@ -2,22 +2,28 @@
 
 namespace App\Notifications\Invoice;
 
+use App\Invoice;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class StateChanged extends Notification
+class StatusChanged extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    public $invoice;
 
     /**
      * Create a new notification instance.
      *
+     * @param Invoice $invoice
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(Invoice $invoice)
     {
-        //
+        $this->invoice = $invoice;
     }
 
     /**
@@ -29,7 +35,13 @@ class StateChanged extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        $channels = ['broadcast', 'database'];
+
+        if (isset($notifiable->email)) {
+            $channels[] = 'mail';
+        }
+
+        return $channels;
     }
 
     /**
@@ -42,9 +54,8 @@ class StateChanged extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line("Your invoice {$this->invoice->title} has had its status changed.")
+                    ->action('View Invoice', url('/invoices/'.$this->invoice->id));
     }
 
     /**
@@ -57,7 +68,9 @@ class StateChanged extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'invoice_id'   => $this->invoice->id,
+            'invoice_name' => $this->invoice->title,
+            'new_state'    => $this->invoice->status,
         ];
     }
 }

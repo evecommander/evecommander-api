@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
  * @property string organization_type
  * @property string title
  * @property string description
+ * @property string status
  * @property Carbon start_time
  * @property Carbon end_time
  * @property string created_by

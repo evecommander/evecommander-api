@@ -2,22 +2,32 @@
 
 namespace App\Notifications\ReplacementClaim;
 
+use App\Comment;
+use App\ReplacementClaim;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CommentPosted extends Notification
+class CommentPosted extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    public $claim;
+    public $comment;
 
     /**
      * Create a new notification instance.
      *
+     * @param ReplacementClaim $claim
+     * @param Comment          $comment
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(ReplacementClaim $claim, Comment $comment)
     {
-        //
+        $this->claim = $claim;
+        $this->comment = $comment;
     }
 
     /**
@@ -29,7 +39,13 @@ class CommentPosted extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        $channels = ['broadcast', 'database'];
+
+        if (isset($notifiable->email)) {
+            $channels[] = 'mail';
+        }
+
+        return $channels;
     }
 
     /**
@@ -42,9 +58,9 @@ class CommentPosted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('A comment was posted on a replacement claim between')
+                    ->line("{$this->claim->character->first()->name} and {$this->claim->organization->first()->name}.")
+                    ->action('View Claim', url('/replacement-claims/'.$this->claim->id));
     }
 
     /**
@@ -57,7 +73,14 @@ class CommentPosted extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'claim_id'          => $this->claim->id,
+            'character_id'      => $this->claim->character_id,
+            'character_name'    => $this->claim->character->first()->name,
+            'organization_id'   => $this->claim->organization_id,
+            'organization_type' => $this->claim->organization_type,
+            'organization_name' => $this->claim->organization->first()->name,
+            'author_id'         => $this->comment->character_id,
+            'author_name'       => $this->comment->character->first()->name,
         ];
     }
 }

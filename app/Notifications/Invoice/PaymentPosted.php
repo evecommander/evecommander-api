@@ -2,34 +2,36 @@
 
 namespace App\Notifications\Invoice;
 
-use App\Character;
 use App\Invoice;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class PaymentPosted extends Notification
+class PaymentPosted extends Notification implements ShouldQueue
 {
     use Queueable;
 
     public $transactionID;
-    public $processor;
+    public $invoice;
     public $amount;
+    public $forced;
 
     /**
      * Create a new notification instance.
      *
-     * @param Character $processor
-     * @param float     $amount
-     * @param int       $transactionID
-     * @param bool      $forced
+     * @param Invoice $invoice
+     * @param float   $amount
+     * @param int     $transactionID
+     * @param bool    $forced
      *
      * @return void
      */
-    public function __construct(Character $processor, float $amount, int $transactionID, bool $forced = false)
+    public function __construct(Invoice $invoice, float $amount, int $transactionID, bool $forced = false)
     {
-        $this->processor = $processor;
+        $this->invoice = $invoice;
         $this->amount = $amount;
         $this->transactionID = $transactionID;
+        $this->forced = $forced;
     }
 
     /**
@@ -47,23 +49,22 @@ class PaymentPosted extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param Invoice $invoice
+     * @param mixed $notifiable
      *
      * @return array
      */
-    public function toArray($invoice)
+    public function toArray($notifiable)
     {
-        $latestPayment = $invoice->payments()->first();
-        $previousBalance = isset($latestPayment) ? $latestPayment->text['balance_due'] : $invoice->total;
+        $latestPayment = $this->invoice->payments()->first();
+        $previousBalance = isset($latestPayment) ? $latestPayment->text['balance_due'] : $this->invoice->total;
 
         return [
-            'invoice_id'       => $invoice->id,
+            'invoice_id'       => $this->invoice->id,
             'previous_balance' => $previousBalance,
             'balance_due'      => $previousBalance - $this->amount,
             'amount'           => $this->amount,
+            'forced'           => $this->forced,
             'transaction_id'   => $this->transactionID,
-            'processor_id'     => $this->processor->id,
-            'processor_name'   => $this->processor->name,
         ];
     }
 }

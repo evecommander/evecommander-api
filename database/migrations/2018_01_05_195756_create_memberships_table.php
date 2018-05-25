@@ -24,6 +24,7 @@ class CreateMembershipsTable extends Migration
             $table->uuid('created_by');
             $table->uuid('last_updated_by');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('membership_level_id')->references('id')->on('membership_levels');
             $table->foreign('added_by')->references('id')->on('characters');

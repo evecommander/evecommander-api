@@ -2,22 +2,32 @@
 
 namespace App\Notifications\Handbook;
 
+use App\Character;
+use App\Handbook;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Created extends Notification
+class Created extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    public $handbook;
+    public $creator;
 
     /**
      * Create a new notification instance.
      *
+     * @param Handbook  $handbook
+     * @param Character $creator
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(Handbook $handbook, Character $creator)
     {
-        //
+        $this->handbook = $handbook;
+        $this->creator = $creator;
     }
 
     /**
@@ -29,7 +39,13 @@ class Created extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        $channels = ['broadcast', 'database'];
+
+        if (isset($notifiable->email)) {
+            $channels[] = 'mail';
+        }
+
+        return $channels;
     }
 
     /**
@@ -42,9 +58,8 @@ class Created extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line("{$this->creator->name} has created a new handbook called {$this->handbook->title}.")
+                    ->action('View Handbook', url('/handbooks/'.$this->handbook->id));
     }
 
     /**
@@ -57,7 +72,10 @@ class Created extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'handbook_id'   => $this->handbook->id,
+            'handbook_name' => $this->handbook->title,
+            'creator_id'    => $this->creator->id,
+            'creator_name'  => $this->creator->name,
         ];
     }
 }

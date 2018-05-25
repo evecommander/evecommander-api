@@ -20,6 +20,7 @@ class CreateFleetsTable extends Migration
             $table->string('organization_type')->index();
             $table->string('title');
             $table->text('description');
+            $table->enum('status', ['pending', 'standby', 'form-up', 'in-progress', 'completed', 'cancelled'])->default('pending');
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();
             $table->uuid('created_by');

@@ -5,6 +5,7 @@ namespace App;
 use App\Notifications\Membership\CommentPosted;
 use App\Traits\BubblesNotifications;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
@@ -23,6 +24,7 @@ use Illuminate\Support\Carbon;
  * @property string last_updated_by
  * @property Carbon created_at
  * @property Carbon updated_at
+ * @property Carbon deleted_at
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection notifications
@@ -36,7 +38,7 @@ use Illuminate\Support\Carbon;
  */
 class Membership extends Model
 {
-    use Notifiable, BubblesNotifications;
+    use Notifiable, BubblesNotifications, SoftDeletes;
 
     protected function getBubbleToModels(Notification $notification)
     {

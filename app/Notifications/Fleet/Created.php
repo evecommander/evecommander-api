@@ -2,22 +2,28 @@
 
 namespace App\Notifications\Fleet;
 
+use App\Fleet;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Created extends Notification
+class Created extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    public $fleet;
 
     /**
      * Create a new notification instance.
      *
+     * @param Fleet $fleet
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(Fleet $fleet)
     {
-        //
+        $this->fleet = $fleet;
     }
 
     /**
@@ -29,7 +35,13 @@ class Created extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        $channels = ['broadcast', 'database'];
+
+        if (isset($notifiable->email)) {
+            $channels[] = 'mail';
+        }
+
+        return $channels;
     }
 
     /**
@@ -42,9 +54,8 @@ class Created extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line("A new fleet has been scheduled for {$this->fleet->organization->first()->name}.")
+                    ->action('View Fleet', url('/fleets/'.$this->fleet->id));
     }
 
     /**
@@ -57,7 +68,11 @@ class Created extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'fleet_id'          => $this->fleet->id,
+            'fleet_name'        => $this->fleet->title,
+            'organization_id'   => $this->fleet->organization_id,
+            'organization_type' => $this->fleet->organization_type,
+            'organization_name' => $this->fleet->organization->first()->name,
         ];
     }
 }

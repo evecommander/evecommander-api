@@ -2,11 +2,13 @@
 
 namespace App\Notifications\Invoice;
 
+use App\Invoice;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Fulfilled extends Notification
+class Fulfilled extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -15,9 +17,11 @@ class Fulfilled extends Notification
     /**
      * Create a new notification instance.
      *
+     * @param Invoice $invoice
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(Invoice $invoice)
     {
         $this->invoice = $invoice;
     }
@@ -44,9 +48,9 @@ class Fulfilled extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line("{$this->invoice->recipient->first()->name} has fulfilled their invoice")
+                    ->line($this->invoice->title)
+                    ->action('View Invoice', url('/invoices/'.$this->invoice->id));
     }
 
     /**
@@ -59,7 +63,11 @@ class Fulfilled extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'invoice_id'     => $this->invoice->id,
+            'invoice_name'   => $this->invoice->title,
+            'recipient_id'   => $this->invoice->recipient_id,
+            'recipient_type' => $this->invoice->recipient_type,
+            'recipient_name' => $this->invoice->recipient->first()->name,
         ];
     }
 }

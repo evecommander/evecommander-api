@@ -54,7 +54,8 @@ class Issued extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("You have received a new invoice for {$this->invoice->recipient()->first()->name}.")
+                    ->line("You have received a new invoice for {$this->invoice->recipient->first()->name}")
+                    ->line("titled {$this->invoice->title}")
                     ->action('View Invoice', url('/invoices/'.$this->invoice->id));
     }
 
@@ -68,15 +69,16 @@ class Issued extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'invoice_id' => $this->invoice->id,
-            'from_name'  => $this->invoice->issuer()->first()->name,
-            'from_id'    => $this->invoice->issuer_id,
-            'from_type'  => $this->invoice->issuer_type,
-            'to_name'    => $this->invoice->recipient()->first()->name,
-            'to_id'      => $this->invoice->recipient_id,
-            'to_type'    => $this->invoice->recipient_type,
-            'amount'     => $this->invoice->total,
-            'due'        => $this->invoice->due_date,
+            'invoice_id'     => $this->invoice->id,
+            'invoice_name'   => $this->invoice->title,
+            'issuer_name'    => $this->invoice->issuer()->first()->name,
+            'issuer_id'      => $this->invoice->issuer_id,
+            'issuer_type'    => $this->invoice->issuer_type,
+            'recipient_name' => $this->invoice->recipient()->first()->name,
+            'recipient_id'   => $this->invoice->recipient_id,
+            'recipient_type' => $this->invoice->recipient_type,
+            'amount'         => $this->invoice->total,
+            'due'            => $this->invoice->due_date,
         ];
     }
 }
