@@ -15,10 +15,11 @@ class CreateReplacementClaimsTable extends Migration
     {
         Schema::create('replacement_claims', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('character_id');
+            $table->string('code', 20);
+            $table->uuid('character_id');
             $table->uuid('organization_id')->index();
             $table->string('organization_type')->index();
-            $table->string('fitting_id');
+            $table->uuid('fitting_id');
             $table->unsignedInteger('killmail_id');
             $table->string('killmail_hash');
             $table->decimal('total', 20);

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Abstracts\Organization;
 use App\Traits\HasComments;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -21,8 +22,8 @@ use Illuminate\Support\Carbon;
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection comments
- * @property \Illuminate\Database\Eloquent\Collection doctrine
- * @property \Illuminate\Database\Eloquent\Collection organization
+ * @property Doctrine doctrine
+ * @property Organization organization
  * @property \Illuminate\Database\Eloquent\Collection replacementClaims
  */
 class Fitting extends Model

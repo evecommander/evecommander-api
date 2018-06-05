@@ -58,7 +58,7 @@ class CommentPosted extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("{$this->comment->character->first()->name} posted a new comment on the {$this->handbook->title} handbook.")
+                    ->line("{$this->comment->character->name} posted a new comment on the {$this->handbook->title} handbook.")
                     ->action('View Handbook', url('/handbooks/'.$this->handbook->id));
     }
 
@@ -75,7 +75,7 @@ class CommentPosted extends Notification implements ShouldQueue
             'handbook_id'   => $this->handbook->id,
             'handbook_name' => $this->handbook->title,
             'author_id'     => $this->comment->character_id,
-            'author_name'   => $this->comment->character->first()->name,
+            'author_name'   => $this->comment->character->name,
             'comment_text'  => $this->comment->text,
         ];
     }

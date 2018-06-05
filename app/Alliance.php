@@ -24,7 +24,7 @@ use Illuminate\Support\Carbon;
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection handbooks
  * @property \Illuminate\Database\Eloquent\Collection members
- * @property \Illuminate\Database\Eloquent\Collection defaultMembershipLevel
+ * @property MembershipLevel defaultMembershipLevel
  * @property \Illuminate\Database\Eloquent\Collection membershipLevels
  * @property \Illuminate\Database\Eloquent\Collection memberships
  * @property \Illuminate\Database\Eloquent\Collection claims
@@ -41,7 +41,7 @@ use Illuminate\Support\Carbon;
  * @property \Illuminate\Database\Eloquent\Collection notifications
  * @property \Illuminate\Database\Eloquent\Collection readNotifications
  * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
- * @property \Illuminate\Database\Eloquent\Collection coalition
+ * @property Coalition coalition
  * @property \Illuminate\Database\Eloquent\Collection roles
  */
 class Alliance extends Organization

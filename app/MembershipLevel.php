@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Abstracts\Organization;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -23,9 +24,9 @@ use Illuminate\Support\Carbon;
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection memberships
- * @property \Illuminate\Database\Eloquent\Collection organization
- * @property \Illuminate\Database\Eloquent\Collection createdBy
- * @property \Illuminate\Database\Eloquent\Collection lastUpdatedBy
+ * @property Organization organization
+ * @property Character createdBy
+ * @property Character lastUpdatedBy
  * @property \Illuminate\Database\Eloquent\Collection permissions
  */
 class MembershipLevel extends Model

@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection comments
- * @property \Illuminate\Database\Eloquent\Collection invoice
+ * @property Invoice invoice
  */
 class InvoiceItem extends Model
 {

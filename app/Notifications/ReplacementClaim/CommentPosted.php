@@ -59,7 +59,7 @@ class CommentPosted extends Notification implements ShouldQueue
     {
         return (new MailMessage())
                     ->line('A comment was posted on a replacement claim between')
-                    ->line("{$this->claim->character->first()->name} and {$this->claim->organization->first()->name}.")
+                    ->line("{$this->claim->character->name} and {$this->claim->organization->name}.")
                     ->action('View Claim', url('/replacement-claims/'.$this->claim->id));
     }
 
@@ -75,12 +75,12 @@ class CommentPosted extends Notification implements ShouldQueue
         return [
             'claim_id'          => $this->claim->id,
             'character_id'      => $this->claim->character_id,
-            'character_name'    => $this->claim->character->first()->name,
+            'character_name'    => $this->claim->character->name,
             'organization_id'   => $this->claim->organization_id,
             'organization_type' => $this->claim->organization_type,
-            'organization_name' => $this->claim->organization->first()->name,
+            'organization_name' => $this->claim->organization->name,
             'author_id'         => $this->comment->character_id,
-            'author_name'       => $this->comment->character->first()->name,
+            'author_name'       => $this->comment->character->name,
         ];
     }
 }

@@ -56,7 +56,7 @@ class PaymentPosted extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         $latestPayment = $this->invoice->payments()->first();
-        $previousBalance = isset($latestPayment) ? $latestPayment->text['balance_due'] : $this->invoice->total;
+        $previousBalance = isset($latestPayment) ? $latestPayment->data['balance_due'] : $this->invoice->total;
 
         return [
             'invoice_id'       => $this->invoice->id,

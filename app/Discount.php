@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Abstracts\Organization;
 use App\Traits\ModifiesAmounts;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -20,8 +21,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Collection organization
- * @property \Illuminate\Database\Eloquent\Collection billingCondition
+ * @property Organization organization
+ * @property BillingCondition billingCondition
  */
 class Discount extends Model
 {

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Abstracts\Organization;
+use App\Notifications\ReplacementClaim\PaymentPosted;
 use App\Notifications\ReplacementClaim\Submitted;
 use App\Traits\BubblesNotifications;
 use App\Traits\HasComments;
@@ -15,6 +17,7 @@ use Illuminate\Support\Carbon;
  * Class ReplacementClaim.
  *
  * @property string id
+ * @property string code
  * @property string character_id
  * @property string organization_id
  * @property string organization_type
@@ -28,9 +31,9 @@ use Illuminate\Support\Carbon;
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection comments
- * @property \Illuminate\Database\Eloquent\Collection character
- * @property \Illuminate\Database\Eloquent\Collection organization
- * @property \Illuminate\Database\Eloquent\Collection fitting
+ * @property Character character
+ * @property Organization organization
+ * @property Fitting fitting
  */
 class ReplacementClaim extends Model
 {
@@ -45,6 +48,16 @@ class ReplacementClaim extends Model
 
         // otherwise, we want to notify the character
         return $this->character;
+    }
+
+    /**
+     * Called when a replacement claim is being created to set a random code on the model.
+     *
+     * @param ReplacementClaim $model
+     */
+    protected static function onCreate(self $model)
+    {
+        $model->code = 'RC-'.substr(bin2hex(random_bytes(16)), 0, 16);
     }
 
     /**
@@ -75,5 +88,15 @@ class ReplacementClaim extends Model
     public function fitting()
     {
         return $this->belongsTo(Fitting::class);
+    }
+
+    /**
+     * Get any payments posted for the invoice.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function payments()
+    {
+        return $this->notifications()->where('type', PaymentPosted::class);
     }
 }

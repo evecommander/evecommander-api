@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Abstracts\Organization;
 use App\Notifications\Membership\CommentPosted;
 use App\Traits\BubblesNotifications;
 use Illuminate\Database\Eloquent\Model;
@@ -30,11 +31,11 @@ use Illuminate\Support\Carbon;
  * @property \Illuminate\Database\Eloquent\Collection notifications
  * @property \Illuminate\Database\Eloquent\Collection readNotifications
  * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
- * @property \Illuminate\Database\Eloquent\Collection membershipLevel
- * @property \Illuminate\Database\Eloquent\Collection organization
- * @property \Illuminate\Database\Eloquent\Collection member
- * @property \Illuminate\Database\Eloquent\Collection createdBy
- * @property \Illuminate\Database\Eloquent\Collection lastUpdatedBy
+ * @property MembershipLevel membershipLevel
+ * @property Organization organization
+ * @property mixed member
+ * @property Character createdBy
+ * @property Character lastUpdatedBy
  */
 class Membership extends Model
 {

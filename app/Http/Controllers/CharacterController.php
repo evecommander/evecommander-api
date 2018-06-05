@@ -14,8 +14,6 @@ class CharacterController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     *
-     * @return
      */
     public function callback(Request $request)
     {
@@ -31,7 +29,6 @@ class CharacterController extends Controller
      */
     public function refreshToken(Request $request, Character $character)
     {
-        $user = Auth::user();
-        ProcessTokenRefresh::dispatch($user, $character);
+        ProcessTokenRefresh::dispatch($character);
     }
 }

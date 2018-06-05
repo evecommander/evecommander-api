@@ -6,6 +6,7 @@ use App\Abstracts\Organization;
 use App\Alliance;
 use App\Character;
 use App\Corporation;
+use App\Jobs\Exceptions\InvalidApiResponse;
 use App\Membership;
 use App\MembershipLevel;
 use App\OAuth2Token;
@@ -44,6 +45,9 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
     /**
      * Execute the job.
      *
+     * @throws ApiException
+     * @throws InvalidApiResponse
+     *
      * @return void
      */
     public function handle()
@@ -59,16 +63,11 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
         // call api to get character information
         $response = $this->getCharacterID($token);
 
-        try {
-            $character = $this->getCharacterInformation($response['CharacterID']);
-            $corporation = $this->checkCorporation();
-            /** @var MembershipLevel $membershipLevel */
-            $membershipLevel = $corporation->defaultMembershipLevel()->first();
-            $this->createMembership($corporation, $character, $membershipLevel);
-        } catch (ApiException $exception) {
-            $this->fail();
-            exit;
-        }
+        $character = $this->getCharacterInformation($response['CharacterID']);
+        $corporation = $this->checkCorporation();
+        /** @var MembershipLevel $membershipLevel */
+        $membershipLevel = $corporation->defaultMembershipLevel;
+        $this->createMembership($corporation, $character, $membershipLevel);
 
         $character->user()->associate($this->user);
         $token->character()->associate($character);
@@ -80,6 +79,8 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
     }
 
     /**
+     * @throws InvalidApiResponse
+     *
      * @return mixed
      */
     private function getAccessToken()
@@ -98,7 +99,7 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
         curl_close($curl);
 
         if (!isset($response['access_token'])) {
-            $this->fail();
+            throw new InvalidApiResponse();
         }
 
         return $response;
@@ -106,6 +107,8 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
 
     /**
      * @param OAuth2Token $token
+     *
+     * @throws InvalidApiResponse
      */
     private function getCharacterID(OAuth2Token $token)
     {
@@ -121,7 +124,7 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
         curl_close($curl);
 
         if (!isset($response['CharacterID'])) {
-            $this->fail();
+            throw new InvalidApiResponse();
         }
     }
 
@@ -137,7 +140,7 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
         $characterResponse = (new \Swagger\Client\Api\CharacterApi())
             ->getCharactersCharacterId($characterID, null, null, env('EVE_USERAGENT'));
         $character = new Character();
-        $character->eve_id = $characterID;
+        $character->api_id = $characterID;
         $character->name = $characterResponse->getName();
         $this->corporationID = $characterResponse->getCorporationId();
 
@@ -152,7 +155,7 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
     private function checkCorporation()
     {
         try {
-            $corporation = Corporation::where('eve_id', $this->corporationID)->firstOrFail();
+            $corporation = Corporation::where('api_id', $this->corporationID)->firstOrFail();
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
             $corporation = new Corporation();
             $response = (new \Swagger\Client\Api\CorporationApi())

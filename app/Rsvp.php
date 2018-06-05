@@ -19,8 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Collection character
- * @property \Illuminate\Database\Eloquent\Collection fleet
+ * @property Character character
+ * @property Fleet fleet
  */
 class Rsvp extends Model
 {

@@ -58,7 +58,7 @@ class Rejected extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("Your replacement claim with {$this->claim->organization->first()->name}")
+                    ->line("Your replacement claim with {$this->claim->organization->name}")
                     ->line("was rejected by {$this->moderator->name}.")
                     ->action('View Claim', url('/replacement-claims/'.$this->claim->id));
     }
@@ -75,10 +75,10 @@ class Rejected extends Notification implements ShouldQueue
         return [
             'claim_id'          => $this->claim->id,
             'character_id'      => $this->claim->character_id,
-            'character_name'    => $this->claim->character->first()->name,
+            'character_name'    => $this->claim->character->name,
             'organization_id'   => $this->claim->organization_id,
             'organization_type' => $this->claim->organization_type,
-            'organization_name' => $this->claim->organization->first()->name,
+            'organization_name' => $this->claim->organization->name,
             'moderator_id'      => $this->moderator->id,
             'moderator_name'    => $this->moderator->name,
         ];

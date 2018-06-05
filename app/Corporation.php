@@ -38,7 +38,7 @@ use Illuminate\Support\Carbon;
  * @property \Illuminate\Database\Eloquent\Collection notifications
  * @property \Illuminate\Database\Eloquent\Collection readNotifications
  * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
- * @property \Illuminate\Database\Eloquent\Collection alliance
+ * @property Alliance alliance
  * @property \Illuminate\Database\Eloquent\Collection characters
  * @property \Illuminate\Database\Eloquent\Collection roles
  */
