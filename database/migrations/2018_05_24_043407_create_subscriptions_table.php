@@ -14,12 +14,14 @@ class CreateSubscriptionsTable extends Migration
     public function up()
     {
         Schema::create('subscriptions', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->uuid('character_id');
-            $table->uuid('organization_id');
-            $table->string('organization_type');
+            $table->uuid('organization_id')->index();
+            $table->string('organization_type')->index();
             $table->jsonb('settings');
             $table->timestamps();
+
+            $table->foreign('character_id')->references('id')->on('characters');
         });
     }
 

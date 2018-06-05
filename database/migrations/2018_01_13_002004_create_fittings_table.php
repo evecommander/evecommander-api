@@ -20,7 +20,7 @@ class CreateFittingsTable extends Migration
             $table->string('organization_type')->index();
             $table->string('name');
             $table->text('description');
-            $table->unsignedInteger('api_id');
+            $table->unsignedInteger('api_id')->index();
             $table->timestamps();
 
             $table->foreign('doctrine_id')->references('id')->on('doctrines');

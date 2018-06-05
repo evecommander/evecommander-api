@@ -14,14 +14,17 @@ class CreateRolesTable extends Migration
     public function up()
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->uuid('organization_id');
-            $table->string('organization_type');
+            $table->uuid('id')->primary();
+            $table->uuid('organization_id')->index();
+            $table->string('organization_type')->index();
             $table->string('name');
             $table->text('description');
             $table->uuid('created_by');
             $table->uuid('last_updated_by');
             $table->timestamps();
+
+            $table->foreign('created_by')->references('id')->on('characters');
+            $table->foreign('last_updated_by')->references('id')->on('characters');
         });
     }
 

@@ -27,7 +27,7 @@ class CreateMembershipsTable extends Migration
             $table->softDeletes();
 
             $table->foreign('membership_level_id')->references('id')->on('membership_levels');
-            $table->foreign('added_by')->references('id')->on('characters');
+            $table->foreign('created_by')->references('id')->on('characters');
             $table->foreign('last_updated_by')->references('id')->on('characters');
         });
     }

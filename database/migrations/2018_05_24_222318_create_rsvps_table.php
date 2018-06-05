@@ -14,7 +14,7 @@ class CreateRsvpsTable extends Migration
     public function up()
     {
         Schema::create('rsvps', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->uuid('fleet_id');
             $table->uuid('character_id');
             $table->enum('response', [1, 0, -1]);
@@ -22,6 +22,9 @@ class CreateRsvpsTable extends Migration
             $table->boolean('confirmed');
             $table->text('confirmation_notes');
             $table->timestamps();
+
+            $table->foreign('fleet_id')->references('id')->on('fleets');
+            $table->foreign('character_id')->references('id')->on('characters');
         });
     }
 
