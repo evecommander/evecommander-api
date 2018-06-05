@@ -48,7 +48,7 @@ class Fulfilled extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("{$this->invoice->recipient->first()->name} has fulfilled their invoice")
+                    ->line("{$this->invoice->recipient->name} has fulfilled their invoice")
                     ->line($this->invoice->title)
                     ->action('View Invoice', url('/invoices/'.$this->invoice->id));
     }
@@ -67,7 +67,7 @@ class Fulfilled extends Notification implements ShouldQueue
             'invoice_name'   => $this->invoice->title,
             'recipient_id'   => $this->invoice->recipient_id,
             'recipient_type' => $this->invoice->recipient_type,
-            'recipient_name' => $this->invoice->recipient->first()->name,
+            'recipient_name' => $this->invoice->recipient->name,
         ];
     }
 }

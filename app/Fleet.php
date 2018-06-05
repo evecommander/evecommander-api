@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Abstracts\Organization;
 use App\Traits\BubblesNotifications;
 use App\Traits\HasComments;
 use App\Traits\UuidTrait;
@@ -32,10 +33,10 @@ use Illuminate\Support\Carbon;
  * @property \Illuminate\Database\Eloquent\Collection readNotifications
  * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
  * @property \Illuminate\Database\Eloquent\Collection comments
- * @property \Illuminate\Database\Eloquent\Collection fleetType
- * @property \Illuminate\Database\Eloquent\Collection organization
- * @property \Illuminate\Database\Eloquent\Collection createdBy
- * @property \Illuminate\Database\Eloquent\Collection lastUpdatedBy
+ * @property FleetType fleetType
+ * @property Organization organization
+ * @property Character createdBy
+ * @property Character lastUpdatedBy
  * @property \Illuminate\Database\Eloquent\Collection rsvps
  */
 class Fleet extends Model

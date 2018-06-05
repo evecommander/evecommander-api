@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Abstracts\Organization;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -18,8 +19,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Collection character
- * @property \Illuminate\Database\Eloquent\Collection organization
+ * @property Character character
+ * @property Organization organization
  */
 class Subscription extends Model
 {

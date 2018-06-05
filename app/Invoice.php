@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Abstracts\Organization;
 use App\Notifications\Invoice\Fulfilled;
 use App\Notifications\Invoice\Issued;
 use App\Notifications\Invoice\PaymentPosted;
@@ -33,8 +34,8 @@ use Illuminate\Notifications\Notification;
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection comments
- * @property \Illuminate\Database\Eloquent\Collection issuer
- * @property \Illuminate\Database\Eloquent\Collection recipient
+ * @property Organization issuer
+ * @property mixed recipient
  * @property \Illuminate\Database\Eloquent\Collection items
  * @property \Illuminate\Database\Eloquent\Collection notifications
  * @property \Illuminate\Database\Eloquent\Collection readNotifications
@@ -74,6 +75,16 @@ class Invoice extends Model
 
         // otherwise we want to alert both the issuer and recipient
         return $this->issuer->merge($this->recipient);
+    }
+
+    /**
+     * Called when an invoice is being created to set a random code on the model.
+     *
+     * @param Invoice $model
+     */
+    protected static function onCreate(Invoice $model)
+    {
+        $model->code = 'I-'.substr(bin2hex(random_bytes(16)), 0, 16);
     }
 
     /**

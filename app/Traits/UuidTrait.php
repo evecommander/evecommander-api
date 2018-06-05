@@ -12,6 +12,10 @@ trait UuidTrait
         parent::boot();
 
         static::creating(function (Model $model) {
+            if (method_exists(static::class, 'onCreate')) {
+                static::onCreate($model);
+            }
+
             if ($model->{$model->getKeyName()}) {
                 return;
             }

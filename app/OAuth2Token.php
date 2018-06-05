@@ -18,7 +18,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Collection character
+ * @property Character character
  */
 class OAuth2Token extends Model
 {

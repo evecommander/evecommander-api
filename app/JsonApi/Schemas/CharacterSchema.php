@@ -32,7 +32,7 @@ class CharacterSchema extends SchemaProvider
     {
         return [
             'name'       => $resource->name,
-            'eve-id'     => $resource->eve_id,
+            'eve-id'     => $resource->api_id,
             'created-at' => $resource->created_at->toIso8601String(),
             'updated-at' => $resource->updated_at->toIso8601String(),
         ];

@@ -15,6 +15,7 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('code', 20);
             $table->uuid('issuer_id')->index();
             $table->string('issuer_type')->index();
             $table->uuid('recipient_id')->index();

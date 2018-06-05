@@ -58,7 +58,7 @@ class Approved extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("The SRP claim you filed with {$this->claim->organization->first()->name} was approved")
+                    ->line("The SRP claim you filed with {$this->claim->organization->name} was approved")
                     ->line("by {$this->approver->name}")
                     ->action('View Claim', url('/replacement-claims/'.$this->claim->id));
     }
@@ -77,7 +77,7 @@ class Approved extends Notification implements ShouldQueue
             'approver_id'       => $this->approver->id,
             'organization_id'   => $this->claim->organization_id,
             'organization_type' => $this->claim->organization_type,
-            'organization_name' => $this->claim->organization->first()->name,
+            'organization_name' => $this->claim->organization->name,
         ];
     }
 }

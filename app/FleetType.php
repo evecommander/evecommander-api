@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Abstracts\Organization;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -19,7 +20,7 @@ use Illuminate\Support\Carbon;
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection fleets
- * @property \Illuminate\Database\Eloquent\Collection organization
+ * @property Organization organization
  */
 class FleetType extends Model
 {

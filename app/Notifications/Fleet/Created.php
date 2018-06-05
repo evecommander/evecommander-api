@@ -54,7 +54,7 @@ class Created extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("A new fleet has been scheduled for {$this->fleet->organization->first()->name}.")
+                    ->line("A new fleet has been scheduled for {$this->fleet->organization->name}.")
                     ->action('View Fleet', url('/fleets/'.$this->fleet->id));
     }
 
@@ -72,7 +72,7 @@ class Created extends Notification implements ShouldQueue
             'fleet_name'        => $this->fleet->title,
             'organization_id'   => $this->fleet->organization_id,
             'organization_type' => $this->fleet->organization_type,
-            'organization_name' => $this->fleet->organization->first()->name,
+            'organization_name' => $this->fleet->organization->name,
         ];
     }
 }

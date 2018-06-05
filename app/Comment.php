@@ -19,8 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection comments
- * @property \Illuminate\Database\Eloquent\Collection character
- * @property \Illuminate\Database\Eloquent\Collection commentable
+ * @property Character character
+ * @property mixed commentable
  */
 class Comment extends Model
 {

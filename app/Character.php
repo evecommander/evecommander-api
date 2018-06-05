@@ -15,7 +15,7 @@ use Illuminate\Support\Carbon;
  *
  * @property string id
  * @property int user_id
- * @property int eve_id
+ * @property int api_id
  * @property string name
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -30,10 +30,10 @@ use Illuminate\Support\Carbon;
  * @property \Illuminate\Database\Eloquent\Collection pendingInvoices
  * @property \Illuminate\Database\Eloquent\Collection defaultInvoices
  * @property \Illuminate\Database\Eloquent\Collection memberships
- * @property \Illuminate\Database\Eloquent\Collection user
- * @property \Illuminate\Database\Eloquent\Collection token
+ * @property User user
+ * @property OAuth2Token token
  * @property \Illuminate\Database\Eloquent\Collection comments
- * @property \Illuminate\Database\Eloquent\Collection corporation
+ * @property Corporation corporation
  * @property \Illuminate\Database\Eloquent\Collection roles
  * @property \Illuminate\Database\Eloquent\Collection rsvps
  */

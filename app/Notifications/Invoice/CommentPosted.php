@@ -59,7 +59,7 @@ class CommentPosted extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('A new comment has been posted on your invoice by '.$this->comment->character()->first()->name.'.')
+                    ->line('A new comment has been posted on your invoice by '.$this->comment->character->name.'.')
                     ->action('View Invoice', url('/invoices/'.$this->invoice->id));
     }
 
@@ -73,7 +73,7 @@ class CommentPosted extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         /** @var Character $author */
-        $author = $this->comment->character->first();
+        $author = $this->comment->character;
 
         return [
             'invoice_id'   => $this->invoice->id,

@@ -25,7 +25,7 @@ use Illuminate\Support\Carbon;
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection handbooks
  * @property \Illuminate\Database\Eloquent\Collection members
- * @property \Illuminate\Database\Eloquent\Collection defaultMembershipLevel
+ * @property MembershipLevel defaultMembershipLevel
  * @property \Illuminate\Database\Eloquent\Collection membershipLevels
  * @property \Illuminate\Database\Eloquent\Collection memberships
  * @property \Illuminate\Database\Eloquent\Collection claims
@@ -42,7 +42,7 @@ use Illuminate\Support\Carbon;
  * @property \Illuminate\Database\Eloquent\Collection notifications
  * @property \Illuminate\Database\Eloquent\Collection readNotifications
  * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
- * @property \Illuminate\Database\Eloquent\Collection leader
+ * @property Character leader
  * @property \Illuminate\Database\Eloquent\Collection alliances
  * @property \Illuminate\Database\Eloquent\Collection roles
  */

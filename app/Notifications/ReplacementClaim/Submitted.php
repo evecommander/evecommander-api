@@ -54,8 +54,8 @@ class Submitted extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("A new replacement claim has been filed by {$this->claim->character->first()->name}")
-                    ->line("against {$this->claim->organization->first()->name}")
+                    ->line("A new replacement claim has been filed by {$this->claim->character->name}")
+                    ->line("against {$this->claim->organization->name}")
                     ->action('View Claim', url('/replacement-claims/'.$this->claim->id));
     }
 
@@ -71,10 +71,10 @@ class Submitted extends Notification implements ShouldQueue
         return [
             'claim_id'          => $this->claim->id,
             'character_id'      => $this->claim->character_id,
-            'character_name'    => $this->claim->character->first()->name,
+            'character_name'    => $this->claim->character->name,
             'organization_id'   => $this->claim->organization_id,
             'organization_type' => $this->claim->organization_type,
-            'organization_name' => $this->claim->organization->first()->name,
+            'organization_name' => $this->claim->organization->name,
         ];
     }
 }
