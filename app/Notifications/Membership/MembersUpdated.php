@@ -4,9 +4,9 @@ namespace App\Notifications\Membership;
 
 use App\Abstracts\Organization;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class MembersUpdated extends Notification implements ShouldQueue
 {
@@ -35,7 +35,8 @@ class MembersUpdated extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -52,7 +53,8 @@ class MembersUpdated extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
@@ -81,7 +83,7 @@ class MembersUpdated extends Notification implements ShouldQueue
 
         $organizationType = end(explode('\\', get_class($this->organization)));
 
-        return (new MailMessage)->markdown('mail.members-updated', [
+        return (new MailMessage())->markdown('mail.members-updated', [
             'organization'      => $this->organization,
             'organization_type' => $organizationType,
             'changed'           => $mapped,
@@ -91,7 +93,8 @@ class MembersUpdated extends Notification implements ShouldQueue
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function toArray($notifiable)

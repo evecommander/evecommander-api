@@ -25,7 +25,9 @@ class AuthorizesAPI
 
     /**
      * @param $entity
+     *
      * @throws ApiCharacterNotFound
+     *
      * @return Character
      */
     protected function getApiCharacterForEntity($entity)
@@ -43,7 +45,9 @@ class AuthorizesAPI
 
     /**
      * @param Character $character
+     *
      * @throws InvalidApiResponse
+     *
      * @return OAuth2Token
      */
     protected function getCharacterToken(Character $character)
@@ -57,6 +61,7 @@ class AuthorizesAPI
 
     /**
      * @param OAuth2Token $token
+     *
      * @return bool
      */
     private function tokenNeedsRefresh(OAuth2Token $token)
@@ -66,6 +71,7 @@ class AuthorizesAPI
 
     /**
      * @param Character $character
+     *
      * @throws InvalidApiResponse
      */
     protected function refreshToken(Character $character)

@@ -13,11 +13,11 @@ use App\Notifications\Membership\Created;
 use App\Notifications\Membership\Deleted;
 use App\Notifications\Membership\MembersUpdated;
 use Illuminate\Bus\Queueable;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Swagger\Client\Api\AllianceApi;
 use Swagger\Client\Api\CorporationApi;
@@ -51,6 +51,7 @@ class ProcessMembershipChanges extends AuthorizesAPI implements ShouldQueue
      * @throws ApiCharacterNotFound
      * @throws ApiException
      * @throws InvalidApiResponse
+     *
      * @return void
      */
     public function handle()
