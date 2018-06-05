@@ -4,8 +4,6 @@ namespace App\Jobs;
 
 use App\Character;
 use App\Jobs\Exceptions\InvalidApiResponse;
-use App\OAuth2Token;
-use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -34,6 +32,7 @@ class ProcessTokenRefresh extends AuthorizesAPI implements ShouldQueue
      * Execute the job.
      *
      * @throws InvalidApiResponse
+     *
      * @return void
      */
     public function handle()

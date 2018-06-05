@@ -47,6 +47,7 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
      *
      * @throws ApiException
      * @throws InvalidApiResponse
+     *
      * @return void
      */
     public function handle()
@@ -78,8 +79,9 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
     }
 
     /**
-     * @return mixed
      * @throws InvalidApiResponse
+     *
+     * @return mixed
      */
     private function getAccessToken()
     {
@@ -105,6 +107,7 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
 
     /**
      * @param OAuth2Token $token
+     *
      * @throws InvalidApiResponse
      */
     private function getCharacterID(OAuth2Token $token)

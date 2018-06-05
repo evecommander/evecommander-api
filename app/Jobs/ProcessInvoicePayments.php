@@ -8,10 +8,10 @@ use App\Jobs\Exceptions\InvalidApiResponse;
 use App\Notifications\Invoice\PaymentPosted;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Swagger\Client\ApiException;
 use Swagger\Client\Configuration;
 use Swagger\Client\Model\GetCharactersCharacterIdWalletJournal200Ok;
@@ -41,6 +41,7 @@ class ProcessInvoicePayments extends AuthorizesAPI implements ShouldQueue
      * @throws ApiCharacterNotFound
      * @throws ApiException
      * @throws InvalidApiResponse
+     *
      * @return void
      */
     public function handle()
@@ -67,7 +68,7 @@ class ProcessInvoicePayments extends AuthorizesAPI implements ShouldQueue
 
     /**
      * @param GetCharactersCharacterIdWalletJournal200Ok[] $entries
-     * @param Carbon $lowerBound
+     * @param Carbon                                       $lowerBound
      */
     private function processJournalEntries($entries, Carbon $lowerBound)
     {
