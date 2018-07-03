@@ -25,8 +25,11 @@ class CreateInvoicesTable extends Migration
             $table->decimal('total', 20);
             $table->dateTime('due_date');
             $table->dateTime('hard_due_date');
+            $table->uuid('last_updated_by')->index();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
+
+            $table->foreign('last_updated_by')->references('id')->on('characters');
         });
 
         // add trigger to new table

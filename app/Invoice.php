@@ -41,6 +41,7 @@ use Illuminate\Notifications\Notification;
  * @property \Illuminate\Database\Eloquent\Collection readNotifications
  * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
  * @property \Illuminate\Database\Eloquent\Collection payments
+ * @property Character lastUpdatedBy
  */
 class Invoice extends Model
 {
@@ -125,6 +126,16 @@ class Invoice extends Model
     public function payments()
     {
         return $this->notifications()->where('type', PaymentPosted::class);
+    }
+
+    /**
+     * Get relation between this invoice and the character that last updated it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function lastUpdatedBy()
+    {
+        return $this->belongsTo(Character::class, 'last_updated_by');
     }
 
     /**

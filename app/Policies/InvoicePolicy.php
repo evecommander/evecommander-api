@@ -272,4 +272,26 @@ class InvoicePolicy implements ResourcePolicyInterface
     {
         return $this->modifyNotifications($invoice, $request);
     }
+
+    /**
+     * @param Invoice $invoice
+     * @param Request $request
+     *
+     * @return bool
+     */
+    public function readLastUpdatedBy(Invoice $invoice, Request $request): bool
+    {
+        return $request->user()->can('read', [$invoice->lastUpdatedBy, $request]);
+    }
+
+    /**
+     * @param Invoice $invoice
+     * @param Request $request
+     *
+     * @return bool
+     */
+    public function modifyLastUpdatedBy(Invoice $invoice, Request $request): bool
+    {
+        return false;
+    }
 }
