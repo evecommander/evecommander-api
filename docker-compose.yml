@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   app:
     build:
@@ -15,26 +15,14 @@ services:
      - .:/var/www/html
     networks:
      - vessel
-  node:
-    build:
-      context: ./docker/node
-      dockerfile: Dockerfile
-      args:
-        uid: "${WWWUSER}"
-    image: vessel/node
-    user: node
-    volumes:
-     - .:/var/www/html
-    networks:
-     - vessel
   pgsql:
     image: postgres:alpine
     ports:
      - "${PGSQL_PORT}:5432"
     environment:
-      POSTGRES_DATABASE: "${DB_DATABASE}"
-      POSTGRES_USER: "${DB_USERNAME}"
-      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DATABASE: "eve_commander"
+      POSTGRES_USERNAME: "homestead"
+      POSTGRES_PASSWORD: "secret"
     volumes:
      - vesselpgsql:/var/lib/postgresql/data
     networks:
@@ -51,7 +39,7 @@ services:
      - "1194:1194/udp"
     restart: always
     volumes:
-     - vesselecho:/app
+     - ./docker/echo/laravel-echo-server.json:/app/laravel-echo-server.json
     networks:
      - vessel
 networks:
@@ -61,6 +49,4 @@ volumes:
   vesselpgsql:
     driver: "local"
   vesselredis:
-    driver: "local"
-  vesselecho:
     driver: "local"

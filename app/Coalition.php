@@ -28,17 +28,17 @@ use Illuminate\Support\Carbon;
  * @property MembershipLevel defaultMembershipLevel
  * @property \Illuminate\Database\Eloquent\Collection membershipLevels
  * @property \Illuminate\Database\Eloquent\Collection memberships
- * @property \Illuminate\Database\Eloquent\Collection claims
+ * @property \Illuminate\Database\Eloquent\Collection replacementClaims
  * @property \Illuminate\Database\Eloquent\Collection invoices
  * @property \Illuminate\Database\Eloquent\Collection fulfilledInvoices
  * @property \Illuminate\Database\Eloquent\Collection overdueInvoices
  * @property \Illuminate\Database\Eloquent\Collection pendingInvoices
  * @property \Illuminate\Database\Eloquent\Collection defaultInvoices
- * @property \Illuminate\Database\Eloquent\Collection issuedInvoices
- * @property \Illuminate\Database\Eloquent\Collection fulfilledIssuedInvoices
- * @property \Illuminate\Database\Eloquent\Collection overdueIssuedInvoices
- * @property \Illuminate\Database\Eloquent\Collection pendingIssuedInvoices
- * @property \Illuminate\Database\Eloquent\Collection defaultIssuedInvoices
+ * @property \Illuminate\Database\Eloquent\Collection receivedInvoices
+ * @property \Illuminate\Database\Eloquent\Collection fulfilledReceivedInvoices
+ * @property \Illuminate\Database\Eloquent\Collection overdueReceivedInvoices
+ * @property \Illuminate\Database\Eloquent\Collection pendingReceivedInvoices
+ * @property \Illuminate\Database\Eloquent\Collection defaultReceivedInvoices
  * @property \Illuminate\Database\Eloquent\Collection notifications
  * @property \Illuminate\Database\Eloquent\Collection readNotifications
  * @property \Illuminate\Database\Eloquent\Collection unreadNotifications

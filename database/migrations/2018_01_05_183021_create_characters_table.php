@@ -18,10 +18,15 @@ class CreateCharactersTable extends Migration
             $table->uuid('user_id');
             $table->unsignedInteger('api_id');
             $table->string('name');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('user_id')->references('id')->on('users');
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER characters_updated_at_modtime 
+            BEFORE UPDATE ON characters FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

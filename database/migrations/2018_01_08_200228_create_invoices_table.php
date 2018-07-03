@@ -25,8 +25,13 @@ class CreateInvoicesTable extends Migration
             $table->decimal('total', 20);
             $table->dateTime('due_date');
             $table->dateTime('hard_due_date');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER invoices_updated_at_modtime 
+            BEFORE UPDATE ON invoices FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

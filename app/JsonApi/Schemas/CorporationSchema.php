@@ -76,7 +76,7 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
             ],
 
-            'claims' => [
+            'replacementClaims' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
@@ -106,27 +106,27 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
             ],
 
-            'issuedInvoices' => [
+            'receivedInvoices' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
 
-            'fulfilledIssuedInvoices' => [
+            'fulfilledReceivedInvoices' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
 
-            'overdueIssuedInvoices' => [
+            'overdueReceivedInvoices' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
 
-            'pendingIssuedInvoices' => [
+            'pendingReceivedInvoices' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
 
-            'defaultIssuedInvoices' => [
+            'defaultReceivedInvoices' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],

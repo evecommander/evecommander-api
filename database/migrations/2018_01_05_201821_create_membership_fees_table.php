@@ -19,8 +19,13 @@ class CreateMembershipFeesTable extends Migration
             $table->string('organization_type')->index();
             $table->enum('amount_type', ['fixed', 'percent', 'per_member']);
             $table->decimal('amount', 20)->comment('If amount_type is fixed, amount is in ISK; If percent, amount is a percentage; If per_member, amount is fixed but multiplied by how many members the target has.');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER membership_fees_updated_at_modtime 
+            BEFORE UPDATE ON membership_fees FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

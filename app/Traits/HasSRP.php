@@ -11,7 +11,7 @@ use App\ReplacementClaim;
  */
 trait HasSRP
 {
-    public function claims()
+    public function replacementClaims()
     {
         return $this->morphMany(ReplacementClaim::class, 'organization');
     }

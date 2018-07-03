@@ -21,8 +21,13 @@ class CreateBillingConditionsTable extends Migration
             $table->text('description');
             $table->enum('type', ['joining', 'exit', 'min_members', 'max_members', 'min_amount', 'max_amount']);
             $table->unsignedInteger('quantity')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER billing_conditions_updated_at_modtime 
+            BEFORE UPDATE ON billing_conditions FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

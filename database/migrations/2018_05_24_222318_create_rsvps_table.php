@@ -14,15 +14,23 @@ class CreateRsvpsTable extends Migration
     public function up()
     {
         Schema::create('rsvps', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->uuid('fleet_id');
             $table->uuid('character_id');
             $table->enum('response', [1, 0, -1]);
             $table->text('notes');
             $table->boolean('confirmed');
             $table->text('confirmation_notes');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+
+            $table->foreign('fleet_id')->references('id')->on('fleets');
+            $table->foreign('character_id')->references('id')->on('characters');
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER rsvps_updated_at_modtime 
+            BEFORE UPDATE ON rsvps FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

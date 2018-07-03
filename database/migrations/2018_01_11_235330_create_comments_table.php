@@ -19,10 +19,15 @@ class CreateCommentsTable extends Migration
             $table->string('commentable_type')->index();
             $table->uuid('character_id');
             $table->text('text');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('character_id')->references('id')->on('characters');
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER comments_updated_at_modtime 
+            BEFORE UPDATE ON comments FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

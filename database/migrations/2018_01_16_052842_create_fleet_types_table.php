@@ -15,12 +15,17 @@ class CreateFleetTypesTable extends Migration
     {
         Schema::create('fleet_types', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('organization_id');
-            $table->string('organization_type');
+            $table->uuid('organization_id')->index();
+            $table->string('organization_type')->index();
             $table->string('name');
             $table->text('description');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER fleet_types_updated_at_modtime 
+            BEFORE UPDATE ON fleet_types FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**
