@@ -26,9 +26,10 @@ class CoalitionPolicy implements ResourcePolicyInterface
         AuthorizesNotificationsRelation;
 
     /**
-     * @param User $user
-     * @param string $type
+     * @param User    $user
+     * @param string  $type
      * @param Request $request
+     *
      * @return bool
      */
     public function index(User $user, string $type, Request $request): bool
@@ -39,10 +40,11 @@ class CoalitionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the coalition.
      *
-     * @param  User    $user
-     * @param  Model   $condition
-     * @param  Request $request
-     * @return boolean
+     * @param User    $user
+     * @param Model   $condition
+     * @param Request $request
+     *
+     * @return bool
      */
     public function read(User $user, Model $condition, Request $request): bool
     {
@@ -50,16 +52,17 @@ class CoalitionPolicy implements ResourcePolicyInterface
         /** @var Character $character */
         $character = Character::find($request->header(CheckCharacter::CHARACTER_HEADER))->load('corporation.alliance.coalition');
 
-        /** @var Coalition $coalition */
+        /* @var Coalition $coalition */
         return $character->corporation->alliance->coalition->id === $coalition->id;
     }
 
     /**
      * Determine whether the user can create coalition.
      *
-     * @param User $user
-     * @param string $type
+     * @param User    $user
+     * @param string  $type
      * @param Request $request
+     *
      * @return bool
      */
     public function create(User $user, string $type, Request $request): bool
@@ -70,42 +73,45 @@ class CoalitionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the coalition.
      *
-     * @param  User    $user
-     * @param  Model   $condition
-     * @param  Request $request
-     * @return boolean
+     * @param User    $user
+     * @param Model   $condition
+     * @param Request $request
+     *
+     * @return bool
      */
     public function update(User $user, Model $condition, Request $request): bool
     {
         /** @var Character $character */
         $character = Character::find($request->header(CheckCharacter::CHARACTER_HEADER));
 
-        /** @var Coalition $coalition */
+        /* @var Coalition $coalition */
         return $character->hasPermission('update', $coalition);
     }
 
     /**
      * Determine whether the user can delete the coalition.
      *
-     * @param  User    $user
-     * @param  Model   $condition
-     * @param  Request $request
-     * @return boolean
+     * @param User    $user
+     * @param Model   $condition
+     * @param Request $request
+     *
+     * @return bool
      */
     public function delete(User $user, Model $condition, Request $request): bool
     {
         /** @var Character $character */
         $character = Character::find($request->header(CheckCharacter::CHARACTER_HEADER));
 
-        /** @var Coalition $coalition */
+        /* @var Coalition $coalition */
         return $character->hasPermission('delete', $coalition);
     }
 
     /**
      * Determine whether the user can view the alliances relation.
      *
-     * @param  Coalition $coalition
-     * @param  Request $request
+     * @param Coalition $coalition
+     * @param Request   $request
+     *
      * @return bool
      */
     public function readAlliances(Coalition $coalition, Request $request): bool
@@ -116,8 +122,9 @@ class CoalitionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can modify the alliances relation.
      *
-     * @param  Coalition $coalition
-     * @param  Request $request
+     * @param Coalition $coalition
+     * @param Request   $request
+     *
      * @return bool
      */
     public function modifyAlliances(Coalition $coalition, Request $request): bool
@@ -128,8 +135,9 @@ class CoalitionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the coalition relation.
      *
-     * @param  Coalition $coalition
-     * @param  Request $request
+     * @param Coalition $coalition
+     * @param Request   $request
+     *
      * @return bool
      */
     public function readCoalition(Coalition $coalition, Request $request): bool
@@ -140,8 +148,9 @@ class CoalitionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can modify the coalition relation.
      *
-     * @param  Coalition $coalition
-     * @param  Request $request
+     * @param Coalition $coalition
+     * @param Request   $request
+     *
      * @return bool
      */
     public function modifyCoalition(Coalition $coalition, Request $request): bool

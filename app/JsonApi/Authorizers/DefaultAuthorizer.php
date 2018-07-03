@@ -111,15 +111,17 @@ class DefaultAuthorizer extends AbstractAuthorizer
      *
      * `$record` will be the post domain record (object) and `$field` will be the string `comments`.
      *
-     * @param object $record
-     *      the domain record.
-     * @param string $field
-     *      the JSON API field name for the relationship.
+     * @param object  $record
+     *                         the domain record.
+     * @param string  $field
+     *                         the JSON API field name for the relationship.
      * @param Request $request
-     *      the inbound request.
-     * @return void
+     *                         the inbound request.
+     *
      * @throws AuthenticationException|AuthorizationException
-     *      if the request is not authorized.
+     *                                                        if the request is not authorized.
+     *
+     * @return void
      */
     public function readRelationship($record, $field, $request)
     {
@@ -139,15 +141,17 @@ class DefaultAuthorizer extends AbstractAuthorizer
      *
      * `$record` will be the post domain record (object) and `$field` will be the string `comments`.
      *
-     * @param object $record
-     *      the domain record.
-     * @param string $field
-     *      the JSON API field name for the relationship.
+     * @param object  $record
+     *                         the domain record.
+     * @param string  $field
+     *                         the JSON API field name for the relationship.
      * @param Request $request
-     *      the inbound request.
-     * @return void
+     *                         the inbound request.
+     *
      * @throws AuthenticationException|AuthorizationException
-     *      if the request is not authorized.
+     *                                                        if the request is not authorized.
+     *
+     * @return void
      */
     public function modifyRelationship($record, $field, $request)
     {

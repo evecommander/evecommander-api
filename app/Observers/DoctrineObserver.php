@@ -11,7 +11,8 @@ class DoctrineObserver
     /**
      * Handle to the doctrine "creating" event.
      *
-     * @param  \App\Doctrine  $doctrine
+     * @param \App\Doctrine $doctrine
+     *
      * @return void
      */
     public function creating(Doctrine $doctrine)
@@ -25,7 +26,8 @@ class DoctrineObserver
     /**
      * Handle the doctrine "updating" event.
      *
-     * @param  \App\Doctrine  $doctrine
+     * @param \App\Doctrine $doctrine
+     *
      * @return void
      */
     public function updating(Doctrine $doctrine)

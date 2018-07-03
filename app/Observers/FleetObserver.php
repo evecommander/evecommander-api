@@ -11,7 +11,8 @@ class FleetObserver
     /**
      * Handle to the fleet "creating" event.
      *
-     * @param  \App\Fleet  $fleet
+     * @param \App\Fleet $fleet
+     *
      * @return void
      */
     public function creating(Fleet $fleet)
@@ -25,7 +26,8 @@ class FleetObserver
     /**
      * Handle the fleet "updating" event.
      *
-     * @param  \App\Fleet  $fleet
+     * @param \App\Fleet $fleet
+     *
      * @return void
      */
     public function updating(Fleet $fleet)

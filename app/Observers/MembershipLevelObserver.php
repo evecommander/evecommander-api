@@ -11,7 +11,8 @@ class MembershipLevelObserver
     /**
      * Handle to the membership level "creating" event.
      *
-     * @param  \App\MembershipLevel  $membershipLevel
+     * @param \App\MembershipLevel $membershipLevel
+     *
      * @return void
      */
     public function creating(MembershipLevel $membershipLevel)
@@ -25,7 +26,8 @@ class MembershipLevelObserver
     /**
      * Handle the membership level "updating" event.
      *
-     * @param  \App\MembershipLevel  $membershipLevel
+     * @param \App\MembershipLevel $membershipLevel
+     *
      * @return void
      */
     public function updating(MembershipLevel $membershipLevel)

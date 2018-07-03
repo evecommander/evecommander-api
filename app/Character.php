@@ -96,10 +96,11 @@ class Character extends Model
     }
 
     /**
-     * Returns whether the character has a given permission for a given organization
+     * Returns whether the character has a given permission for a given organization.
      *
-     * @param string $slug
+     * @param string       $slug
      * @param Organization $organization
+     *
      * @return bool
      */
     public function hasPermission(string $slug, Organization $organization)

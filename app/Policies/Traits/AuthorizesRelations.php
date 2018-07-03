@@ -15,11 +15,12 @@ trait AuthorizesRelations
     /**
      * Determine whether the user can read the given relationship.
      *
-     * @param  User    $user
-     * @param  Model   $resource
-     * @param  string  $relation
-     * @param  Request $request
-     * @return boolean
+     * @param User    $user
+     * @param Model   $resource
+     * @param string  $relation
+     * @param Request $request
+     *
+     * @return bool
      */
     public function readRelationship(User $user, Model $resource, string $relation, Request $request): bool
     {
@@ -29,10 +30,11 @@ trait AuthorizesRelations
     /**
      * Determine whether the user can modify the given relationship.
      *
-     * @param  User    $user
-     * @param  Model   $resource
-     * @param  string  $relation
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $resource
+     * @param string  $relation
+     * @param Request $request
+     *
      * @return bool
      */
     public function modifyRelationship(User $user, Model $resource, string $relation, Request $request): bool
@@ -41,10 +43,11 @@ trait AuthorizesRelations
     }
 
     /**
-     * @param  Model   $resource
-     * @param  string  $relation
-     * @param  string  $action
-     * @param  Request $request
+     * @param Model   $resource
+     * @param string  $relation
+     * @param string  $action
+     * @param Request $request
+     *
      * @return bool
      */
     protected function authorizeRelation(Model $resource, string $relation, string $action, Request $request): bool

@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         $api->resource('characters', [
             'controller' => true,
-            'has-one' => [
+            'has-one'    => [
                 'user'  => ['except' => 'replace'],
                 'token' => ['except' => 'replace'],
             ],

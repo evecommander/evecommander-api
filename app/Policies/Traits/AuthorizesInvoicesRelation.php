@@ -9,7 +9,8 @@ trait AuthorizesInvoicesRelation
 {
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return bool
      */
     public function readFulfilledInvoices(Organization $organization, Request $request)
@@ -27,7 +28,8 @@ trait AuthorizesInvoicesRelation
 
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return bool
      */
     public function readOverdueInvoices(Organization $organization, Request $request)
@@ -45,7 +47,8 @@ trait AuthorizesInvoicesRelation
 
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return bool
      */
     public function readPendingInvoices(Organization $organization, Request $request)
@@ -63,7 +66,8 @@ trait AuthorizesInvoicesRelation
 
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return bool
      */
     public function readDefaultInvoices(Organization $organization, Request $request)

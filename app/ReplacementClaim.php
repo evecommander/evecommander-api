@@ -55,7 +55,7 @@ class ReplacementClaim extends Model
      *
      * @param ReplacementClaim $model
      */
-    protected static function onCreate(ReplacementClaim $model)
+    protected static function onCreate(self $model)
     {
         $model->code = 'RC-'.substr(bin2hex(random_bytes(16)), 0, 16);
     }

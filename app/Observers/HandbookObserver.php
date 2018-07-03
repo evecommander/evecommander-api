@@ -11,7 +11,8 @@ class HandbookObserver
     /**
      * Handle to the handbook "creating" event.
      *
-     * @param  \App\Handbook  $handbook
+     * @param \App\Handbook $handbook
+     *
      * @return void
      */
     public function creating(Handbook $handbook)
@@ -25,7 +26,8 @@ class HandbookObserver
     /**
      * Handle the handbook "updating" event.
      *
-     * @param  \App\Handbook  $handbook
+     * @param \App\Handbook $handbook
+     *
      * @return void
      */
     public function updating(Handbook $handbook)
