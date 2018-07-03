@@ -9,7 +9,8 @@ trait AuthorizesNotificationsRelation
 {
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return bool
      */
     public function readReadNotification(Organization $organization, Request $request)
@@ -19,7 +20,8 @@ trait AuthorizesNotificationsRelation
 
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return bool
      */
     public function modifyReadNotifications(Organization $organization, Request $request)
@@ -29,7 +31,8 @@ trait AuthorizesNotificationsRelation
 
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return bool
      */
     public function readUnreadNotification(Organization $organization, Request $request)
@@ -39,7 +42,8 @@ trait AuthorizesNotificationsRelation
 
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return bool
      */
     public function modifyUnreadNotifications(Organization $organization, Request $request)

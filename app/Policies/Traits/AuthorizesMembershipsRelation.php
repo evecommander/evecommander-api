@@ -9,7 +9,8 @@ trait AuthorizesMembershipsRelation
 {
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return bool
      */
     public function modifyMembers(Organization $organization, Request $request)

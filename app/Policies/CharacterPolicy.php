@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
+use App\Character;
 use App\Policies\Interfaces\ResourcePolicyInterface;
 use App\User;
-use App\Character;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -20,13 +20,14 @@ class CharacterPolicy implements ResourcePolicyInterface
         'overdueInvoices',
         'pendingInvoices',
         'defaultInvoices',
-        'corporation'
+        'corporation',
     ];
 
     /**
-     * @param User $user
-     * @param string $type
+     * @param User    $user
+     * @param string  $type
      * @param Request $request
+     *
      * @return bool
      */
     public function index(User $user, string $type, Request $request): bool
@@ -37,9 +38,10 @@ class CharacterPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the character.
      *
-     * @param User $user
-     * @param Model $character
+     * @param User    $user
+     * @param Model   $character
      * @param Request $request
+     *
      * @return bool
      */
     public function read(User $user, Model $character, Request $request): bool
@@ -50,9 +52,10 @@ class CharacterPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create characters.
      *
-     * @param User $user
-     * @param string $type
+     * @param User    $user
+     * @param string  $type
      * @param Request $request
+     *
      * @return bool
      */
     public function create(User $user, string $type, Request $request): bool
@@ -63,53 +66,57 @@ class CharacterPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the character.
      *
-     * @param  User    $user
-     * @param  Model   $character
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $character
+     * @param Request $request
+     *
      * @return bool
      */
     public function update(User $user, Model $character, Request $request): bool
     {
-        /** @var Character $character */
+        /* @var Character $character */
         return $user->characters()->where('characters.id', '=', $character->id)->exists();
     }
 
     /**
      * Determine whether the user can delete the character.
      *
-     * @param  User    $user
-     * @param  Model   $character
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $character
+     * @param Request $request
+     *
      * @return bool
      */
     public function delete(User $user, Model $character, Request $request): bool
     {
-        /** @var Character $character */
+        /* @var Character $character */
         return $user->characters()->where('characters.id', '=', $character->id)->exists();
     }
 
     /**
      * Determine whether the user can read the relationship.
      *
-     * @param  User    $user
-     * @param  Model   $character
-     * @param  string  $relation
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $character
+     * @param string  $relation
+     * @param Request $request
+     *
      * @return bool
      */
     public function readRelationship(User $user, Model $character, string $relation, Request $request): bool
     {
-        /** @var Character $character */
+        /* @var Character $character */
         return $user->characters()->where('characters.id', '=', $character->id)->exists();
     }
 
     /**
      * Determine whether the user can modify the relationship.
      *
-     * @param  User    $user
-     * @param  Model   $character
-     * @param  string  $relation
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $character
+     * @param string  $relation
+     * @param Request $request
+     *
      * @return bool
      */
     public function modifyRelationship(User $user, Model $character, string $relation, Request $request): bool
@@ -118,7 +125,7 @@ class CharacterPolicy implements ResourcePolicyInterface
             return false;
         }
 
-        /** @var Character $character */
+        /* @var Character $character */
         return $user->characters()->where('characters.id', '=', $character->id)->exists();
     }
 }

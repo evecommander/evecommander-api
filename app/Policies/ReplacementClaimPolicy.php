@@ -10,8 +10,8 @@ use App\Corporation;
 use App\Http\Middleware\CheckCharacter;
 use App\Policies\Interfaces\ResourcePolicyInterface;
 use App\Policies\Traits\AuthorizesRelations;
-use App\User;
 use App\ReplacementClaim;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -22,9 +22,10 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User $user
-     * @param string $type
+     * @param User    $user
+     * @param string  $type
      * @param Request $request
+     *
      * @return bool
      */
     public function index(User $user, string $type, Request $request): bool
@@ -35,23 +36,25 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the replacement claim.
      *
-     * @param  User    $user
-     * @param  Model   $replacementClaim
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $replacementClaim
+     * @param Request $request
+     *
      * @return bool
      */
     public function read(User $user, Model $replacementClaim, Request $request): bool
     {
-        /** @var ReplacementClaim $replacementClaim */
+        /* @var ReplacementClaim $replacementClaim */
         return $this->authorizeRelation($replacementClaim->organization, 'replacement_claims', 'read', $request);
     }
 
     /**
      * Determine whether the user can create replacement claims.
      *
-     * @param User $user
-     * @param string $type
+     * @param User    $user
+     * @param string  $type
      * @param Request $request
+     *
      * @return bool
      */
     public function create(User $user, string $type, Request $request): bool
@@ -86,34 +89,37 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the replacement claim.
      *
-     * @param  User    $user
-     * @param  Model   $replacementClaim
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $replacementClaim
+     * @param Request $request
+     *
      * @return bool
      */
     public function update(User $user, Model $replacementClaim, Request $request): bool
     {
-        /** @var ReplacementClaim $replacementClaim */
+        /* @var ReplacementClaim $replacementClaim */
         return $this->authorizeRelation($replacementClaim->organization, 'replacement_claims', 'modify', $request);
     }
 
     /**
      * Determine whether the user can delete the replacement claim.
      *
-     * @param  User    $user
-     * @param  Model   $replacementClaim
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $replacementClaim
+     * @param Request $request
+     *
      * @return bool
      */
     public function delete(User $user, Model $replacementClaim, Request $request): bool
     {
-        /** @var ReplacementClaim $replacementClaim */
+        /* @var ReplacementClaim $replacementClaim */
         return $this->authorizeRelation($replacementClaim->organization, 'replacement_claims', 'modify', $request);
     }
 
     /**
      * @param ReplacementClaim $replacementClaim
-     * @param Request $request
+     * @param Request          $request
+     *
      * @return bool
      */
     public function readOrganization(ReplacementClaim $replacementClaim, Request $request): bool
@@ -123,7 +129,8 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
 
     /**
      * @param ReplacementClaim $replacementClaim
-     * @param Request $request
+     * @param Request          $request
+     *
      * @return bool
      */
     public function modifyOrganization(ReplacementClaim $replacementClaim, Request $request): bool
@@ -133,7 +140,8 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
 
     /**
      * @param ReplacementClaim $replacementClaim
-     * @param Request $request
+     * @param Request          $request
+     *
      * @return bool
      */
     public function readCharacter(ReplacementClaim $replacementClaim, Request $request): bool
@@ -143,7 +151,8 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
 
     /**
      * @param ReplacementClaim $replacementClaim
-     * @param Request $request
+     * @param Request          $request
+     *
      * @return bool
      */
     public function modifyCharacter(ReplacementClaim $replacementClaim, Request $request): bool
@@ -153,7 +162,8 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
 
     /**
      * @param ReplacementClaim $replacementClaim
-     * @param Request $request
+     * @param Request          $request
+     *
      * @return bool
      */
     public function readComments(ReplacementClaim $replacementClaim, Request $request): bool
@@ -163,7 +173,8 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
 
     /**
      * @param ReplacementClaim $replacementClaim
-     * @param Request $request
+     * @param Request          $request
+     *
      * @return bool
      */
     public function modifyComments(ReplacementClaim $replacementClaim, Request $request): bool
@@ -173,7 +184,8 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
 
     /**
      * @param ReplacementClaim $replacementClaim
-     * @param Request $request
+     * @param Request          $request
+     *
      * @return bool
      */
     public function readFitting(ReplacementClaim $replacementClaim, Request $request): bool
@@ -183,7 +195,8 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
 
     /**
      * @param ReplacementClaim $replacementClaim
-     * @param Request $request
+     * @param Request          $request
+     *
      * @return bool
      */
     public function modifyFitting(ReplacementClaim $replacementClaim, Request $request): bool

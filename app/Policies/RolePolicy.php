@@ -5,8 +5,8 @@ namespace App\Policies;
 use App\Abstracts\Organization;
 use App\Policies\Interfaces\ResourcePolicyInterface;
 use App\Policies\Traits\AuthorizesRelations;
-use App\User;
 use App\Role;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -16,9 +16,10 @@ class RolePolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User $user
-     * @param string $type
+     * @param User    $user
+     * @param string  $type
      * @param Request $request
+     *
      * @return bool
      */
     public function index(User $user, string $type, Request $request): bool
@@ -29,23 +30,25 @@ class RolePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the role.
      *
-     * @param  User    $user
-     * @param  Model   $role
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $role
+     * @param Request $request
+     *
      * @return bool
      */
     public function read(User $user, Model $role, Request $request): bool
     {
-        /** @var Role $role */
+        /* @var Role $role */
         return $this->authorizeRelation($role->organization, 'roles', 'read', $request);
     }
 
     /**
      * Determine whether the user can create roles.
      *
-     * @param User $user
-     * @param string $type
+     * @param User    $user
+     * @param string  $type
      * @param Request $request
+     *
      * @return bool
      */
     public function create(User $user, string $type, Request $request): bool
@@ -64,34 +67,37 @@ class RolePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the role.
      *
-     * @param  User    $user
-     * @param  Model   $role
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $role
+     * @param Request $request
+     *
      * @return bool
      */
     public function update(User $user, Model $role, Request $request): bool
     {
-        /** @var Role $role */
+        /* @var Role $role */
         return $this->authorizeRelation($role->organization, 'roles', 'modify', $request);
     }
 
     /**
      * Determine whether the user can delete the role.
      *
-     * @param  User    $user
-     * @param  Model   $role
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $role
+     * @param Request $request
+     *
      * @return bool
      */
     public function delete(User $user, Model $role, Request $request): bool
     {
-        /** @var Role $role */
+        /* @var Role $role */
         return $this->authorizeRelation($role->organization, 'roles', 'modify', $request);
     }
 
     /**
-     * @param Role $role
+     * @param Role    $role
      * @param Request $request
+     *
      * @return bool
      */
     public function readOrganization(Role $role, Request $request): bool
@@ -100,8 +106,9 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param Role $role
+     * @param Role    $role
      * @param Request $request
+     *
      * @return bool
      */
     public function modifyOrganization(Role $role, Request $request): bool
@@ -110,8 +117,9 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param Role $role
+     * @param Role    $role
      * @param Request $request
+     *
      * @return bool
      */
     public function readPermissions(Role $role, Request $request): bool
@@ -120,8 +128,9 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param Role $role
+     * @param Role    $role
      * @param Request $request
+     *
      * @return bool
      */
     public function modifyPermissions(Role $role, Request $request): bool
@@ -130,8 +139,9 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param Role $role
+     * @param Role    $role
      * @param Request $request
+     *
      * @return bool
      */
     public function readCharacters(Role $role, Request $request): bool
@@ -140,8 +150,9 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param Role $role
+     * @param Role    $role
      * @param Request $request
+     *
      * @return bool
      */
     public function modifyCharacters(Role $role, Request $request): bool

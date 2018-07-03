@@ -11,7 +11,7 @@ trait AuthorizesDefaultMembershipLevelRelation
      * Determine whether the user can read the default membership level.
      *
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
      *
      * @return bool
      */
@@ -24,7 +24,7 @@ trait AuthorizesDefaultMembershipLevelRelation
      * Determine whether the user can modify the default membership level.
      *
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
      *
      * @return bool
      */

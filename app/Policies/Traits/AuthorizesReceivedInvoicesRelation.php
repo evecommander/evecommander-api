@@ -21,7 +21,8 @@ trait AuthorizesReceivedInvoicesRelation
 
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return mixed
      */
     public function readFulfilledReceivedInvoices(Organization $organization, Request $request)
@@ -39,7 +40,8 @@ trait AuthorizesReceivedInvoicesRelation
 
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return mixed
      */
     public function readOverdueReceivedInvoices(Organization $organization, Request $request)
@@ -57,7 +59,8 @@ trait AuthorizesReceivedInvoicesRelation
 
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return mixed
      */
     public function readPendingReceivedInvoices(Organization $organization, Request $request)
@@ -75,7 +78,8 @@ trait AuthorizesReceivedInvoicesRelation
 
     /**
      * @param Organization $organization
-     * @param Request $request
+     * @param Request      $request
+     *
      * @return mixed
      */
     public function readDefaultReceivedInvoices(Organization $organization, Request $request)

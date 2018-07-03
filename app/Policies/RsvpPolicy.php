@@ -6,8 +6,8 @@ use App\Fleet;
 use App\Http\Middleware\CheckCharacter;
 use App\Policies\Interfaces\ResourcePolicyInterface;
 use App\Policies\Traits\AuthorizesRelations;
-use App\User;
 use App\Rsvp;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -17,9 +17,10 @@ class RsvpPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User $user
-     * @param string $type
+     * @param User    $user
+     * @param string  $type
      * @param Request $request
+     *
      * @return bool
      */
     public function index(User $user, string $type, Request $request): bool
@@ -30,23 +31,25 @@ class RsvpPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the rsvp.
      *
-     * @param  User    $user
-     * @param  Model   $rsvp
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $rsvp
+     * @param Request $request
+     *
      * @return bool
      */
     public function read(User $user, Model $rsvp, Request $request): bool
     {
-        /** @var Rsvp $rsvp */
+        /* @var Rsvp $rsvp */
         return $user->can('read', [$rsvp->fleet, $request]);
     }
 
     /**
      * Determine whether the user can create rsvps.
      *
-     * @param User $user
-     * @param string $type
+     * @param User    $user
+     * @param string  $type
      * @param Request $request
+     *
      * @return bool
      */
     public function create(User $user, string $type, Request $request): bool
@@ -62,34 +65,37 @@ class RsvpPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the rsvp.
      *
-     * @param  User    $user
-     * @param  Model   $rsvp
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $rsvp
+     * @param Request $request
+     *
      * @return bool
      */
     public function update(User $user, Model $rsvp, Request $request): bool
     {
-        /** @var Rsvp $rsvp */
+        /* @var Rsvp $rsvp */
         return $rsvp->character_id === $request->header(CheckCharacter::CHARACTER_HEADER);
     }
 
     /**
      * Determine whether the user can delete the rsvp.
      *
-     * @param  User    $user
-     * @param  Model   $rsvp
-     * @param  Request $request
+     * @param User    $user
+     * @param Model   $rsvp
+     * @param Request $request
+     *
      * @return bool
      */
     public function delete(User $user, Model $rsvp, Request $request): bool
     {
-        /** @var Rsvp $rsvp */
+        /* @var Rsvp $rsvp */
         return $rsvp->character_id === $request->header(CheckCharacter::CHARACTER_HEADER);
     }
 
     /**
-     * @param Rsvp $rsvp
+     * @param Rsvp    $rsvp
      * @param Request $request
+     *
      * @return bool
      */
     public function readCharacter(Rsvp $rsvp, Request $request): bool
@@ -98,8 +104,9 @@ class RsvpPolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param Rsvp $rsvp
+     * @param Rsvp    $rsvp
      * @param Request $request
+     *
      * @return bool
      */
     public function modifyCharacter(Rsvp $rsvp, Request $request): bool
@@ -108,8 +115,9 @@ class RsvpPolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param Rsvp $rsvp
+     * @param Rsvp    $rsvp
      * @param Request $request
+     *
      * @return bool
      */
     public function readFleet(Rsvp $rsvp, Request $request): bool
@@ -118,8 +126,9 @@ class RsvpPolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param Rsvp $rsvp
+     * @param Rsvp    $rsvp
      * @param Request $request
+     *
      * @return bool
      */
     public function modifyFleet(Rsvp $rsvp, Request $request): bool

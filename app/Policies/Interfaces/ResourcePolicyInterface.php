@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 interface ResourcePolicyInterface
 {
     /**
-     * Determine whether the user can view an index list of the given type
+     * Determine whether the user can view an index list of the given type.
      *
      * @param User    $user
      * @param string  $type
      * @param Request $request
+     *
      * @return bool
      */
     public function index(User $user, string $type, Request $request): bool;
@@ -24,6 +25,7 @@ interface ResourcePolicyInterface
      * @param User    $user
      * @param Model   $record
      * @param Request $request
+     *
      * @return bool
      */
     public function read(User $user, Model $record, Request $request): bool;
@@ -34,6 +36,7 @@ interface ResourcePolicyInterface
      * @param User    $user
      * @param string  $type
      * @param Request $request
+     *
      * @return bool
      */
     public function create(User $user, string $type, Request $request): bool;
@@ -44,6 +47,7 @@ interface ResourcePolicyInterface
      * @param User    $user
      * @param Model   $record
      * @param Request $request
+     *
      * @return bool
      */
     public function update(User $user, Model $record, Request $request): bool;
@@ -54,6 +58,7 @@ interface ResourcePolicyInterface
      * @param User    $user
      * @param Model   $record
      * @param Request $request
+     *
      * @return bool
      */
     public function delete(User $user, Model $record, Request $request): bool;
@@ -65,6 +70,7 @@ interface ResourcePolicyInterface
      * @param Model   $record
      * @param string  $relation
      * @param Request $request
+     *
      * @return bool
      */
     public function readRelationship(User $user, Model $record, string $relation, Request $request): bool;
@@ -76,6 +82,7 @@ interface ResourcePolicyInterface
      * @param Model   $record
      * @param string  $relation
      * @param Request $request
+     *
      * @return bool
      */
     public function modifyRelationship(User $user, Model $record, string $relation, Request $request): bool;

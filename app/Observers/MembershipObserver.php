@@ -11,7 +11,8 @@ class MembershipObserver
     /**
      * Handle to the membership "creating" event.
      *
-     * @param  \App\Membership  $membership
+     * @param \App\Membership $membership
+     *
      * @return void
      */
     public function creating(Membership $membership)
@@ -25,7 +26,8 @@ class MembershipObserver
     /**
      * Handle the membership "updating" event.
      *
-     * @param  \App\Membership  $membership
+     * @param \App\Membership $membership
+     *
      * @return void
      */
     public function updating(Membership $membership)

@@ -12,8 +12,9 @@ class CheckCharacter
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -23,10 +24,10 @@ class CheckCharacter
             return response()->json([
                 'errors' => [
                     [
-                        'title' => 'Missing character concerned in request',
+                        'title'  => 'Missing character concerned in request',
                         'detail' => 'A character was not included in the attempted request when one must be',
-                    ]
-                ]
+                    ],
+                ],
             ], 401);
         }
 
@@ -38,10 +39,10 @@ class CheckCharacter
             return response()->json([
                 'errors' => [
                     [
-                        'title' => 'Invalid Character',
+                        'title'  => 'Invalid Character',
                         'detail' => 'The character assigned to the request is not associated with the authenticated user',
-                    ]
-                ]
+                    ],
+                ],
             ], 403);
         }
 

@@ -34,6 +34,7 @@ class CharacterController extends JsonApiController
     public function refreshToken(Request $request, Character $character)
     {
         ProcessTokenRefresh::dispatch($character);
+
         return response()->setStatusCode(202);
     }
 }
