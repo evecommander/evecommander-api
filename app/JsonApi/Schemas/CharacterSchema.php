@@ -53,7 +53,7 @@ class CharacterSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
             ],
 
-            'claims' => [
+            'replacementClaims' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],

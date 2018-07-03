@@ -82,7 +82,7 @@ class Invoice extends Model
      *
      * @param Invoice $model
      */
-    protected static function onCreate(self $model)
+    protected static function onCreate(Invoice $model)
     {
         $model->code = 'I-'.substr(bin2hex(random_bytes(16)), 0, 16);
     }

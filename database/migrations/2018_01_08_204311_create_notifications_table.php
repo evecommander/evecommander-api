@@ -20,8 +20,13 @@ class CreateNotificationsTable extends Migration
             $table->string('notifiable_type')->index();
             $table->text('data');
             $table->timestamp('read_at')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER notifications_updated_at_modtime 
+            BEFORE UPDATE ON notifications FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

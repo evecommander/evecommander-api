@@ -24,11 +24,16 @@ class CreateReplacementClaimsTable extends Migration
             $table->string('killmail_hash');
             $table->decimal('total', 20);
             $table->enum('status', ['pending', 'contested', 'closed', 'payed'])->index();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('character_id')->references('id')->on('characters');
             $table->foreign('fitting_id')->references('id')->on('fittings');
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER replacement_claims_updated_at_modtime 
+            BEFORE UPDATE ON replacement_claims FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

@@ -21,11 +21,16 @@ class CreateRolesTable extends Migration
             $table->text('description');
             $table->uuid('created_by');
             $table->uuid('last_updated_by');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('created_by')->references('id')->on('characters');
             $table->foreign('last_updated_by')->references('id')->on('characters');
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER roles_updated_at_modtime 
+            BEFORE UPDATE ON roles FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

@@ -23,10 +23,10 @@ class CoalitionAdapter extends AbstractAdapter
         'overdueInvoices',
         'pendingInvoices',
         'defaultInvoices',
-        'fulfilledIssuedInvoices',
-        'overdueIssuedInvoices',
-        'pendingIssuedInvoices',
-        'defaultIssuedInvoices',
+        'fulfilledReceivedInvoices',
+        'overdueReceivedInvoices',
+        'pendingReceivedInvoices',
+        'defaultReceivedInvoices',
         'readNotifications',
         'unreadNotifications',
     ];
@@ -42,7 +42,7 @@ class CoalitionAdapter extends AbstractAdapter
         'defaultMembershipLevel',
         'membershipLevels',
         'memberships',
-        'claims',
+        'replacementClaims',
         'invoices',
         'fulfilledInvoices',
         'overdueInvoices',
@@ -53,11 +53,11 @@ class CoalitionAdapter extends AbstractAdapter
         'overdueInvoices',
         'pendingInvoices',
         'defaultInvoices',
-        'issuedInvoices',
-        'fulfilledIssuedInvoices',
-        'overdueIssuedInvoices',
-        'pendingIssuedInvoices',
-        'defaultIssuedInvoices',
+        'receivedInvoices',
+        'fulfilledReceivedInvoices',
+        'overdueReceivedInvoices',
+        'pendingReceivedInvoices',
+        'defaultReceivedInvoices',
         'notifications',
         'readNotifications',
         'unreadNotifications',
@@ -95,7 +95,7 @@ class CoalitionAdapter extends AbstractAdapter
         return $this->hasMany();
     }
 
-    public function claims()
+    public function replacementClaims()
     {
         return $this->hasMany();
     }
@@ -125,27 +125,27 @@ class CoalitionAdapter extends AbstractAdapter
         return $this->hasMany();
     }
 
-    public function issuedInvoices()
+    public function receivedInvoices()
     {
         return $this->hasMany();
     }
 
-    public function fulfilledIssuedInvoices()
+    public function fulfilledReceivedInvoices()
     {
         return $this->hasMany();
     }
 
-    public function overdueIssuedInvoices()
+    public function overdueReceivedInvoices()
     {
         return $this->hasMany();
     }
 
-    public function pendingIssuedInvoices()
+    public function pendingReceivedInvoices()
     {
         return $this->hasMany();
     }
 
-    public function defaultIssuedInvoices()
+    public function defaultReceivedInvoices()
     {
         return $this->hasMany();
     }

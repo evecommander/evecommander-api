@@ -25,12 +25,17 @@ class CreateFleetsTable extends Migration
             $table->dateTime('end_time')->nullable();
             $table->uuid('created_by');
             $table->uuid('last_updated_by');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('fleet_type_id')->references('id')->on('fleet_types');
             $table->foreign('created_by')->references('id')->on('characters');
             $table->foreign('last_updated_by')->references('id')->on('characters');
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER fleets_updated_at_modtime 
+            BEFORE UPDATE ON fleets FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

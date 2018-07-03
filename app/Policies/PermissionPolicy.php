@@ -2,58 +2,118 @@
 
 namespace App\Policies;
 
+use App\Policies\Interfaces\ResourcePolicyInterface;
+use App\Policies\Traits\AuthorizesRelations;
 use App\User;
 use App\Permission;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
-class PermissionPolicy
+class PermissionPolicy implements ResourcePolicyInterface
 {
-    use HandlesAuthorization;
+    use HandlesAuthorization, AuthorizesRelations;
+
+    /**
+     * @param User $user
+     * @param string $type
+     * @param Request $request
+     * @return bool
+     */
+    public function index(User $user, string $type, Request $request): bool
+    {
+        return false;
+    }
 
     /**
      * Determine whether the user can view the permission.
      *
-     * @param  \App\User  $user
-     * @param  \App\Permission  $permission
-     * @return mixed
+     * @param  User    $user
+     * @param  Model   $permission
+     * @param  Request $request
+     * @return bool
      */
-    public function view(User $user, Permission $permission)
+    public function read(User $user, Model $permission, Request $request): bool
     {
-        //
+        return true;
     }
 
     /**
      * Determine whether the user can create permissions.
      *
-     * @param  \App\User  $user
-     * @return mixed
+     * @param User $user
+     * @param string $type
+     * @param Request $request
+     * @return bool
      */
-    public function create(User $user)
+    public function create(User $user, string $type, Request $request): bool
     {
-        //
+        return false;
     }
 
     /**
      * Determine whether the user can update the permission.
      *
-     * @param  \App\User  $user
-     * @param  \App\Permission  $permission
-     * @return mixed
+     * @param  User    $user
+     * @param  Model   $permission
+     * @param  Request $request
+     * @return bool
      */
-    public function update(User $user, Permission $permission)
+    public function update(User $user, Model $permission, Request $request): bool
     {
-        //
+        return false;
     }
 
     /**
      * Determine whether the user can delete the permission.
      *
-     * @param  \App\User  $user
-     * @param  \App\Permission  $permission
-     * @return mixed
+     * @param  User    $user
+     * @param  Model   $permission
+     * @param  Request $request
+     * @return bool
      */
-    public function delete(User $user, Permission $permission)
+    public function delete(User $user, Model $permission, Request $request): bool
     {
-        //
+        return false;
+    }
+
+    /**
+     * @param Permission $permission
+     * @param Request $request
+     * @return bool
+     */
+    public function readMembershipLevels(Permission $permission, Request $request): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param Permission $permission
+     * @param Request $request
+     * @return bool
+     */
+    public function modifyMembershipLevels(Permission $permission, Request $request): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param Permission $permission
+     * @param Request $request
+     * @return bool
+     */
+    public function readRoles(Permission $permission, Request $request): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param Permission $permission
+     * @param Request $request
+     * @return bool
+     */
+    public function modifyRoles(Permission $permission, Request $request): bool
+    {
+        return false;
     }
 }

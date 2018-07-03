@@ -19,8 +19,13 @@ class CreateFleetTypesTable extends Migration
             $table->string('organization_type')->index();
             $table->string('name');
             $table->text('description');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER fleet_types_updated_at_modtime 
+            BEFORE UPDATE ON fleet_types FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

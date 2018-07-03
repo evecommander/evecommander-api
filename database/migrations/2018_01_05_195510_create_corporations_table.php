@@ -19,10 +19,15 @@ class CreateCorporationsTable extends Migration
             $table->string('name');
             $table->uuid('default_membership_level')->nullable();
             $table->jsonb('settings');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('default_membership_level')->references('id')->on('membership_levels');
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER corporations_updated_at_modtime 
+            BEFORE UPDATE ON corporations FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

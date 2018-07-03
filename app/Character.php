@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Abstracts\Organization;
 use App\Traits\BubblesNotifications;
 use App\Traits\IsMember;
 use App\Traits\ReceivesInvoices;
 use App\Traits\UuidTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -91,6 +93,23 @@ class Character extends Model
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * Returns whether the character has a given permission for a given organization
+     *
+     * @param string $slug
+     * @param Organization $organization
+     * @return bool
+     */
+    public function hasPermission(string $slug, Organization $organization)
+    {
+        return $this->roles()
+            ->where('organization_id', '=', $organization->id)
+            ->where('organization_type', '=', get_class($organization))
+            ->whereHas('permissions', function (Builder $query) use ($slug, $organization) {
+                $query->where('slug', '=', $slug);
+            })->exists();
     }
 
     /**

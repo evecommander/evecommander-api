@@ -19,10 +19,15 @@ class CreateOAuth2TokensTable extends Migration
             $table->string('access_token');
             $table->dateTime('expires_on');
             $table->string('refresh_token')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('character_id')->references('id')->on('characters');
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER o_auth2_tokens_updated_at_modtime 
+            BEFORE UPDATE ON o_auth2_tokens FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

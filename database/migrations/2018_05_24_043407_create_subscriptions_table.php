@@ -19,10 +19,15 @@ class CreateSubscriptionsTable extends Migration
             $table->uuid('organization_id')->index();
             $table->string('organization_type')->index();
             $table->jsonb('settings');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('character_id')->references('id')->on('characters');
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER subscriptions_updated_at_modtime 
+            BEFORE UPDATE ON subscriptions FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

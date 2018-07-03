@@ -20,10 +20,15 @@ class CreateInvoiceItemsTable extends Migration
             $table->text('description');
             $table->integer('quantity');
             $table->decimal('cost', 20);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('invoice_id')->references('id')->on('invoices');
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER invoice_items_updated_at_modtime 
+            BEFORE UPDATE ON invoice_items FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

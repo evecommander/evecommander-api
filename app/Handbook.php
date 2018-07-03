@@ -4,6 +4,7 @@ namespace App;
 
 use App\Abstracts\Organization;
 use App\Traits\HasComments;
+use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -30,7 +31,7 @@ use Illuminate\Support\Carbon;
  */
 class Handbook extends Model
 {
-    use HasComments;
+    use HasComments, UuidTrait;
 
     /**
      * Get relation between this handbook and the organization that owns it.

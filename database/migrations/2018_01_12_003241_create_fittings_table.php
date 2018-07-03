@@ -21,10 +21,15 @@ class CreateFittingsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->unsignedInteger('api_id')->index();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('doctrine_id')->references('id')->on('doctrines');
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER fittings_updated_at_modtime 
+            BEFORE UPDATE ON fittings FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

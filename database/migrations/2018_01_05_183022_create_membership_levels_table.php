@@ -23,11 +23,16 @@ class CreateMembershipLevelsTable extends Migration
             $table->enum('dues_structure', ['per_day', 'per_week', 'per_month', 'per_quarter', 'per_half', 'per_year', 'upon_joining']);
             $table->uuid('created_by');
             $table->uuid('last_updated_by');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('created_by')->references('id')->on('characters');
             $table->foreign('last_updated_by')->references('id')->on('characters');
         });
+
+        // add trigger to new table
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER membership_levels_updated_at_modtime 
+            BEFORE UPDATE ON membership_levels FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**

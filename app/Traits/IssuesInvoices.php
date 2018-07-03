@@ -17,7 +17,7 @@ trait IssuesInvoices
      *
      * @return MorphMany
      */
-    public function issuedInvoices()
+    public function receivedInvoices()
     {
         return $this->morphMany(Invoice::class, 'issuer');
     }
@@ -27,9 +27,9 @@ trait IssuesInvoices
      *
      * @return MorphMany
      */
-    public function fulfilledIssuedInvoices()
+    public function fulfilledReceivedInvoices()
     {
-        return $this->issuedInvoices()->where('state', Invoice::STATE_FULFILLED);
+        return $this->receivedInvoices()->where('state', Invoice::STATE_FULFILLED);
     }
 
     /**
@@ -37,9 +37,9 @@ trait IssuesInvoices
      *
      * @return MorphMany
      */
-    public function overdueIssuedInvoices()
+    public function overdueReceivedInvoices()
     {
-        return $this->issuedInvoices()->where('state', Invoice::STATE_OVERDUE);
+        return $this->receivedInvoices()->where('state', Invoice::STATE_OVERDUE);
     }
 
     /**
@@ -47,9 +47,9 @@ trait IssuesInvoices
      *
      * @return MorphMany
      */
-    public function pendingIssuedInvoices()
+    public function pendingReceivedInvoices()
     {
-        return $this->issuedInvoices()->where('state', Invoice::STATE_PENDING);
+        return $this->receivedInvoices()->where('state', Invoice::STATE_PENDING);
     }
 
     /**
@@ -57,8 +57,8 @@ trait IssuesInvoices
      *
      * @return MorphMany
      */
-    public function defaultIssuedInvoices()
+    public function defaultReceivedInvoices()
     {
-        return $this->issuedInvoices()->where('state', Invoice::STATE_IN_DEFAULT);
+        return $this->receivedInvoices()->where('state', Invoice::STATE_IN_DEFAULT);
     }
 }

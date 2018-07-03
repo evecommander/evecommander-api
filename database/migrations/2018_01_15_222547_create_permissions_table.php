@@ -18,7 +18,6 @@ class CreatePermissionsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('slug')->index();
-            $table->timestamps();
         });
     }
 
