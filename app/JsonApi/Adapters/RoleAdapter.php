@@ -26,6 +26,7 @@ class RoleAdapter extends AbstractAdapter
         'organization',
         'permissions',
         'characters',
+        'membershipLevels',
     ];
 
     /**
@@ -49,6 +50,11 @@ class RoleAdapter extends AbstractAdapter
     }
 
     public function characters()
+    {
+        return $this->hasMany();
+    }
+
+    public function membershipLevels()
     {
         return $this->hasMany();
     }

@@ -82,7 +82,7 @@ class MembershipLevelSchema extends SchemaProvider
                 },
             ],
 
-            'permissions' => [
+            'roles' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],

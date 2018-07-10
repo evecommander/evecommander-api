@@ -3,12 +3,10 @@
 namespace App;
 
 use App\Abstracts\Organization;
-use App\Traits\BubblesNotifications;
 use App\Traits\HasComments;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 
 /**
@@ -41,7 +39,23 @@ use Illuminate\Support\Carbon;
  */
 class Fleet extends Model
 {
-    use UuidTrait, Notifiable, BubblesNotifications, HasComments;
+    use UuidTrait, Notifiable, HasComments;
+
+    const STATUS_PENDING = 'pending';
+    const STATUS_STANDBY = 'standby';
+    const STATUS_FORM_UP = 'form-up';
+    const STATUS_IN_PROGRESS = 'in-progress';
+    const STATUS_COMPLETED = 'completed';
+    const STATUS_CANCELLED = 'cancelled';
+
+    const AVAILABLE_STATUSES = [
+        self::STATUS_PENDING,
+        self::STATUS_STANDBY,
+        self::STATUS_FORM_UP,
+        self::STATUS_IN_PROGRESS,
+        self::STATUS_COMPLETED,
+        self::STATUS_CANCELLED,
+    ];
 
     protected $dates = [
         'start_time',
@@ -49,15 +63,6 @@ class Fleet extends Model
         'created_at',
         'updated_at',
     ];
-
-    protected function getBubbleToModels(Notification $notification)
-    {
-        $rsvps = $this->rsvps()->where('response', '>=', 0)->with('character')->get();
-
-        return $rsvps->map(function (Rsvp $rsvp) {
-            return $rsvp->character;
-        });
-    }
 
     /**
      * Get relation between this fleet and the fleet type it belongs to.

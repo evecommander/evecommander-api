@@ -54,9 +54,10 @@ class Updated extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("The membership between {$this->membership->member->name}")
-                    ->line("and {$this->membership->organization->name} has been updated.")
-                    ->action('View Membership', url('/memberships/'.$this->membership->id));
+            ->subject('Membership Updated')
+            ->line("The membership between {$this->membership->member->name}")
+            ->line("and {$this->membership->organization->name} has been updated.")
+            ->action('View Membership', url('/memberships/'.$this->membership->id));
     }
 
     /**

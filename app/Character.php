@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Abstracts\Organization;
-use App\Traits\BubblesNotifications;
 use App\Traits\IsMember;
 use App\Traits\ReceivesInvoices;
 use App\Traits\UuidTrait;
@@ -41,9 +40,7 @@ use Illuminate\Support\Carbon;
  */
 class Character extends Model
 {
-    use UuidTrait, IsMember, ReceivesInvoices, Notifiable, BubblesNotifications;
-
-    public $bubbleToRelation = 'user';
+    use UuidTrait, IsMember, ReceivesInvoices, Notifiable;
 
     /**
      * Get the user that this character belongs to.

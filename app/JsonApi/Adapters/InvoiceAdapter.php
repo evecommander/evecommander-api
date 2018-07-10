@@ -31,6 +31,7 @@ class InvoiceAdapter extends AbstractAdapter
         'notifications',
         'readNotifications',
         'unreadNotifications',
+        'lastUpdatedBy',
     ];
 
     /**
@@ -81,5 +82,10 @@ class InvoiceAdapter extends AbstractAdapter
     public function unreadNotifications()
     {
         return $this->hasMany();
+    }
+
+    public function lastUpdatedBy()
+    {
+        return $this->belongsTo();
     }
 }

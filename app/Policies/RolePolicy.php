@@ -159,4 +159,26 @@ class RolePolicy implements ResourcePolicyInterface
     {
         return false;
     }
+
+    /**
+     * @param Role    $role
+     * @param Request $request
+     *
+     * @return bool
+     */
+    public function readMembershipLevels(Role $role, Request $request): bool
+    {
+        return $this->read($request->user(), $role, $request);
+    }
+
+    /**
+     * @param Role    $role
+     * @param Request $request
+     *
+     * @return bool
+     */
+    public function modifyMembershipLevels(Role $role, Request $request): bool
+    {
+        return false;
+    }
 }

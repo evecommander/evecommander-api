@@ -58,9 +58,10 @@ class CommentPosted extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("{$this->comment->character->name} posted a comment on a membership between")
-                    ->line("{$this->membership->member->name} and {$this->membership->organization->name}")
-                    ->action('View Membership', url('/memberships/'.$this->membership->id));
+            ->subject('Comment Posted')
+            ->line("{$this->comment->character->name} posted a comment on a membership between")
+            ->line("{$this->membership->member->name} and {$this->membership->organization->name}")
+            ->action('View Membership', url('/memberships/'.$this->membership->id));
     }
 
     /**

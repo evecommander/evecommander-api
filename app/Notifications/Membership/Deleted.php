@@ -54,9 +54,10 @@ class Deleted extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("The membership between {$this->membership->member->name} and {$this->membership->organization->name}")
-                    ->line('has been deactivated.')
-                    ->action('View Deactivated Membership', url('/memberships/'.$this->membership->id));
+            ->subject('Membership Deleted')
+            ->line("The membership between {$this->membership->member->name} and {$this->membership->organization->name}")
+            ->line('has been deactivated.')
+            ->action('View Deactivated Membership', url('/memberships/'.$this->membership->id));
     }
 
     /**

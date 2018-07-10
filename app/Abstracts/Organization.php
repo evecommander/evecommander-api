@@ -5,30 +5,25 @@ namespace App\Abstracts;
 use App\FleetType;
 use App\Role;
 use App\Subscription;
-use App\Traits\BubblesNotifications;
 use App\Traits\HasHandbooks;
 use App\Traits\HasMembers;
 use App\Traits\IsMember;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notification;
 
 /**
  * Class Organization.
  *
+ * @property string name
  * @property array settings
  * @property array mass_subscribables
  */
 abstract class Organization extends Model
 {
-    use HasHandbooks, HasMembers, IsMember, BubblesNotifications;
+    use HasHandbooks, HasMembers, IsMember;
 
     const MASS_SUBSCRIBABLE = [
-        'fleet-comment'    => \App\Notifications\Fleet\CommentPosted::class,
-        'fleet-created'    => \App\Notifications\Fleet\Created::class,
-        'fleet-updated'    => \App\Notifications\Fleet\Updated::class,
-        'handbook-created' => \App\Notifications\Handbook\Created::class,
-        'handbook-updated' => \App\Notifications\Handbook\Updated::class,
-        'handbook-comment' => \App\Notifications\Handbook\CommentPosted::class,
+        'fleet-created',
+        'handbook-created',
     ];
 
     /**
@@ -59,29 +54,5 @@ abstract class Organization extends Model
     public function fleetTypes()
     {
         return $this->morphMany(FleetType::class, 'organization');
-    }
-
-    /**
-     * Get mapping of all notifications that are subscribable for all members.
-     *
-     * @return array
-     */
-    public function getMassSubscribablesAttribute()
-    {
-        return self::MASS_SUBSCRIBABLE;
-    }
-
-    protected function getBubbleToModels(Notification $notification)
-    {
-        // get all subscriptions that have the notification's class enabled in it's 'settings' json column
-        // @> is PostgreSQL containment operator
-        // see https://www.postgresql.org/docs/10/static/datatype-json.html#JSON-CONTAINMENT
-        /** @var \Illuminate\Database\Eloquent\Collection $subscriptions */
-        $subscriptions = $this->subscriptions()->whereRaw('settings @> \'{"'.get_class($notification).'": 1}')
-            ->with('character')->get();
-
-        return $subscriptions->map(function (Subscription $subscription) {
-            return $subscription->character;
-        });
     }
 }

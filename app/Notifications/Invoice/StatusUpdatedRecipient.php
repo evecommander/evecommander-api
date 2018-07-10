@@ -8,22 +8,26 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class StatusChanged extends Notification implements ShouldQueue
+class StatusUpdatedRecipient extends Notification implements ShouldQueue
 {
     use Queueable;
 
     public $invoice;
 
+    public $previousStatus;
+
     /**
      * Create a new notification instance.
      *
      * @param Invoice $invoice
+     * @param string  $previousStatus
      *
      * @return void
      */
-    public function __construct(Invoice $invoice)
+    public function __construct(Invoice $invoice, string $previousStatus)
     {
         $this->invoice = $invoice;
+        $this->previousStatus = $previousStatus;
     }
 
     /**
@@ -35,13 +39,11 @@ class StatusChanged extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        $channels = ['broadcast', 'database'];
-
         if (isset($notifiable->email)) {
-            $channels[] = 'mail';
+            return ['mail'];
         }
 
-        return $channels;
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -54,8 +56,10 @@ class StatusChanged extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("Your invoice {$this->invoice->title} has had its status changed.")
-                    ->action('View Invoice', url('/invoices/'.$this->invoice->id));
+            ->subject('Received Invoice Status Updated')
+            ->line("An invoice issued by {$this->invoice->issuer->name} to {$this->invoice->recipient->name}")
+            ->line("has transitioned from {$this->previousStatus} to {$this->invoice->status}.")
+            ->action('View invoice', url('/invoices/'.$this->invoice->id));
     }
 
     /**
@@ -68,9 +72,11 @@ class StatusChanged extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'invoice_id'   => $this->invoice->id,
-            'invoice_name' => $this->invoice->title,
-            'new_state'    => $this->invoice->status,
+            'invoice_id'      => $this->invoice->id,
+            'issuer_name'     => $this->invoice->issuer->name,
+            'recipient_name'  => $this->invoice->recipient->name,
+            'previous_status' => $this->previousStatus,
+            'new_status'      => $this->invoice->status,
         ];
     }
 }

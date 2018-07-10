@@ -3,12 +3,9 @@
 namespace App;
 
 use App\Abstracts\Organization;
-use App\Notifications\Membership\CommentPosted;
-use App\Traits\BubblesNotifications;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 
 /**
@@ -39,18 +36,7 @@ use Illuminate\Support\Carbon;
  */
 class Membership extends Model
 {
-    use Notifiable, BubblesNotifications, SoftDeletes;
-
-    protected function getBubbleToModels(Notification $notification)
-    {
-        // if a comment was posted, forward to both organization and member
-        if ($notification instanceof CommentPosted) {
-            return $this->member->merge($this->organization);
-        }
-
-        // else, only send to member
-        return $this->member;
-    }
+    use Notifiable, SoftDeletes;
 
     /**
      * Get the membership level that this membership belongs to.

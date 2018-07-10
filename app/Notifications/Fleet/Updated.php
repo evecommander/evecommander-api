@@ -2,7 +2,6 @@
 
 namespace App\Notifications\Fleet;
 
-use App\Character;
 use App\Fleet;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,20 +13,17 @@ class Updated extends Notification implements ShouldQueue
     use Queueable;
 
     public $fleet;
-    public $editor;
 
     /**
      * Create a new notification instance.
      *
-     * @param Fleet     $fleet
-     * @param Character $editor
+     * @param Fleet $fleet
      *
      * @return void
      */
-    public function __construct(Fleet $fleet, Character $editor)
+    public function __construct(Fleet $fleet)
     {
         $this->fleet = $fleet;
-        $this->editor = $editor;
     }
 
     /**
@@ -39,13 +35,7 @@ class Updated extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        $channels = ['broadcast', 'database'];
-
-        if (isset($notifiable->email)) {
-            $channels[] = 'mail';
-        }
-
-        return $channels;
+        return ['mail'];
     }
 
     /**
@@ -58,8 +48,9 @@ class Updated extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("{$this->editor->name} has edited the {$this->fleet->title} fleet.")
-                    ->action('View Fleet', url('/fleets/'.$this->fleet->id));
+            ->subject('Fleet Updated')
+            ->line("{$this->fleet->lastUpdatedBy->name} has updated the {$this->fleet->title} fleet.")
+            ->action('View Fleet', url('/fleets/'.$this->fleet->id));
     }
 
     /**
@@ -71,11 +62,6 @@ class Updated extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
-        return [
-            'fleet_id'    => $this->fleet->id,
-            'fleet_name'  => $this->fleet->title,
-            'editor_id'   => $this->editor->id,
-            'editor_name' => $this->editor->name,
-        ];
+        return [];
     }
 }

@@ -99,6 +99,15 @@ class InvoiceSchema extends SchemaProvider
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
+
+            'lastUpdatedBy' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => isset($includeRelationships['lastUpdatedBy']),
+                self::DATA         => function () use ($resource) {
+                    return $resource->lastUpdatedBy;
+                },
+            ],
         ];
     }
 }

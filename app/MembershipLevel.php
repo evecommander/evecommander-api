@@ -27,7 +27,7 @@ use Illuminate\Support\Carbon;
  * @property Organization organization
  * @property Character createdBy
  * @property Character lastUpdatedBy
- * @property \Illuminate\Database\Eloquent\Collection permissions
+ * @property \Illuminate\Database\Eloquent\Collection roles
  */
 class MembershipLevel extends Model
 {
@@ -82,12 +82,12 @@ class MembershipLevel extends Model
     }
 
     /**
-     * Get relation between this membership level and any permissions that are assigned to it.
+     * Get relation between this membership level and any roles that are assigned to it.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function permissions()
+    public function roles()
     {
-        return $this->belongsToMany(Permission::class);
+        return $this->belongsToMany(Role::class)->withTimestamps();
     }
 }

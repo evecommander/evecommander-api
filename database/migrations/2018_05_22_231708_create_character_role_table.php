@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePermissionsRolesTable extends Migration
+class CreateCharacterRoleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,20 @@ class CreatePermissionsRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('permissions_roles', function (Blueprint $table) {
-            $table->uuid('permission_id');
+        Schema::create('character_role', function (Blueprint $table) {
+            $table->uuid('character_id');
             $table->uuid('role_id');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 
-            $table->primary(['permission_id', 'role_id']);
-            $table->foreign('permission_id')->references('id')->on('permissions');
+            $table->primary(['character_id', 'role_id']);
+            $table->foreign('character_id')->references('id')->on('characters');
             $table->foreign('role_id')->references('id')->on('roles');
         });
 
         // add trigger to new table
-        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER permissions_roles_updated_at_modtime 
-            BEFORE UPDATE ON permissions_roles FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
+        \Illuminate\Support\Facades\DB::statement('CREATE TRIGGER character_role_updated_at_modtime 
+            BEFORE UPDATE ON character_role FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();');
     }
 
     /**
@@ -36,6 +36,6 @@ class CreatePermissionsRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permissions_roles');
+        Schema::dropIfExists('character_role');
     }
 }

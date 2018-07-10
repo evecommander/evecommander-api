@@ -2,7 +2,6 @@
 
 namespace App\Notifications\Handbook;
 
-use App\Character;
 use App\Handbook;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,20 +13,17 @@ class Updated extends Notification implements ShouldQueue
     use Queueable;
 
     public $handbook;
-    public $editor;
 
     /**
      * Create a new notification instance.
      *
-     * @param Handbook  $handbook
-     * @param Character $editor
+     * @param Handbook $handbook
      *
      * @return void
      */
-    public function __construct(Handbook $handbook, Character $editor)
+    public function __construct(Handbook $handbook)
     {
         $this->handbook = $handbook;
-        $this->editor = $editor;
     }
 
     /**
@@ -58,8 +54,9 @@ class Updated extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("{$this->editor->name} has updated the {$this->handbook->title}.")
-                    ->action('View Handbook', url('/handbooks/'.$this->handbook->id));
+            ->subject('Handbook Updated')
+            ->line("{$this->handbook->lastUpdatedBy->name} has updated the {$this->handbook->title}.")
+            ->action('View Handbook', url('/handbooks/'.$this->handbook->id));
     }
 
     /**
@@ -74,8 +71,8 @@ class Updated extends Notification implements ShouldQueue
         return [
             'handbook_id'   => $this->handbook->id,
             'handbook_name' => $this->handbook->title,
-            'editor_id'     => $this->editor->id,
-            'editor_name'   => $this->editor->name,
+            'editor_id'     => $this->handbook->lastUpdatedBy->id,
+            'editor_name'   => $this->handbook->lastUpdatedBy->name,
         ];
     }
 }

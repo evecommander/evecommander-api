@@ -1,34 +1,29 @@
 <?php
 
-namespace App\Notifications\Fleet;
+namespace App\Notifications\Invoice;
 
-use App\Character;
-use App\Comment;
-use App\Fleet;
+use App\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CommentPosted extends Notification implements ShouldQueue
+class Received extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $comment;
-    public $fleet;
+    public $invoice;
 
     /**
      * Create a new notification instance.
      *
-     * @param Comment $comment
-     * @param Fleet   $fleet
+     * @param Invoice $invoice
      *
      * @return void
      */
-    public function __construct(Comment $comment, Fleet $fleet)
+    public function __construct(Invoice $invoice)
     {
-        $this->comment = $comment;
-        $this->fleet = $fleet;
+        $this->invoice = $invoice;
     }
 
     /**
@@ -40,9 +35,9 @@ class CommentPosted extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        $channels = ['broadcast', 'database'];
+        $channels = ['database', 'broadcast'];
 
-        if (isset($notifiable->email)) {
+        if ($notifiable->email) {
             $channels[] = 'mail';
         }
 
@@ -59,8 +54,10 @@ class CommentPosted extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("A comment has been posted on the {$this->fleet->title} fleet.")
-                    ->action('View Comment', url('/fleets/'.$this->fleet->id));
+            ->subject('Invoice Received')
+            ->line("You have received a new invoice from {$this->invoice->issuer->name}")
+            ->line("totalling {$this->invoice->total}isk.")
+            ->action('View Invoice', url('/invoices/'.$this->invoice->id));
     }
 
     /**
@@ -72,15 +69,13 @@ class CommentPosted extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
-        /** @var Character $author */
-        $author = $this->comment->character;
-
         return [
-            'fleet_id'     => $this->fleet->id,
-            'fleet_name'   => $this->fleet->title,
-            'comment_text' => $this->comment->text,
-            'author_id'    => $author->id,
-            'author_name'  => $author->name,
+            'invoice_id'   => $this->invoice->id,
+            'invoice_name' => $this->invoice->title,
+            'issuer_id'    => $this->invoice->issuer_id,
+            'issuer_type'  => $this->invoice->issuer_type,
+            'issuer_name'  => $this->invoice->issuer->name,
+            'total'        => $this->invoice->total,
         ];
     }
 }
