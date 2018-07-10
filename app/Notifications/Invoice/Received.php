@@ -4,11 +4,11 @@ namespace App\Notifications\Invoice;
 
 use App\Invoice;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
-class StatusChanged extends Notification implements ShouldQueue
+class Received extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -29,15 +29,14 @@ class StatusChanged extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
     {
-        $channels = ['broadcast', 'database'];
+        $channels = ['database', 'broadcast'];
 
-        if (isset($notifiable->email)) {
+        if ($notifiable->email) {
             $channels[] = 'mail';
         }
 
@@ -47,22 +46,22 @@ class StatusChanged extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage())
-                    ->line("Your invoice {$this->invoice->title} has had its status changed.")
-                    ->action('View Invoice', url('/invoices/'.$this->invoice->id));
+        return (new MailMessage)
+            ->subject('Invoice Received')
+            ->line("You have received a new invoice from {$this->invoice->issuer->name}")
+            ->line("totalling {$this->invoice->total}isk.")
+            ->action('View Invoice', url('/invoices/'.$this->invoice->id));
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return array
      */
     public function toArray($notifiable)
@@ -70,7 +69,10 @@ class StatusChanged extends Notification implements ShouldQueue
         return [
             'invoice_id'   => $this->invoice->id,
             'invoice_name' => $this->invoice->title,
-            'new_state'    => $this->invoice->status,
+            'issuer_id'    => $this->invoice->issuer_id,
+            'issuer_type'  => $this->invoice->issuer_type,
+            'issuer_name'  => $this->invoice->issuer->name,
+            'total'        => $this->invoice->total,
         ];
     }
 }
