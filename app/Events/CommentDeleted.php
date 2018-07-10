@@ -4,10 +4,10 @@ namespace App\Events;
 
 use App\Comment;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Queue\SerializesModels;
 
 class CommentDeleted implements ShouldBroadcast
 {
@@ -19,6 +19,7 @@ class CommentDeleted implements ShouldBroadcast
      * Create a new event instance.
      *
      * @param Comment $comment
+     *
      * @return void
      */
     public function __construct(Comment $comment)

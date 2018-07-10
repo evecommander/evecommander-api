@@ -3,11 +3,9 @@
 namespace App;
 
 use App\Abstracts\Organization;
-use App\Notifications\Membership\CommentPosted;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 
 /**

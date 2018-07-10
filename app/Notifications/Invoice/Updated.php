@@ -2,7 +2,6 @@
 
 namespace App\Notifications\Invoice;
 
-use App\Character;
 use App\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,7 +17,7 @@ class Updated extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      *
-     * @param Invoice   $invoice
+     * @param Invoice $invoice
      *
      * @return void
      */

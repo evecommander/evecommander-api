@@ -51,7 +51,7 @@ class ProcessInvoices extends Command
             ->map(function (Invoice $invoice) {
                 $this->line("Queueing job chain for {$invoice->id}");
                 ProcessInvoicePayments::dispatch($invoice)->chain([
-                    new ProcessInvoiceStatuses($invoice)
+                    new ProcessInvoiceStatuses($invoice),
                 ]);
             });
 

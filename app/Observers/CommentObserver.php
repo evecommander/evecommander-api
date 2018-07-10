@@ -19,7 +19,8 @@ class CommentObserver
     /**
      * Handle to the comment "created" event.
      *
-     * @param  \App\Comment  $comment
+     * @param \App\Comment $comment
+     *
      * @return void
      */
     public function created(Comment $comment)
@@ -148,7 +149,8 @@ class CommentObserver
     /**
      * Handle the comment "updated" event.
      *
-     * @param  \App\Comment  $comment
+     * @param \App\Comment $comment
+     *
      * @return void
      */
     public function updated(Comment $comment)
@@ -159,7 +161,8 @@ class CommentObserver
     /**
      * Handle the comment "deleted" event.
      *
-     * @param  \App\Comment  $comment
+     * @param \App\Comment $comment
+     *
      * @return void
      */
     public function deleted(Comment $comment)

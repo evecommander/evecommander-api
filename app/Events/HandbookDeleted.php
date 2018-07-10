@@ -4,10 +4,10 @@ namespace App\Events;
 
 use App\Handbook;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Queue\SerializesModels;
 
 class HandbookDeleted implements ShouldBroadcast
 {
@@ -19,6 +19,7 @@ class HandbookDeleted implements ShouldBroadcast
      * Create a new event instance.
      *
      * @param Handbook $handbook
+     *
      * @return void
      */
     public function __construct(Handbook $handbook)

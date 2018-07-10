@@ -5,10 +5,10 @@ namespace App\Events;
 use App\Character;
 use App\Invoice;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Queue\SerializesModels;
 
 class InvoiceReceived implements ShouldBroadcast
 {
@@ -20,6 +20,7 @@ class InvoiceReceived implements ShouldBroadcast
      * Create a new event instance.
      *
      * @param Invoice $invoice
+     *
      * @return void
      */
     public function __construct(Invoice $invoice)

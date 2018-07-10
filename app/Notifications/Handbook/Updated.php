@@ -2,7 +2,6 @@
 
 namespace App\Notifications\Handbook;
 
-use App\Character;
 use App\Handbook;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,7 +17,7 @@ class Updated extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      *
-     * @param Handbook  $handbook
+     * @param Handbook $handbook
      *
      * @return void
      */
