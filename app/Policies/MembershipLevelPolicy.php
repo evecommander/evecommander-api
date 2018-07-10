@@ -188,7 +188,7 @@ class MembershipLevelPolicy implements ResourcePolicyInterface
      *
      * @return bool
      */
-    public function readPermissions(MembershipLevel $membershipLevel, Request $request): bool
+    public function readRoles(MembershipLevel $membershipLevel, Request $request): bool
     {
         return $request->user()->can('read', [$membershipLevel->organization, $request]);
     }
@@ -199,7 +199,7 @@ class MembershipLevelPolicy implements ResourcePolicyInterface
      *
      * @return bool
      */
-    public function modifyPermissions(MembershipLevel $membershipLevel, Request $request): bool
+    public function modifyRoles(MembershipLevel $membershipLevel, Request $request): bool
     {
         return false;
     }

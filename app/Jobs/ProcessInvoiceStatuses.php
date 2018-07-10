@@ -2,13 +2,20 @@
 
 namespace App\Jobs;
 
+use App\Abstracts\Organization;
+use App\Character;
+use App\Events\InvoiceUpdated;
 use App\Invoice;
-use App\Notifications\Invoice\StatusChanged;
+use App\Notifications\Invoice\StatusUpdatedIssuer;
+use App\Notifications\Invoice\StatusUpdatedRecipient;
+use App\Subscription;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Notification;
 
 class ProcessInvoiceStatuses implements ShouldQueue
 {
@@ -60,7 +67,55 @@ class ProcessInvoiceStatuses implements ShouldQueue
     protected function sendNotification()
     {
         if ($this->initialStatus !== $this->invoice->status) {
-            $this->invoice->notify(new StatusChanged($this->invoice));
+            // send status change notification to the recipient
+            Notification::send(
+                $this->getNotifiableModels($this->invoice->recipient, StatusUpdatedRecipient::class),
+                new StatusUpdatedRecipient($this->invoice, $this->initialStatus)
+            );
+
+            // send status change notification to the issuer
+            Notification::send(
+                $this->getNotifiableModels($this->invoice->issuer, StatusUpdatedIssuer::class),
+                new StatusUpdatedIssuer($this->invoice, $this->initialStatus)
+            );
+
+            // broadcast that the invoice has changed
+            broadcast(new InvoiceUpdated($this->invoice));
+        }
+    }
+
+    /**
+     * Get notifiable models for the given entity.
+     *
+     * @param Model $entity
+     * @param string $notification
+     *
+     * @return array|\Illuminate\Support\Collection
+     */
+    protected function getNotifiableModels(Model $entity, string $notification)
+    {
+        if ($entity instanceof Character) {
+            $entity->loadMissing('user');
+            /** @var Character $entity */
+            return collect([$entity->user]);
+        } else {
+            /** @var Organization $entity */
+            $subscriptions = $entity->subscriptions()
+                ->where(
+                    'subscriptions.notification',
+                    '=',
+                    array_search($notification, Subscription::AVAILABLE_NOTIFICATIONS)
+                )
+                ->with('character.user')
+                ->get();
+
+            $notifiables = collect();
+
+            $subscriptions->map(function (Subscription $subscription) use ($notifiables) {
+                $notifiables->push($subscription->character->user);
+            });
+
+            return $notifiables->unique('id');
         }
     }
 
@@ -85,7 +140,7 @@ class ProcessInvoiceStatuses implements ShouldQueue
             return;
         }
 
-        if ($lastPayment->data['balance_due'] === 0) {
+        if ($lastPayment->data['balance_due'] <= 0) {
             $this->invoice->status = Invoice::STATE_FULFILLED;
             $this->invoice->save();
         }

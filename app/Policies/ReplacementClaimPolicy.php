@@ -203,4 +203,26 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
     {
         return $this->update($request->user(), $replacementClaim, $request);
     }
+
+    /**
+     * @param ReplacementClaim $replacementClaim
+     * @param Request          $request
+     *
+     * @return bool
+     */
+    public function readLastUpdatedBy(ReplacementClaim $replacementClaim, Request $request): bool
+    {
+        return $this->read($request->user(), $replacementClaim, $request);
+    }
+
+    /**
+     * @param ReplacementClaim $replacementClaim
+     * @param Request          $request
+     *
+     * @return bool
+     */
+    public function modifyLastUpdatedBy(ReplacementClaim $replacementClaim, Request $request): bool
+    {
+        return false;
+    }
 }

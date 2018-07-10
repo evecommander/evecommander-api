@@ -15,10 +15,10 @@ class CreateSubscriptionsTable extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('character_id');
+            $table->uuid('character_id')->index();
             $table->uuid('organization_id')->index();
             $table->string('organization_type')->index();
-            $table->jsonb('settings');
+            $table->string('notification')->index();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 

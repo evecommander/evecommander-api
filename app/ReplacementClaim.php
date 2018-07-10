@@ -4,13 +4,10 @@ namespace App;
 
 use App\Abstracts\Organization;
 use App\Notifications\ReplacementClaim\PaymentPosted;
-use App\Notifications\ReplacementClaim\Submitted;
-use App\Traits\BubblesNotifications;
 use App\Traits\HasComments;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 
 /**
@@ -28,37 +25,24 @@ use Illuminate\Support\Carbon;
  * @property string status
  * @property Carbon created_at
  * @property Carbon updated_at
+ * @property string last_updated_by
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection comments
  * @property Character character
  * @property Organization organization
  * @property Fitting fitting
+ * @property Character lastUpdatedBy
  */
 class ReplacementClaim extends Model
 {
-    use HasComments, Notifiable, UuidTrait, BubblesNotifications;
+    use HasComments, Notifiable, UuidTrait;
 
-    protected function getBubbleToModels(Notification $notification)
-    {
-        // when a claim is submitted, we only want to alert the organization
-        if ($notification instanceof Submitted) {
-            return $this->organization;
-        }
-
-        // otherwise, we want to notify the character
-        return $this->character;
-    }
-
-    /**
-     * Called when a replacement claim is being created to set a random code on the model.
-     *
-     * @param ReplacementClaim $model
-     */
-    protected static function onCreate(self $model)
-    {
-        $model->code = 'RC-'.substr(bin2hex(random_bytes(16)), 0, 16);
-    }
+    const STATUS_PENDING = 'pending';
+    const STATUS_CONTESTED = 'contested';
+    const STATUS_CLOSED = 'closed';
+    const STATUS_PAYED = 'payed';
+    const STATUS_ACCEPTED = 'accepted';
 
     /**
      * Get Character that this ReplacementClaim belongs to.
@@ -98,5 +82,15 @@ class ReplacementClaim extends Model
     public function payments()
     {
         return $this->notifications()->where('type', PaymentPosted::class);
+    }
+
+    /**
+     * Get Character that last updated this ReplacementClaim.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function lastUpdatedBy()
+    {
+        return $this->belongsTo(Character::class, 'last_updated_by');
     }
 }

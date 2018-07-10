@@ -54,9 +54,10 @@ class Created extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('A new membership has been created between')
-                    ->line("{$this->membership->member->name} and {$this->membership->organization->name}")
-                    ->action('View Membership', url('/memberships/'.$this->membership->id));
+            ->subject('Membership Created')
+            ->line('A new membership has been created between')
+            ->line("{$this->membership->member->name} and {$this->membership->organization->name}")
+            ->action('View Membership', url('/memberships/'.$this->membership->id));
     }
 
     /**

@@ -24,6 +24,7 @@ use Illuminate\Support\Carbon;
  * @property Organization organization
  * @property \Illuminate\Database\Eloquent\Collection permissions
  * @property \Illuminate\Database\Eloquent\Collection characters
+ * @property \Illuminate\Database\Eloquent\Collection membershipLevels
  */
 class Role extends Model
 {
@@ -46,7 +47,7 @@ class Role extends Model
      */
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class)->withPivot(['created_at', 'updated_at']);
+        return $this->belongsToMany(Permission::class)->withTimestamps();
     }
 
     /**
@@ -56,6 +57,16 @@ class Role extends Model
      */
     public function characters()
     {
-        return $this->belongsToMany(Character::class)->withPivot(['created_at', 'updated_at']);
+        return $this->belongsToMany(Character::class)->withTimestamps();
+    }
+
+    /**
+     * Get relation between this role and any membership levels that are assigned to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function membershipLevels()
+    {
+        return $this->belongsToMany(MembershipLevel::class)->withTimestamps();
     }
 }

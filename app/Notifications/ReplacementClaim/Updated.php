@@ -9,25 +9,22 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Rejected extends Notification implements ShouldQueue
+class Updated extends Notification implements ShouldQueue
 {
     use Queueable;
 
     public $claim;
-    public $moderator;
 
     /**
      * Create a new notification instance.
      *
      * @param ReplacementClaim $claim
-     * @param Character        $moderator
      *
      * @return void
      */
-    public function __construct(ReplacementClaim $claim, Character $moderator)
+    public function __construct(ReplacementClaim $claim)
     {
         $this->claim = $claim;
-        $this->moderator = $moderator;
     }
 
     /**
@@ -58,9 +55,10 @@ class Rejected extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line("Your replacement claim with {$this->claim->organization->name}")
-                    ->line("was rejected by {$this->moderator->name}.")
-                    ->action('View Claim', url('/replacement-claims/'.$this->claim->id));
+            ->subject('Replacement Claim Updated')
+            ->line("Your replacement claim with {$this->claim->organization->name}")
+            ->line("has been updated by {$this->claim->lastUpdatedBy->name}.")
+            ->action('View Claim', url('/replacement-claims/'.$this->claim->id));
     }
 
     /**
@@ -79,8 +77,8 @@ class Rejected extends Notification implements ShouldQueue
             'organization_id'   => $this->claim->organization_id,
             'organization_type' => $this->claim->organization_type,
             'organization_name' => $this->claim->organization->name,
-            'moderator_id'      => $this->moderator->id,
-            'moderator_name'    => $this->moderator->name,
+            'moderator_id'      => $this->claim->lastUpdatedBy->id,
+            'moderator_name'    => $this->claim->lastUpdatedBy->name,
         ];
     }
 }

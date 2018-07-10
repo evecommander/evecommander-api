@@ -83,11 +83,13 @@ class MembersUpdated extends Notification implements ShouldQueue
 
         $organizationType = end(explode('\\', get_class($this->organization)));
 
-        return (new MailMessage())->markdown('mail.members-updated', [
-            'organization'      => $this->organization,
-            'organization_type' => $organizationType,
-            'changed'           => $mapped,
-        ]);
+        return (new MailMessage())
+            ->subject('Members Updated')
+            ->markdown('mail.members-updated', [
+                'organization'      => $this->organization,
+                'organization_type' => $organizationType,
+                'changed'           => $mapped,
+            ]);
     }
 
     /**

@@ -59,8 +59,9 @@ class CommentPosted extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('A new comment has been posted on your invoice by '.$this->comment->character->name.'.')
-                    ->action('View Invoice', url('/invoices/'.$this->invoice->id));
+            ->subject('Comment Posted')
+            ->line('A new comment has been posted on your invoice by '.$this->comment->character->name.'.')
+            ->action('View Invoice', url('/invoices/'.$this->invoice->id));
     }
 
     /**

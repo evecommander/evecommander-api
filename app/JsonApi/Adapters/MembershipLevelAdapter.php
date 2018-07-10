@@ -31,6 +31,7 @@ class MembershipLevelAdapter extends AbstractAdapter
         'organization',
         'createdBy',
         'lastUpdatedBy',
+        'roles',
     ];
 
     /**
@@ -61,5 +62,10 @@ class MembershipLevelAdapter extends AbstractAdapter
     public function lastUpdatedBy()
     {
         return $this->belongsTo();
+    }
+
+    public function roles()
+    {
+        return $this->hasMany();
     }
 }

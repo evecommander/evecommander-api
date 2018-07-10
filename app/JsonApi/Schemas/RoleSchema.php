@@ -66,6 +66,11 @@ class RoleSchema extends SchemaProvider
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
+
+            'membershipLevels' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+            ],
         ];
     }
 }

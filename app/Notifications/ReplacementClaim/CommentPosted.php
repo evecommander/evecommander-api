@@ -58,9 +58,10 @@ class CommentPosted extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                    ->line('A comment was posted on a replacement claim between')
-                    ->line("{$this->claim->character->name} and {$this->claim->organization->name}.")
-                    ->action('View Claim', url('/replacement-claims/'.$this->claim->id));
+            ->subject('Comment Posted')
+            ->line('A comment was posted on a replacement claim between')
+            ->line("{$this->claim->character->name} and {$this->claim->organization->name}.")
+            ->action('View Claim', url('/replacement-claims/'.$this->claim->id));
     }
 
     /**

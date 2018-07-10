@@ -34,6 +34,7 @@ class ReplacementClaimAdapter extends AbstractAdapter
         'notifications',
         'readNotifications',
         'unreadNotifications',
+        'lastUpdatedBy',
     ];
 
     /**
@@ -74,5 +75,10 @@ class ReplacementClaimAdapter extends AbstractAdapter
     public function unreadNotifications()
     {
         return $this->hasMany();
+    }
+
+    public function lastUpdatedBy()
+    {
+        return $this->belongsTo();
     }
 }

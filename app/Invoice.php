@@ -3,17 +3,12 @@
 namespace App;
 
 use App\Abstracts\Organization;
-use App\Notifications\Invoice\Fulfilled;
-use App\Notifications\Invoice\Issued;
 use App\Notifications\Invoice\PaymentPosted;
-use App\Notifications\Invoice\Updated;
-use App\Traits\BubblesNotifications;
 use App\Traits\HasComments;
 use App\Traits\UuidTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Notifications\Notification;
 
 /**
  * Class Invoice.
@@ -31,6 +26,7 @@ use Illuminate\Notifications\Notification;
  * @property Carbon hard_due_date
  * @property Carbon created_at
  * @property Carbon updated_at
+ * @property string last_updated_by
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection comments
@@ -45,7 +41,7 @@ use Illuminate\Notifications\Notification;
  */
 class Invoice extends Model
 {
-    use UuidTrait, HasComments, Notifiable, BubblesNotifications;
+    use UuidTrait, HasComments, Notifiable;
 
     const STATE_PENDING = 'pending';
 
@@ -61,22 +57,6 @@ class Invoice extends Model
         'due_date',
         'hard_due_date',
     ];
-
-    protected function getBubbleToModels(Notification $notification)
-    {
-        // when an invoice is issued or updated, we only want to alert the recipient
-        if ($notification instanceof Issued || $notification instanceof Updated) {
-            return $this->recipient;
-        }
-
-        // when an invoice is fulfilled, we only want to alert the issuer
-        if ($notification instanceof Fulfilled) {
-            return $this->issuer;
-        }
-
-        // otherwise we want to alert both the issuer and recipient
-        return $this->issuer->merge($this->recipient);
-    }
 
     /**
      * Called when an invoice is being created to set a random code on the model.

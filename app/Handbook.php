@@ -6,6 +6,7 @@ use App\Abstracts\Organization;
 use App\Traits\HasComments;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 /**
@@ -22,6 +23,7 @@ use Illuminate\Support\Carbon;
  * @property string last_updated_by
  * @property Carbon created_at
  * @property Carbon updated_at
+ * @property Carbon deleted_at
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection comments
@@ -31,7 +33,7 @@ use Illuminate\Support\Carbon;
  */
 class Handbook extends Model
 {
-    use HasComments, UuidTrait;
+    use HasComments, UuidTrait, SoftDeletes;
 
     /**
      * Get relation between this handbook and the organization that owns it.
