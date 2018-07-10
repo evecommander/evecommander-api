@@ -2,7 +2,6 @@
 
 namespace App\Notifications\Fleet;
 
-use App\Character;
 use App\Fleet;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,7 +17,7 @@ class Updated extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      *
-     * @param Fleet     $fleet
+     * @param Fleet $fleet
      *
      * @return void
      */

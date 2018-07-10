@@ -2,7 +2,6 @@
 
 namespace App\Notifications\ReplacementClaim;
 
-use App\Character;
 use App\ReplacementClaim;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

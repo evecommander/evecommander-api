@@ -87,7 +87,7 @@ class ProcessInvoiceStatuses implements ShouldQueue
     /**
      * Get notifiable models for the given entity.
      *
-     * @param Model $entity
+     * @param Model  $entity
      * @param string $notification
      *
      * @return array|\Illuminate\Support\Collection
@@ -96,7 +96,7 @@ class ProcessInvoiceStatuses implements ShouldQueue
     {
         if ($entity instanceof Character) {
             $entity->loadMissing('user');
-            /** @var Character $entity */
+            /* @var Character $entity */
             return collect([$entity->user]);
         } else {
             /** @var Organization $entity */

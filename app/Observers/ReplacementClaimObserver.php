@@ -4,8 +4,8 @@ namespace App\Observers;
 
 use App\Character;
 use App\Http\Middleware\CheckCharacter;
-use App\Notifications\ReplacementClaim\Updated;
 use App\Notifications\ReplacementClaim\Submitted;
+use App\Notifications\ReplacementClaim\Updated;
 use App\ReplacementClaim;
 use App\Subscription;
 use Illuminate\Support\Facades\Notification;
@@ -15,7 +15,8 @@ class ReplacementClaimObserver
     /**
      * Handle to the replacement claim "creating" event.
      *
-     * @param  \App\ReplacementClaim  $replacementClaim
+     * @param \App\ReplacementClaim $replacementClaim
+     *
      * @return void
      */
     public function creating(ReplacementClaim $replacementClaim)
@@ -26,7 +27,8 @@ class ReplacementClaimObserver
     /**
      * Handle to the replacement claim "created" event.
      *
-     * @param  \App\ReplacementClaim  $replacementClaim
+     * @param \App\ReplacementClaim $replacementClaim
+     *
      * @return void
      */
     public function created(ReplacementClaim $replacementClaim)
@@ -51,7 +53,8 @@ class ReplacementClaimObserver
     /**
      * Handle the replacement claim "updating" event.
      *
-     * @param  \App\ReplacementClaim  $replacementClaim
+     * @param \App\ReplacementClaim $replacementClaim
+     *
      * @return void
      */
     public function updating(ReplacementClaim $replacementClaim)
@@ -65,7 +68,8 @@ class ReplacementClaimObserver
     /**
      * Handle the replacement claim "updated" event.
      *
-     * @param  \App\ReplacementClaim  $replacementClaim
+     * @param \App\ReplacementClaim $replacementClaim
+     *
      * @return void
      */
     public function updated(ReplacementClaim $replacementClaim)

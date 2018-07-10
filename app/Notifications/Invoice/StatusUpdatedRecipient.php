@@ -4,9 +4,9 @@ namespace App\Notifications\Invoice;
 
 use App\Invoice;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class StatusUpdatedRecipient extends Notification implements ShouldQueue
 {
@@ -33,7 +33,8 @@ class StatusUpdatedRecipient extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -48,12 +49,13 @@ class StatusUpdatedRecipient extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject('Received Invoice Status Updated')
             ->line("An invoice issued by {$this->invoice->issuer->name} to {$this->invoice->recipient->name}")
             ->line("has transitioned from {$this->previousStatus} to {$this->invoice->status}.")
@@ -63,7 +65,8 @@ class StatusUpdatedRecipient extends Notification implements ShouldQueue
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function toArray($notifiable)

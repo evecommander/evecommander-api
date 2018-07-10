@@ -20,7 +20,8 @@ class InvoiceObserver
     /**
      * Handle to the invoice "creating" event.
      *
-     * @param  \App\Invoice  $invoice
+     * @param \App\Invoice $invoice
+     *
      * @return void
      */
     public function creating(Invoice $invoice)
@@ -35,6 +36,7 @@ class InvoiceObserver
      * Set the total for the invoice from the items attached to it.
      *
      * @param Invoice $invoice
+     *
      * @return void
      */
     protected function calculateTotal(Invoice $invoice)
@@ -53,6 +55,7 @@ class InvoiceObserver
      * Set the due date for the invoice based on the issuer's settings.
      *
      * @param Invoice $invoice
+     *
      * @return void
      */
     protected function setDueDate(Invoice $invoice)
@@ -65,14 +68,17 @@ class InvoiceObserver
             switch ($units) {
                 case 'days':
                     $invoice->due_date = Carbon::create()->addDays($number);
+
                     return;
 
                 case 'weeks':
                     $invoice->due_date = Carbon::create()->addWeeks($number);
+
                     return;
 
                 case 'months':
                     $invoice->due_date = Carbon::create()->addMonths($number);
+
                     return;
             }
         }
@@ -85,6 +91,7 @@ class InvoiceObserver
      * Set the hard due date for the invoice based on the issuer's settings.
      *
      * @param Invoice $invoice
+     *
      * @return void
      */
     protected function setHardDueDate(Invoice $invoice)
@@ -98,14 +105,17 @@ class InvoiceObserver
             switch ($units) {
                 case 'days':
                     $invoice->hard_due_date = Carbon::create()->addDays($number);
+
                     return;
 
                 case 'weeks':
                     $invoice->hard_due_date = Carbon::create()->addWeeks($number);
+
                     return;
 
                 case 'months':
                     $invoice->hard_due_date = Carbon::create()->addMonths($number);
+
                     return;
             }
         }
@@ -117,7 +127,8 @@ class InvoiceObserver
     /**
      * Handle to the invoice "created" event.
      *
-     * @param  \App\Invoice  $invoice
+     * @param \App\Invoice $invoice
+     *
      * @return void
      */
     public function created(Invoice $invoice)
@@ -130,7 +141,8 @@ class InvoiceObserver
     /**
      * Handle the invoice "updating" event.
      *
-     * @param  \App\Invoice  $invoice
+     * @param \App\Invoice $invoice
+     *
      * @return void
      */
     public function updating(Invoice $invoice)
@@ -147,7 +159,8 @@ class InvoiceObserver
     /**
      * Handle the invoice "updated" event.
      *
-     * @param  \App\Invoice  $invoice
+     * @param \App\Invoice $invoice
+     *
      * @return void
      */
     public function updated(Invoice $invoice)
@@ -161,13 +174,14 @@ class InvoiceObserver
      * Get notifiable models for the notification.
      *
      * @param $recipient
+     *
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
      */
     private function getNotifiables($recipient)
     {
         if ($recipient instanceof Character) {
             $recipient->loadMissing('user');
-            /** @var Character $recipient */
+            /* @var Character $recipient */
             return collect([$recipient, $recipient->user]);
         } else {
             /** @var Organization $recipient */
