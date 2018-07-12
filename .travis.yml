@@ -20,6 +20,7 @@ php:
 env:
   global:
     - COMMIT=${TRAVIS_COMMIT::8}
+    - PGPORT=5433
 
 before_script:
   - composer install --optimize-autoloader
@@ -28,8 +29,8 @@ before_script:
   - php artisan jwt:secret
   - php artisan config:cache
   - php artisan route:cache
-  - psql -c 'create database eve_commander;' -U postgres
-  - psql -c 'create database eve_sde;' -U postgres
+  - psql -c 'create database eve_commander;' -u postgres
+  - psql -c 'create database eve_sde;' -u postgres
   - php artisan migrate --seed
 
 script:
