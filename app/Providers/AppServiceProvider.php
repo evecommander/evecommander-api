@@ -18,6 +18,7 @@ use App\Observers\MembershipLevelObserver;
 use App\Observers\MembershipObserver;
 use App\Observers\ReplacementClaimObserver;
 use App\ReplacementClaim;
+use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,6 +30,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        JsonApi::defaultApi('v1');
+
+        // register model observers
         Comment::observe(CommentObserver::class);
         Doctrine::observe(DoctrineObserver::class);
         Fleet::observe(FleetObserver::class);

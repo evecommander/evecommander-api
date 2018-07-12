@@ -2,6 +2,10 @@ sudo: required
 
 services:
   - docker
+  - redis-server
+
+addons:
+  postgresql: "10"
 
 language: php
 
@@ -15,7 +19,17 @@ env:
 
 before_script:
   - composer install --optimize-autoloader
+  - cp .env.example .env
+  - php artisan key:generate
+  - php artisan jwt:secret
   - php artisan config:cache
+  - php artisan route:cache
+  - psql -c 'create database eve_commander;' -U postgres
+  - psql -c 'create database eve_sde;' -U postgres
+  - php artisan migrate --seed
+
+script:
+  - phpunit
 
 after_success:
   - rm .env

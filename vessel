@@ -87,7 +87,7 @@ if [ $# -gt 0 ]; then
 
         echo "VESSEL: Setting .env Variables"
         cp .env .env.bak.vessel
-        $SEDCMD "s/DB_HOST=.*/DB_HOST=mysql/" .env
+        $SEDCMD "s/DB_HOST=.*/DB_HOST=pgsql/" .env
         $SEDCMD "s/CACHE_DRIVER=.*/CACHE_DRIVER=redis/" .env
         $SEDCMD "s/SESSION_DRIVER=.*/SESSION_DRIVER=redis/" .env
         $SEDCMD "s/REDIS_HOST=.*/REDIS_HOST=redis/" .env
