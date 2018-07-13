@@ -29,8 +29,9 @@ before_script:
   - php artisan jwt:secret
   - php artisan config:cache
   - php artisan route:cache
-  - psql -c "CREATE DATABASE eve_commander;"
-  - psql -c "CREATE DATABASE eve_sde;"
+  - psql -c "CREATE USER commander PASSWORD 'secret';"
+  - psql -c "CREATE DATABASE eve_commander WITH OWNER = commander;"
+  - psql -c "CREATE DATABASE eve_sde WITH OWNER = commander;"
   - php artisan migrate --seed
 
 script:
