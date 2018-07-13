@@ -1,5 +1,10 @@
 sudo: required
 
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::8}
+    - PGPORT=5433
+
 services:
   - docker
   - redis-server
@@ -8,19 +13,14 @@ addons:
   postgresql: "10"
   apt:
     packages:
-    - postgresql-10
-    - postgresql-client-10
+     - postgresql-10
+     - postgresql-client-10
 
 language: php
 
 php:
   - "7.2"
   - "7.1"
-
-env:
-  global:
-    - COMMIT=${TRAVIS_COMMIT::8}
-    - PGPORT=5433
 
 before_script:
   - composer install --optimize-autoloader
@@ -29,8 +29,8 @@ before_script:
   - php artisan jwt:secret
   - php artisan config:cache
   - php artisan route:cache
-  - psql -c 'create database eve_commander;' -u postgres
-  - psql -c 'create database eve_sde;' -u postgres
+  - psql -c "CREATE DATABASE eve_commander;"
+  - psql -c "CREATE DATABASE eve_sde;"
   - php artisan migrate --seed
 
 script:
