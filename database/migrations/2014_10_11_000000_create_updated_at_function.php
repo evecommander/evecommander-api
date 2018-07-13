@@ -11,8 +11,6 @@ class CreateUpdatedAtFunction extends Migration
      */
     public function up()
     {
-        \Illuminate\Support\Facades\DB::statement('DROP FUNCTION update_updated_at_column;');
-
         \Illuminate\Support\Facades\DB::statement('
         CREATE FUNCTION update_updated_at_column() RETURNS trigger
             LANGUAGE plpgsql
@@ -31,6 +29,6 @@ class CreateUpdatedAtFunction extends Migration
      */
     public function down()
     {
-        \Illuminate\Support\Facades\DB::statement('DROP FUNCTION update_updated_at_column;');
+        \Illuminate\Support\Facades\DB::statement('DROP FUNCTION IF EXISTS update_updated_at_column;');
     }
 }
