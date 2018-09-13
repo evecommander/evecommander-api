@@ -143,7 +143,7 @@ trait FiltersResources
     }
 
     /**
-     * @param Builder $query
+     * @param Builder    $query
      * @param Collection $includedResources
      */
     protected function with($query, Collection $includedResources)

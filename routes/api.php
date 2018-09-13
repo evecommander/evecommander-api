@@ -32,8 +32,8 @@ Route::group(['middleware' => 'auth'], function () {
         ->middleware('json-api.auth:default');
 
     JsonApi::register('v1', [
-        'namespace' => 'Api',
-        'middleware' => 'json-api.auth:default'
+        'namespace'  => 'Api',
+        'middleware' => 'json-api.auth:default',
     ], function (ApiGroup $api, Registrar $router) {
         $api->resource('users', [
             'except' => [
@@ -49,8 +49,8 @@ Route::group(['middleware' => 'auth'], function () {
         $api->resource('characters', [
             'controller' => true,
             'has-one'    => [
-                'user'  => ['except' => 'replace'],
-                'token' => ['except' => 'replace', 'inverse' => 'oauth2-tokens'],
+                'user'        => ['except' => 'replace'],
+                'token'       => ['except' => 'replace', 'inverse' => 'oauth2-tokens'],
                 'corporation' => ['except' => ['replace']],
             ],
             'has-many' => [
@@ -71,7 +71,7 @@ Route::group(['middleware' => 'auth'], function () {
                     'members',
                     'membershipLevels',
                     'memberships',
-                    'alliance' => ['except' => ['replace']],
+                    'alliance'   => ['except' => ['replace']],
                     'characters' => ['only' => ['related', 'read']],
                     'replacementClaims',
                     'invoices',
@@ -282,14 +282,14 @@ Route::group(['middleware' => 'auth'], function () {
                 'has-one' => [
                     'fleet',
                     'character',
-                ]
+                ],
             ]);
 
             $api->resource('subscriptions', [
                 'has-one' => [
                     'character',
                     'organization',
-                ]
+                ],
             ]);
         });
     });
