@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\Adapters;
 
+use App\Alliance;
 use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
@@ -20,16 +21,6 @@ class AllianceAdapter extends AbstractAdapter
     protected $guarded = [
         'corporations',
         'coalition',
-        'fulfilledInvoices',
-        'overdueInvoices',
-        'pendingInvoices',
-        'defaultInvoices',
-        'fulfilledReceivedInvoices',
-        'overdueReceivedInvoices',
-        'pendingReceivedInvoices',
-        'defaultReceivedInvoices',
-        'readNotifications',
-        'unreadNotifications',
     ];
 
     /**
@@ -46,18 +37,8 @@ class AllianceAdapter extends AbstractAdapter
         'coalition',
         'replacementClaims',
         'invoices',
-        'fulfilledInvoices',
-        'overdueInvoices',
-        'pendingInvoices',
-        'defaultInvoices',
         'receivedInvoices',
-        'fulfilledReceivedInvoices',
-        'overdueReceivedInvoices',
-        'pendingReceivedInvoices',
-        'defaultReceivedInvoices',
         'notifications',
-        'readNotifications',
-        'unreadNotifications',
         'corporations',
         'roles',
         'subscriptions',
@@ -70,7 +51,7 @@ class AllianceAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Alliance(), $paging);
+        parent::__construct(new Alliance(), $paging);
     }
 
     public function handbooks()
@@ -100,12 +81,16 @@ class AllianceAdapter extends AbstractAdapter
 
     public function coalition()
     {
-        return $this->hasMany();
+        return $this->queriesOne(function (Alliance $alliance) {
+            return $alliance->coalition();
+        });
     }
 
     public function corporations()
     {
-        return $this->hasMany();
+        return $this->queriesMany(function (Alliance $alliance) {
+            return $alliance->corporations();
+        });
     }
 
     public function replacementClaims()
@@ -118,62 +103,12 @@ class AllianceAdapter extends AbstractAdapter
         return $this->hasMany();
     }
 
-    public function fulfilledInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function overdueInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function pendingInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function defaultInvoices()
-    {
-        return $this->hasMany();
-    }
-
     public function receivedInvoices()
     {
         return $this->hasMany();
     }
 
-    public function fulfilledReceivedInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function overdueReceivedInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function pendingReceivedInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function defaultReceivedInvoices()
-    {
-        return $this->hasMany();
-    }
-
     public function notifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function readNotifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function unreadNotifications()
     {
         return $this->hasMany();
     }

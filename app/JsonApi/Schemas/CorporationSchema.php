@@ -19,7 +19,7 @@ class CorporationSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return (string) $resource->getKey();
+        return (string) $resource->getRouteKey();
     }
 
     /**
@@ -86,62 +86,12 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
             ],
 
-            'fulfilledInvoices' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'overdueInvoices' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'pendingInvoices' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'defaultInvoices' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
             'receivedInvoices' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
 
-            'fulfilledReceivedInvoices' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'overdueReceivedInvoices' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'pendingReceivedInvoices' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'defaultReceivedInvoices' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
             'notifications' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'readNotifications' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'unreadNotifications' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],

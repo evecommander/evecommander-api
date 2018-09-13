@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\Adapters;
 
+use App\Corporation;
 use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
@@ -20,16 +21,6 @@ class CorporationAdapter extends AbstractAdapter
     protected $guarded = [
         'alliance',
         'characters',
-        'fulfilledInvoices',
-        'overdueInvoices',
-        'pendingInvoices',
-        'defaultInvoices',
-        'fulfilledReceivedInvoices',
-        'overdueReceivedInvoices',
-        'pendingReceivedInvoices',
-        'defaultReceivedInvoices',
-        'readNotifications',
-        'unreadNotifications',
     ];
 
     /**
@@ -47,18 +38,8 @@ class CorporationAdapter extends AbstractAdapter
         'characters',
         'replacementClaims',
         'invoices',
-        'fulfilledInvoices',
-        'overdueInvoices',
-        'pendingInvoices',
-        'defaultInvoices',
         'receivedInvoices',
-        'fulfilledReceivedInvoices',
-        'overdueReceivedInvoices',
-        'pendingReceivedInvoices',
-        'defaultReceivedInvoices',
         'notifications',
-        'readNotifications',
-        'unreadNotifications',
         'roles',
         'subscriptions',
     ];
@@ -70,7 +51,7 @@ class CorporationAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Corporation(), $paging);
+        parent::__construct(new Corporation(), $paging);
     }
 
     public function handbooks()
@@ -100,12 +81,16 @@ class CorporationAdapter extends AbstractAdapter
 
     public function alliance()
     {
-        return $this->belongsTo();
+        return $this->queriesOne(function (Corporation $corporation) {
+            return $corporation->alliance();
+        });
     }
 
     public function characters()
     {
-        return $this->hasMany();
+        return $this->queriesMany(function (Corporation $corporation) {
+            return $corporation->characters();
+        });
     }
 
     public function replacementClaims()
@@ -118,62 +103,12 @@ class CorporationAdapter extends AbstractAdapter
         return $this->hasMany();
     }
 
-    public function fulfilledInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function overdueInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function pendingInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function defaultInvoices()
-    {
-        return $this->hasMany();
-    }
-
     public function receivedInvoices()
     {
         return $this->hasMany();
     }
 
-    public function fulfilledReceivedInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function overdueReceivedInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function pendingReceivedInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function defaultReceivedInvoices()
-    {
-        return $this->hasMany();
-    }
-
     public function notifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function readNotifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function unreadNotifications()
     {
         return $this->hasMany();
     }

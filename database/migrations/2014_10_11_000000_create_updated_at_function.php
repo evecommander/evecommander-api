@@ -12,7 +12,7 @@ class CreateUpdatedAtFunction extends Migration
     public function up()
     {
         \Illuminate\Support\Facades\DB::statement('
-        CREATE FUNCTION update_updated_at_column() RETURNS trigger
+        CREATE OR REPLACE FUNCTION update_updated_at_column() RETURNS trigger
             LANGUAGE plpgsql
             AS $$
           BEGIN

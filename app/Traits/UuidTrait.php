@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 trait UuidTrait
 {
@@ -20,7 +20,7 @@ trait UuidTrait
                 return;
             }
 
-            $model->{$model->getKeyName()} = Uuid::uuid5(Uuid::NAMESPACE_DNS, env('UUID_NAMESPACE_DNS'))->getHex();
+            $model->{$model->getKeyName()} = Str::orderedUuid();
         });
     }
 

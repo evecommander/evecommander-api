@@ -19,7 +19,7 @@ class HandbookSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return (string) $resource->getKey();
+        return (string) $resource->getRouteKey();
     }
 
     /**

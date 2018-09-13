@@ -19,7 +19,7 @@ class FleetSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return (string) $resource->getKey();
+        return (string) $resource->getRouteKey();
     }
 
     /**
@@ -52,16 +52,6 @@ class FleetSchema extends SchemaProvider
     {
         return [
             'notifications' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'readNotifications' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'unreadNotifications' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],

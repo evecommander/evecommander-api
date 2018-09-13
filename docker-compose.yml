@@ -15,6 +15,9 @@ services:
      - .:/var/www/html
     networks:
      - vessel
+    links:
+     - pgsql
+     - redis
   pgsql:
     image: postgres:alpine
     ports:
@@ -42,6 +45,9 @@ services:
      - ./docker/echo/laravel-echo-server.json:/app/laravel-echo-server.json
     networks:
      - vessel
+    links:
+      - app
+      - redis
 networks:
   vessel:
     driver: "bridge"

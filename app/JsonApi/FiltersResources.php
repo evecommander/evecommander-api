@@ -142,7 +142,11 @@ trait FiltersResources
         }
     }
 
-    protected function with(Builder $query, Collection $includedResources)
+    /**
+     * @param Builder $query
+     * @param Collection $includedResources
+     */
+    protected function with($query, Collection $includedResources)
     {
         $query->with($includedResources);
     }

@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\Adapters;
 
+use App\Character;
 use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
@@ -28,13 +29,7 @@ class CharacterAdapter extends AbstractAdapter
         'comments',
         'memberships',
         'invoices',
-        'fulfilledInvoices',
-        'overdueInvoices',
-        'pendingInvoices',
-        'defaultInvoices',
         'notifications',
-        'readNotifications',
-        'unreadNotifications',
         'corporation',
         'roles',
         'subscriptions',
@@ -48,7 +43,7 @@ class CharacterAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Character(), $paging);
+        parent::__construct(new Character(), $paging);
     }
 
     public function user()
@@ -76,44 +71,16 @@ class CharacterAdapter extends AbstractAdapter
         return $this->hasMany();
     }
 
-    public function fulfilledInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function overdueInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function pendingInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function defaultInvoices()
-    {
-        return $this->hasMany();
-    }
-
     public function notifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function readNotifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function unreadNotifications()
     {
         return $this->hasMany();
     }
 
     public function corporation()
     {
-        return $this->hasMany();
+        return $this->queriesOne(function (Character $character) {
+            return $character->corporation();
+        });
     }
 
     public function roles()

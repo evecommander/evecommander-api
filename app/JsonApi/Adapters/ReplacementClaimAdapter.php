@@ -3,6 +3,7 @@
 namespace App\JsonApi\Adapters;
 
 use App\JsonApi\FiltersResources;
+use App\ReplacementClaim;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 
@@ -17,10 +18,7 @@ class ReplacementClaimAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    protected $guarded = [
-        'readNotifications',
-        'unreadNotifications',
-    ];
+    protected $guarded = [];
 
     /**
      * Resource relationship fields that can be filled.
@@ -32,8 +30,6 @@ class ReplacementClaimAdapter extends AbstractAdapter
         'organization',
         'comments',
         'notifications',
-        'readNotifications',
-        'unreadNotifications',
         'lastUpdatedBy',
     ];
 
@@ -44,7 +40,7 @@ class ReplacementClaimAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\ReplacementClaim(), $paging);
+        parent::__construct(new ReplacementClaim(), $paging);
     }
 
     public function character()
@@ -63,16 +59,6 @@ class ReplacementClaimAdapter extends AbstractAdapter
     }
 
     public function notifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function readNotifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function unreadNotifications()
     {
         return $this->hasMany();
     }

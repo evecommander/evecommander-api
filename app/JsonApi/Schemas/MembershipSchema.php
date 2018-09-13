@@ -19,7 +19,7 @@ class MembershipSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return (string) $resource->getKey();
+        return (string) $resource->getRouteKey();
     }
 
     /**
@@ -49,16 +49,6 @@ class MembershipSchema extends SchemaProvider
     {
         return [
             'notifications' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'readNotifications' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'unreadNotifications' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],

@@ -19,7 +19,7 @@ class CharacterSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return (string) $resource->getKey();
+        return (string) $resource->getRouteKey();
     }
 
     /**
@@ -63,26 +63,6 @@ class CharacterSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
             ],
 
-            'fulfilledInvoices' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'overdueInvoices' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'pendingInvoices' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'defaultInvoices' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
             'user' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
@@ -104,16 +84,6 @@ class CharacterSchema extends SchemaProvider
             ],
 
             'notifications' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'readNotifications' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'unreadNotifications' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
