@@ -47,7 +47,7 @@ class GenerateUser extends Command
         $user = factory(User::class)->create(['password' => Hash::make($password)]);
 
         $row = [
-            (string)$user->id,
+            (string) $user->id,
             $user->email,
             $password,
             $user->created_at,
