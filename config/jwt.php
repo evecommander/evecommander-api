@@ -274,7 +274,7 @@ return [
         |
         */
 
-        'jwt' => Tymon\JWTAuth\Providers\JWT\Lcobucci::class,
+        'jwt' => Tymon\JWTAuth\Providers\JWT\NamshiAdapter::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -285,7 +285,7 @@ return [
         |
         */
 
-        'auth' => Tymon\JWTAuth\Providers\Auth\Illuminate::class,
+        'auth' => Tymon\JWTAuth\Providers\Auth\IlluminateAuthAdapter::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -296,7 +296,7 @@ return [
         |
         */
 
-        'storage' => Tymon\JWTAuth\Providers\Storage\Illuminate::class,
+        'storage' => Tymon\JWTAuth\Providers\Storage\IlluminateCacheAdapter::class,
 
     ],
 

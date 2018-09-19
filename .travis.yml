@@ -38,7 +38,6 @@ script:
   - phpunit
 
 after_success:
-  - travis_retry php vendor/bin/php-coveralls
   - rm .env
   - export REPO=$DOCKER_USERNAME/evecommander-php;
   - docker build -t $REPO:$COMMIT .;
