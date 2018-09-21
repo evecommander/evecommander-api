@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ef6a5f8d69eacfac556047efc4bfca3",
+    "content-hash": "3c8ed29592a9b4de8f19ca88b9ba7031",
     "packages": [
         {
             "name": "cloudcreativity/laravel-json-api",

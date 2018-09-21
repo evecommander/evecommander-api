@@ -6,7 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
-        "cloudcreativity/laravel-json-api": ">=1.0.0-beta.2",
+        "cloudcreativity/laravel-json-api": "^1.0.0-beta.3",
         "evecommander/esi-client-php": "^0.8.1",
         "fideloper/proxy": "~4.0",
         "irazasyed/jwt-auth-guard": "^1.0",
@@ -15,7 +15,7 @@
         "moontoast/math": "^1.1",
         "predis/predis": "^1.1",
         "shipping-docker/vessel": "^2.1",
-        "tymon/jwt-auth": ">=1.0.0-rc.3"
+        "tymon/jwt-auth": "^1.0.0-rc.3"
     },
     "require-dev": {
         "cloudcreativity/json-api-testing": "1.x-dev",
