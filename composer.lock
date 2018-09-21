@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3c8ed29592a9b4de8f19ca88b9ba7031",
+    "content-hash": "e4d235abd78184fb8988dc98b397a525",
     "packages": [
         {
             "name": "cloudcreativity/laravel-json-api",
@@ -2024,16 +2024,16 @@
         },
         {
             "name": "shipping-docker/vessel",
-            "version": "2.1.0",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shipping-docker/vessel.git",
-                "reference": "533cc7d0f0055899c59960c5ea2d1fb3b1af7459"
+                "reference": "87e7c38d545d0a55a9a8bf8b7d889df08c0b1280"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shipping-docker/vessel/zipball/533cc7d0f0055899c59960c5ea2d1fb3b1af7459",
-                "reference": "533cc7d0f0055899c59960c5ea2d1fb3b1af7459",
+                "url": "https://api.github.com/repos/shipping-docker/vessel/zipball/87e7c38d545d0a55a9a8bf8b7d889df08c0b1280",
+                "reference": "87e7c38d545d0a55a9a8bf8b7d889df08c0b1280",
                 "shasum": ""
             },
             "type": "library",
@@ -2060,7 +2060,7 @@
                 }
             ],
             "description": "Simple Docker dev environments",
-            "time": "2017-11-16T00:47:14+00:00"
+            "time": "2018-09-14T01:25:29+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
