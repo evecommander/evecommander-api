@@ -5,7 +5,7 @@ namespace App\Contracts;
 use Illuminate\Support\Collection;
 
 /**
- * Interface HasSRPContract
+ * Interface HasSRPContract.
  *
  * @property Collection replacementClaims
  * @property Collection pendingReplacementClaims

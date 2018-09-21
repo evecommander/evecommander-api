@@ -58,7 +58,7 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->handbooksCount($resource);
-                }
+                },
             ],
 
             'members' => [
@@ -66,7 +66,7 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->membersCount($resource);
-                }
+                },
             ],
 
             'defaultMembershipLevel' => [
@@ -79,7 +79,7 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->membershipLevelsCount($resource);
-                }
+                },
             ],
 
             'memberships' => [
@@ -87,7 +87,7 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->membersCount($resource);
-                }
+                },
             ],
 
             'replacementClaims' => [
@@ -95,7 +95,7 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->replacementClaimsCounts($resource);
-                }
+                },
             ],
 
             'invoices' => [
@@ -103,7 +103,7 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->issuedInvoicesCounts($resource);
-                }
+                },
             ],
 
             'receivedInvoices' => [
@@ -111,7 +111,7 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->receivedInvoicesCounts($resource);
-                }
+                },
             ],
 
             'notifications' => [
@@ -119,7 +119,7 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->notificationsCounts($resource);
-                }
+                },
             ],
 
             'alliance' => [
@@ -133,9 +133,9 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return [
-                        'count' => $resource->characters->count()
+                        'count' => $resource->characters->count(),
                     ];
-                }
+                },
             ],
 
             'roles' => [
@@ -143,7 +143,7 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->rolesCount($resource);
-                }
+                },
             ],
 
             'subscriptions' => [
@@ -151,7 +151,7 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->subscriptionsCount($resource);
-                }
+                },
             ],
         ];
     }

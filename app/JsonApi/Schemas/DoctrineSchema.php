@@ -63,9 +63,9 @@ class DoctrineSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return [
-                        'count' => $resource->fittings->count()
+                        'count' => $resource->fittings->count(),
                     ];
-                }
+                },
             ],
 
             'createdBy' => [

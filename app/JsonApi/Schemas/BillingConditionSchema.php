@@ -64,9 +64,9 @@ class BillingConditionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return [
-                        'count' => $resource->discounts->count()
+                        'count' => $resource->discounts->count(),
                     ];
-                }
+                },
             ],
 
             'membership-fees' => [
@@ -74,9 +74,9 @@ class BillingConditionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return [
-                        'count' => $resource->membershipFees->count()
+                        'count' => $resource->membershipFees->count(),
                     ];
-                }
+                },
             ],
         ];
     }

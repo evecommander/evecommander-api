@@ -5,7 +5,7 @@ namespace App\Contracts;
 use Illuminate\Support\Collection;
 
 /**
- * Interface HasHandbooksContract
+ * Interface HasHandbooksContract.
  *
  * @property Collection handbooks
  */

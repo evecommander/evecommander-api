@@ -5,7 +5,7 @@ namespace App\Contracts;
 use Illuminate\Support\Collection;
 
 /**
- * Interface HasNotificationsContract
+ * Interface HasNotificationsContract.
  *
  * @property Collection notifications
  * @property Collection readNotifications

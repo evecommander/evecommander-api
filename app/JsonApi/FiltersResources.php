@@ -41,14 +41,14 @@ trait FiltersResources
                     $this->doFilter($query, $model, $key, $val);
                 });
             }
-        } elseif (strpos($filter,'.')) {
+        } elseif (strpos($filter, '.')) {
             $filterTableName = reset(explode('.', $filter));
             $filterName = null;
             $needle = '.';
             $pos = strpos($filter, $needle);
 
             if ($pos !== false) {
-                $filterName = substr($filter, $pos+1);
+                $filterName = substr($filter, $pos + 1);
             }
 
             $incModel = $model->{$filterTableName}()->getRelated();
@@ -68,9 +68,9 @@ trait FiltersResources
             } else {
                 throw new ValidationException(Error::create([
                     'status' => 422,
-                    'title' => "Unknown value passed for filter",
+                    'title'  => 'Unknown value passed for filter',
                     'detail' => "Unknown value {{$name}}",
-                    'source' => ['parameter' => "filter[{$name}]=$value"]
+                    'source' => ['parameter' => "filter[{$name}]=$value"],
                 ]));
             }
 
@@ -79,7 +79,7 @@ trait FiltersResources
             if (!Schema::connection($this->model->getConnectionName())->hasColumn($this->model->getTable(), $name)) {
                 throw new ValidationException(Error::create([
                     'status' => 422,
-                    'title' => "Unknown key passed for filter: {$name}"
+                    'title'  => "Unknown key passed for filter: {$name}",
                 ]));
             }
 
@@ -119,7 +119,7 @@ trait FiltersResources
                 $filterQuery->whereNull($name);
                 break;
             case 'null':
-                if (filter_var($value,FILTER_VALIDATE_BOOLEAN)) {
+                if (filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
                     $filterQuery->whereNull($name);
                 } else {
                     $filterQuery->whereNotNull($name);
