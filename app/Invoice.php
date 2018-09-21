@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Abstracts\Organization;
+use App\Contracts\HasNotificationsContract;
 use App\Notifications\Invoice\PaymentPosted;
 use App\Traits\HasComments;
 use App\Traits\UuidTrait;
@@ -39,7 +40,7 @@ use Illuminate\Notifications\Notifiable;
  * @property \Illuminate\Database\Eloquent\Collection payments
  * @property Character lastUpdatedBy
  */
-class Invoice extends Model
+class Invoice extends Model implements HasNotificationsContract
 {
     use UuidTrait, HasComments, Notifiable;
 

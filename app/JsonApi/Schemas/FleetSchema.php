@@ -2,10 +2,13 @@
 
 namespace App\JsonApi\Schemas;
 
+use App\JsonApi\ProvidesMeta;
 use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class FleetSchema extends SchemaProvider
 {
+    use ProvidesMeta;
+
     /**
      * @var string
      */
@@ -19,7 +22,7 @@ class FleetSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return (string) $resource->getKey();
+        return (string) $resource->getRouteKey();
     }
 
     /**
@@ -54,21 +57,19 @@ class FleetSchema extends SchemaProvider
             'notifications' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-            ],
-
-            'readNotifications' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
-            ],
-
-            'unreadNotifications' => [
-                self::SHOW_SELF    => true,
-                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return $this->notificationsCounts($resource);
+                },
             ],
 
             'comments' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->comments->count(),
+                    ];
+                },
             ],
 
             'fleetType' => [

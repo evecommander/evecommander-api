@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\Adapters;
 
+use App\Coalition;
 use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
@@ -19,16 +20,6 @@ class CoalitionAdapter extends AbstractAdapter
 
     protected $guarded = [
         'alliances',
-        'fulfilledInvoices',
-        'overdueInvoices',
-        'pendingInvoices',
-        'defaultInvoices',
-        'fulfilledReceivedInvoices',
-        'overdueReceivedInvoices',
-        'pendingReceivedInvoices',
-        'defaultReceivedInvoices',
-        'readNotifications',
-        'unreadNotifications',
     ];
 
     /**
@@ -44,25 +35,12 @@ class CoalitionAdapter extends AbstractAdapter
         'memberships',
         'replacementClaims',
         'invoices',
-        'fulfilledInvoices',
-        'overdueInvoices',
-        'pendingInvoices',
-        'defaultInvoices',
         'leader',
-        'fulfilledInvoices',
-        'overdueInvoices',
-        'pendingInvoices',
-        'defaultInvoices',
         'receivedInvoices',
-        'fulfilledReceivedInvoices',
-        'overdueReceivedInvoices',
-        'pendingReceivedInvoices',
-        'defaultReceivedInvoices',
         'notifications',
-        'readNotifications',
-        'unreadNotifications',
         'roles',
         'subscriptions',
+        'alliances',
     ];
 
     /**
@@ -72,7 +50,7 @@ class CoalitionAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Coalition(), $paging);
+        parent::__construct(new Coalition(), $paging);
     }
 
     public function handbooks()
@@ -105,62 +83,12 @@ class CoalitionAdapter extends AbstractAdapter
         return $this->hasMany();
     }
 
-    public function fulfilledInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function overdueInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function pendingInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function defaultInvoices()
-    {
-        return $this->hasMany();
-    }
-
     public function receivedInvoices()
     {
         return $this->hasMany();
     }
 
-    public function fulfilledReceivedInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function overdueReceivedInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function pendingReceivedInvoices()
-    {
-        return $this->hasMany();
-    }
-
-    public function defaultReceivedInvoices()
-    {
-        return $this->hasMany();
-    }
-
     public function notifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function readNotifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function unreadNotifications()
     {
         return $this->hasMany();
     }
@@ -178,5 +106,12 @@ class CoalitionAdapter extends AbstractAdapter
     public function subscriptions()
     {
         return $this->hasMany();
+    }
+
+    public function alliances()
+    {
+        return $this->queriesMany(function (Coalition $coalition) {
+            return $coalition->alliances();
+        });
     }
 }

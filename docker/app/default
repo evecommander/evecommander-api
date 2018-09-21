@@ -14,6 +14,8 @@ server {
 
     include h5bp/basic.conf;
 
+    client_max_body_size 100M;
+
     location / {
         try_files $uri $uri/ /index.php$is_args$args;
     }
@@ -21,7 +23,7 @@ server {
     location ~ \.php$ {
         add_header X-Served-By Vessel;
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+        fastcgi_pass unix:/run/php/php7.2-fpm.sock;
     }
 
     error_page 404 /index.php;

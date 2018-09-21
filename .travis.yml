@@ -1,7 +1,20 @@
 sudo: required
 
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::8}
+    - PGPORT=5433
+
 services:
   - docker
+  - redis-server
+
+addons:
+  postgresql: "10"
+  apt:
+    packages:
+     - postgresql-10
+     - postgresql-client-10
 
 language: php
 
@@ -9,13 +22,20 @@ php:
   - "7.2"
   - "7.1"
 
-env:
-  global:
-    - COMMIT=${TRAVIS_COMMIT::8}
-
 before_script:
   - composer install --optimize-autoloader
+  - cp .env.example .env
+  - php artisan key:generate
+  - php artisan jwt:secret
   - php artisan config:cache
+  - php artisan route:cache
+  - psql -c "CREATE USER commander PASSWORD 'secret';"
+  - psql -c "CREATE DATABASE eve_commander WITH OWNER = commander;"
+  - psql -c "CREATE DATABASE eve_sde WITH OWNER = commander;"
+  - php artisan migrate --seed
+
+script:
+  - phpunit
 
 after_success:
   - rm .env

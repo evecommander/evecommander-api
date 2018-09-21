@@ -16,9 +16,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-//Route::get('/', function () {
-//    return [];
-//});
 
 Broadcast::routes();
 
@@ -34,33 +31,32 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('characters/{character}/refresh', 'Api\\CharacterController@refreshToken')
         ->middleware('json-api.auth:default');
 
-    JsonApi::register('v1', ['namespace' => 'Api', 'middleware' => 'json-api.auth:default'], function (ApiGroup $api, Registrar $router) {
+    JsonApi::register('v1', [
+        'namespace'  => 'Api',
+        'middleware' => 'json-api.auth:default',
+    ], function (ApiGroup $api, Registrar $router) {
         $api->resource('users', [
+            'except' => [
+                'index',
+                'create',
+            ],
             'has-many' => [
                 'characters',
                 'notifications',
-                'readNotifications',
-                'unreadNotifications',
             ],
         ]);
 
         $api->resource('characters', [
             'controller' => true,
             'has-one'    => [
-                'user'  => ['except' => 'replace'],
-                'token' => ['except' => 'replace'],
+                'user'        => ['except' => 'replace'],
+                'token'       => ['except' => 'replace', 'inverse' => 'oauth2-tokens'],
+                'corporation' => ['except' => ['replace']],
             ],
             'has-many' => [
                 'comments',
                 'invoices',
-                'fulfilledInvoices',
-                'overdueInvoices',
-                'pendingInvoices',
-                'defaultInvoices',
                 'notifications',
-                'readNotifications',
-                'unreadNotifications',
-                'corporation',
             ],
         ]);
 
@@ -75,22 +71,12 @@ Route::group(['middleware' => 'auth'], function () {
                     'members',
                     'membershipLevels',
                     'memberships',
-                    'alliance',
-                    'characters',
+                    'alliance'   => ['except' => ['replace']],
+                    'characters' => ['only' => ['related', 'read']],
                     'replacementClaims',
                     'invoices',
-                    'fulfilledInvoices',
-                    'overdueInvoices',
-                    'pendingInvoices',
-                    'defaultInvoices',
                     'receivedInvoices',
-                    'fulfilledReceivedInvoices',
-                    'overdueReceivedInvoices',
-                    'pendingReceivedInvoices',
-                    'defaultReceivedInvoices',
                     'notifications',
-                    'readNotifications',
-                    'unreadNotifications',
                 ],
             ]);
 
@@ -103,22 +89,12 @@ Route::group(['middleware' => 'auth'], function () {
                     'members',
                     'membershipLevels',
                     'memberships',
-                    'coalition',
+                    'coalition' => ['except' => ['replace']],
                     'replacementClaims',
                     'invoices',
-                    'fulfilledInvoices',
-                    'overdueInvoices',
-                    'pendingInvoices',
-                    'defaultInvoices',
                     'receivedInvoices',
-                    'fulfilledReceivedInvoices',
-                    'overdueReceivedInvoices',
-                    'pendingReceivedInvoices',
-                    'defaultReceivedInvoices',
                     'notifications',
-                    'readNotifications',
-                    'unreadNotifications',
-                    'corporations',
+                    'corporations' => ['only' => ['related', 'read']],
                 ],
             ]);
 
@@ -134,22 +110,9 @@ Route::group(['middleware' => 'auth'], function () {
                     'memberships',
                     'replacementClaims',
                     'invoices',
-                    'fulfilledInvoices',
-                    'overdueInvoices',
-                    'pendingInvoices',
-                    'defaultInvoices',
-                    'fulfilledInvoices',
-                    'overdueInvoices',
-                    'pendingInvoices',
-                    'defaultInvoices',
                     'receivedInvoices',
-                    'fulfilledReceivedInvoices',
-                    'overdueReceivedInvoices',
-                    'pendingReceivedInvoices',
-                    'defaultReceivedInvoices',
                     'notifications',
-                    'readNotifications',
-                    'unreadNotifications',
+                    'alliances' => ['only' => ['related', 'read']],
                 ],
             ]);
 
@@ -211,8 +174,6 @@ Route::group(['middleware' => 'auth'], function () {
                 'has-many' => [
                     'comments',
                     'notifications',
-                    'readNotifications',
-                    'unreadNotifications',
                 ],
             ]);
 
@@ -244,8 +205,6 @@ Route::group(['middleware' => 'auth'], function () {
                     'payments',
                     'comments',
                     'notifications',
-                    'readNotifications',
-                    'unreadNotifications',
                 ],
             ]);
 
@@ -268,8 +227,6 @@ Route::group(['middleware' => 'auth'], function () {
                 ],
                 'has-many' => [
                     'notifications',
-                    'readNotifications',
-                    'unreadNotifications',
                 ],
             ]);
 
@@ -307,8 +264,31 @@ Route::group(['middleware' => 'auth'], function () {
                 'has-many' => [
                     'comments',
                     'notifications',
-                    'readNotifications',
-                    'unreadNotifications',
+                ],
+            ]);
+
+            $api->resource('roles', [
+                'has-one' => [
+                    'organization',
+                ],
+                'has-many' => [
+                    'permissions',
+                    'characters',
+                    'membershipLevels',
+                ],
+            ]);
+
+            $api->resource('rsvps', [
+                'has-one' => [
+                    'fleet',
+                    'character',
+                ],
+            ]);
+
+            $api->resource('subscriptions', [
+                'has-one' => [
+                    'character',
+                    'organization',
                 ],
             ]);
         });

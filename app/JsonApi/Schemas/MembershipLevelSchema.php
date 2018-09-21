@@ -19,7 +19,7 @@ class MembershipLevelSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return (string) $resource->getKey();
+        return (string) $resource->getRouteKey();
     }
 
     /**
@@ -53,6 +53,11 @@ class MembershipLevelSchema extends SchemaProvider
             'memberships' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->memberships->count(),
+                    ];
+                },
             ],
 
             'organization' => [
@@ -85,6 +90,11 @@ class MembershipLevelSchema extends SchemaProvider
             'roles' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->roles->count(),
+                    ];
+                },
             ],
         ];
     }

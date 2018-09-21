@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMembershipLevelPermissionTable extends Migration
+class CreateMembershipLevelRoleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMembershipLevelPermissionTable extends Migration
      */
     public function up()
     {
-        Schema::create('membership_level_permission', function (Blueprint $table) {
+        Schema::create('membership_level_role', function (Blueprint $table) {
             $table->uuid('membership_level_id');
             $table->uuid('role_id');
             $table->timestamp('created_at')->useCurrent();

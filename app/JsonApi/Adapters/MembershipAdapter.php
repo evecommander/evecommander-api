@@ -3,6 +3,7 @@
 namespace App\JsonApi\Adapters;
 
 use App\JsonApi\FiltersResources;
+use App\Membership;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 
@@ -33,8 +34,6 @@ class MembershipAdapter extends AbstractAdapter
         'createdBy',
         'lastUpdatedBy',
         'notifications',
-        'readNotifications',
-        'unreadNotifications',
     ];
 
     /**
@@ -44,7 +43,7 @@ class MembershipAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Membership(), $paging);
+        parent::__construct(new Membership(), $paging);
     }
 
     public function membershipLevel()
@@ -73,16 +72,6 @@ class MembershipAdapter extends AbstractAdapter
     }
 
     public function notifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function readNotifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function unreadNotifications()
     {
         return $this->hasMany();
     }

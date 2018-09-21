@@ -3,8 +3,6 @@
 namespace App;
 
 use App\Abstracts\Organization;
-use App\Traits\HasSRP;
-use App\Traits\ReceivesInvoices;
 use Illuminate\Support\Carbon;
 
 /**
@@ -44,8 +42,6 @@ use Illuminate\Support\Carbon;
  */
 class Corporation extends Organization
 {
-    use HasSRP, ReceivesInvoices;
-
     protected $casts = [
         'settings' => 'array',
     ];

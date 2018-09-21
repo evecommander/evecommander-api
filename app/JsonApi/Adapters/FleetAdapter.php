@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\Adapters;
 
+use App\Fleet;
 use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
@@ -17,10 +18,7 @@ class FleetAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    protected $guarded = [
-        'readNotifications',
-        'unreadNotifications',
-    ];
+    protected $guarded = [];
 
     /**
      * Resource relationship fields that can be filled.
@@ -34,8 +32,6 @@ class FleetAdapter extends AbstractAdapter
         'lastUpdatedBy',
         'comments',
         'notifications',
-        'readNotifications',
-        'unreadNotifications',
         'rsvps',
     ];
 
@@ -46,7 +42,7 @@ class FleetAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Fleet(), $paging);
+        parent::__construct(new Fleet(), $paging);
     }
 
     public function fleetType()
@@ -75,16 +71,6 @@ class FleetAdapter extends AbstractAdapter
     }
 
     public function notifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function readNotifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function unreadNotifications()
     {
         return $this->hasMany();
     }

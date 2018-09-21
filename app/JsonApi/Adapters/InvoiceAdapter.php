@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\Adapters;
 
+use App\Invoice;
 use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
@@ -29,8 +30,6 @@ class InvoiceAdapter extends AbstractAdapter
         'payments',
         'comments',
         'notifications',
-        'readNotifications',
-        'unreadNotifications',
         'lastUpdatedBy',
     ];
 
@@ -41,7 +40,7 @@ class InvoiceAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Invoice(), $paging);
+        parent::__construct(new Invoice(), $paging);
     }
 
     public function issuer()
@@ -70,16 +69,6 @@ class InvoiceAdapter extends AbstractAdapter
     }
 
     public function notifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function readNotifications()
-    {
-        return $this->hasMany();
-    }
-
-    public function unreadNotifications()
     {
         return $this->hasMany();
     }

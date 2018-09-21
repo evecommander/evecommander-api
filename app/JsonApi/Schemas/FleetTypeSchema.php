@@ -19,7 +19,7 @@ class FleetTypeSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return (string) $resource->getKey();
+        return (string) $resource->getRouteKey();
     }
 
     /**
@@ -51,6 +51,11 @@ class FleetTypeSchema extends SchemaProvider
             'fleets' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->fleets->count(),
+                    ];
+                },
             ],
 
             'organization' => [

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Contracts\HasNotificationsContract;
 use App\Traits\UuidTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,7 +25,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
  * @property \Illuminate\Database\Eloquent\Collection characters
  */
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements HasNotificationsContract, JWTSubject
 {
     use Notifiable, UuidTrait;
 

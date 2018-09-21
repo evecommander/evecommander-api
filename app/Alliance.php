@@ -3,11 +3,6 @@
 namespace App;
 
 use App\Abstracts\Organization;
-use App\Traits\HasSRP;
-use App\Traits\IssuesInvoices;
-use App\Traits\ReceivesInvoices;
-use App\Traits\UuidTrait;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 /**
@@ -43,11 +38,10 @@ use Illuminate\Support\Carbon;
  * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
  * @property Coalition coalition
  * @property \Illuminate\Database\Eloquent\Collection roles
+ * @property \Illuminate\Database\Eloquent\Collection corporations
  */
 class Alliance extends Organization
 {
-    use UuidTrait, HasSRP, ReceivesInvoices, IssuesInvoices, Notifiable;
-
     protected $casts = [
         'settings' => 'array',
     ];

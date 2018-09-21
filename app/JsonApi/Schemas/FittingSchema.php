@@ -19,7 +19,7 @@ class FittingSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return (string) $resource->getKey();
+        return (string) $resource->getRouteKey();
     }
 
     /**
@@ -61,6 +61,11 @@ class FittingSchema extends SchemaProvider
             'comments' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->comments->count(),
+                    ];
+                },
             ],
 
             'doctrine' => [
@@ -75,6 +80,11 @@ class FittingSchema extends SchemaProvider
             'replacementClaims' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->replacementClaims->count(),
+                    ];
+                },
             ],
         ];
     }

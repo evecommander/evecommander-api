@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   app:
     build:
@@ -15,18 +15,30 @@ services:
      - .:/var/www/html
     networks:
      - vessel
+  node:
+    build:
+      context: ./docker/node
+      dockerfile: Dockerfile
+      args:
+        uid: "${WWWUSER}"
+    image: vessel/node
+    user: node
+    volumes:
+     - .:/var/www/html
+    networks:
+     - vessel
   pgsql:
-    image: postgres:alpine
+    image: postgres:10-alpine
     ports:
-     - "${PGSQL_PORT}:5432"
+    - "${PGSQL_PORT}:5432"
     environment:
       POSTGRES_DATABASE: "eve_commander"
       POSTGRES_USERNAME: "homestead"
       POSTGRES_PASSWORD: "secret"
     volumes:
-     - vesselpgsql:/var/lib/postgresql/data
+    - vesselpgsql:/var/lib/postgresql/data
     networks:
-     - vessel
+    - vessel
   redis:
     image: redis:alpine
     volumes:
@@ -36,12 +48,12 @@ services:
   echo:
     image: lagun4ik/laravel-echo-server
     ports:
-     - "1194:1194/udp"
+    - "1194:1194/udp"
     restart: always
     volumes:
-     - ./docker/echo/laravel-echo-server.json:/app/laravel-echo-server.json
+    - ./docker/echo/laravel-echo-server.json:/app/laravel-echo-server.json
     networks:
-     - vessel
+    - vessel
 networks:
   vessel:
     driver: "bridge"

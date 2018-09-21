@@ -19,7 +19,7 @@ class DoctrineSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return (string) $resource->getKey();
+        return (string) $resource->getRouteKey();
     }
 
     /**
@@ -61,6 +61,11 @@ class DoctrineSchema extends SchemaProvider
             'fittings' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->fittings->count(),
+                    ];
+                },
             ],
 
             'createdBy' => [

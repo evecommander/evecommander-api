@@ -19,7 +19,7 @@ class RoleSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return (string) $resource->getKey();
+        return (string) $resource->getRouteKey();
     }
 
     /**
@@ -60,16 +60,31 @@ class RoleSchema extends SchemaProvider
             'permissions' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->permissions->count(),
+                    ];
+                },
             ],
 
             'characters' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->characters->count(),
+                    ];
+                },
             ],
 
             'membershipLevels' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->membershipLevels->count(),
+                    ];
+                },
             ],
         ];
     }

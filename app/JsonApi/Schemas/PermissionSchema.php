@@ -19,7 +19,7 @@ class PermissionSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return (string) $resource->getKey();
+        return (string) $resource->getRouteKey();
     }
 
     /**
@@ -52,11 +52,21 @@ class PermissionSchema extends SchemaProvider
             'membershipLevels' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->membershipLevels->count(),
+                    ];
+                },
             ],
 
             'roles' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->roles->count(),
+                    ];
+                },
             ],
         ];
     }

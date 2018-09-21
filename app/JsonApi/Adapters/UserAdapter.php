@@ -25,8 +25,6 @@ class UserAdapter extends AbstractAdapter
     protected $relationships = [
         'characters',
         'notifications',
-        'readNotifications',
-        'unreadNotifications',
     ];
 
     /**
@@ -45,16 +43,6 @@ class UserAdapter extends AbstractAdapter
     }
 
     protected function notifications()
-    {
-        return $this->hasMany();
-    }
-
-    protected function readNotifications()
-    {
-        return $this->hasMany();
-    }
-
-    protected function unreadNotifications()
     {
         return $this->hasMany();
     }
