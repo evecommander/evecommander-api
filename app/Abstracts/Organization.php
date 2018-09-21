@@ -2,24 +2,48 @@
 
 namespace App\Abstracts;
 
+use App\Contracts\HasFleetTypesContract;
+use App\Contracts\HasHandbooksContract;
+use App\Contracts\HasMembersContract;
+use App\Contracts\HasNotificationsContract;
+use App\Contracts\HasRolesContract;
+use App\Contracts\HasSRPContract;
+use App\Contracts\HasSubscriptionsContract;
+use App\Contracts\IsMemberContract;
+use App\Contracts\IssuesInvoicesContract;
+use App\Contracts\ReceivesInvoicesContract;
 use App\FleetType;
 use App\Role;
 use App\Subscription;
 use App\Traits\HasHandbooks;
 use App\Traits\HasMembers;
+use App\Traits\HasSRP;
 use App\Traits\IsMember;
+use App\Traits\ReceivesInvoices;
+use App\Traits\IssuesInvoices;
+use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * Class Organization.
  *
  * @property string name
  * @property array settings
- * @property array mass_subscribables
  */
-abstract class Organization extends Model
+abstract class Organization extends Model implements
+    HasHandbooksContract,
+    HasMembersContract,
+    HasNotificationsContract,
+    IssuesInvoicesContract,
+    ReceivesInvoicesContract,
+    HasSRPContract,
+    IsMemberContract,
+    HasRolesContract,
+    HasSubscriptionsContract,
+    HasFleetTypesContract
 {
-    use HasHandbooks, HasMembers, IsMember;
+    use UuidTrait, HasSRP, IssuesInvoices, ReceivesInvoices, Notifiable, HasHandbooks, HasMembers, IsMember;
 
     const MASS_SUBSCRIBABLE = [
         'fleet-created',

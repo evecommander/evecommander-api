@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Abstracts\Organization;
+use App\Contracts\HasNotificationsContract;
 use App\Traits\HasComments;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -37,7 +38,7 @@ use Illuminate\Support\Carbon;
  * @property Character lastUpdatedBy
  * @property \Illuminate\Database\Eloquent\Collection rsvps
  */
-class Fleet extends Model
+class Fleet extends Model implements HasNotificationsContract
 {
     use UuidTrait, Notifiable, HasComments;
 

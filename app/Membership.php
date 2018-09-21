@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Abstracts\Organization;
+use App\Contracts\HasNotificationsContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -34,7 +35,7 @@ use Illuminate\Support\Carbon;
  * @property Character createdBy
  * @property Character lastUpdatedBy
  */
-class Membership extends Model
+class Membership extends Model implements HasNotificationsContract
 {
     use Notifiable, SoftDeletes;
 

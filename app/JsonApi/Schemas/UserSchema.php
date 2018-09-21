@@ -2,10 +2,13 @@
 
 namespace App\JsonApi\Schemas;
 
+use App\JsonApi\ProvidesMeta;
 use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class UserSchema extends SchemaProvider
 {
+    use ProvidesMeta;
+
     /**
      * @var string
      */
@@ -51,11 +54,17 @@ class UserSchema extends SchemaProvider
             'notifications' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META => function () use ($resource) {
+                    return $this->notificationsCounts($resource);
+                }
             ],
 
             'characters' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META => function () use ($resource) {
+                    return ['count' => $resource->characters->count()];
+                }
             ],
         ];
     }

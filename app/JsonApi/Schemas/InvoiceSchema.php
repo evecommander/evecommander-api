@@ -2,10 +2,13 @@
 
 namespace App\JsonApi\Schemas;
 
+use App\JsonApi\ProvidesMeta;
 use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class InvoiceSchema extends SchemaProvider
 {
+    use ProvidesMeta;
+
     /**
      * @var string
      */
@@ -55,16 +58,29 @@ class InvoiceSchema extends SchemaProvider
             'comments' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META => function () use ($resource) {
+                    return [
+                        'count' => $resource->comments->count()
+                    ];
+                }
             ],
 
             'notifications' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META => function () use ($resource) {
+                    return $this->notificationsCounts($resource);
+                }
             ],
 
             'payments' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META => function () use ($resource) {
+                    return [
+                        'count' => $resource->payments->count()
+                    ];
+                }
             ],
 
             'issuer' => [
@@ -88,6 +104,11 @@ class InvoiceSchema extends SchemaProvider
             'items' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META => function () use ($resource) {
+                    return [
+                        'count' => $resource->items->count()
+                    ];
+                }
             ],
 
             'lastUpdatedBy' => [

@@ -2,10 +2,13 @@
 
 namespace App\JsonApi\Schemas;
 
+use App\JsonApi\ProvidesMeta;
 use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class CharacterSchema extends SchemaProvider
 {
+    use ProvidesMeta;
+
     /**
      * @var string
      */
@@ -51,16 +54,25 @@ class CharacterSchema extends SchemaProvider
             'memberships' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return $this->membershipsCount($resource);
+                }
             ],
 
             'replacementClaims' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return $this->replacementClaimsCounts($resource);
+                }
             ],
 
             'invoices' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return $this->receivedInvoicesCounts($resource);
+                }
             ],
 
             'user' => [
@@ -76,6 +88,11 @@ class CharacterSchema extends SchemaProvider
             'comments' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        $resource->comments->count()
+                    ];
+                }
             ],
 
             'corporation' => [
@@ -86,16 +103,27 @@ class CharacterSchema extends SchemaProvider
             'notifications' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return $this->notificationsCounts($resource);
+                }
             ],
 
             'roles' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return $this->rolesCount($resource);
+                }
             ],
 
             'rsvps' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->rsvps->count()
+                    ];
+                }
             ],
         ];
     }

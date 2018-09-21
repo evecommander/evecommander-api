@@ -3,11 +3,6 @@
 namespace App;
 
 use App\Abstracts\Organization;
-use App\Traits\HasSRP;
-use App\Traits\IssuesInvoices;
-use App\Traits\ReceivesInvoices;
-use App\Traits\UuidTrait;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 /**
@@ -49,8 +44,6 @@ use Illuminate\Support\Carbon;
  */
 class Coalition extends Organization
 {
-    use UuidTrait, HasSRP, ReceivesInvoices, IssuesInvoices, Notifiable;
-
     protected $casts = [
         'settings' => 'array',
     ];

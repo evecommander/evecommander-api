@@ -1,73 +1,60 @@
 <?php
 
-namespace App\Traits;
+namespace App\Contracts;
 
-use App\ReplacementClaim;
+use Illuminate\Support\Collection;
 
 /**
- * Trait HasSRP.
+ * Interface HasSRPContract
  *
- * @method morphMany(string $related, string $name)
+ * @property Collection replacementClaims
+ * @property Collection pendingReplacementClaims
+ * @property Collection closedReplacementClaims
+ * @property Collection acceptedReplacementClaims
+ * @property Collection contestedReplacementClaims
+ * @property Collection payedReplacementClaims
  */
-trait HasSRP
+interface HasSRPContract
 {
     /**
      * Get relation between this model and any replacement claims that it owns.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function replacementClaims()
-    {
-        return $this->morphMany(ReplacementClaim::class, 'organization');
-    }
+    public function replacementClaims();
 
     /**
      * Get relation between this model and any pending replacement claims that it owns.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function pendingReplacementClaims()
-    {
-        return $this->replacementClaims()->where('status', ReplacementClaim::STATUS_PENDING);
-    }
+    public function pendingReplacementClaims();
 
     /**
      * Get relation between this model and any closed replacement claims that it owns.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function closedReplacementClaims()
-    {
-        return $this->replacementClaims()->where('status', ReplacementClaim::STATUS_CLOSED);
-    }
+    public function closedReplacementClaims();
 
     /**
      * Get relation between this model and any accepted replacement claims that it owns.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function acceptedReplacementClaims()
-    {
-        return $this->replacementClaims()->where('status', ReplacementClaim::STATUS_ACCEPTED);
-    }
+    public function acceptedReplacementClaims();
 
     /**
      * Get relation between this model and any contested replacement claims that it owns.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function contestedReplacementClaims()
-    {
-        return $this->replacementClaims()->where('status', ReplacementClaim::STATUS_CONTESTED);
-    }
+    public function contestedReplacementClaims();
 
     /**
      * Get relation between this model and any payed replacement claims that it owns.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function payedReplacementClaims()
-    {
-        return $this->replacementClaims()->where('status', ReplacementClaim::STATUS_PAYED);
-    }
+    public function payedReplacementClaims();
 }

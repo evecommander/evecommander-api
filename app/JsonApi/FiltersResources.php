@@ -19,28 +19,42 @@ trait FiltersResources
     protected function filter($query, Collection $filters)
     {
         foreach ($filters as $name => $value) {
-            $this->doFilter($query, $name, $value);
+            $this->doFilter($query, $this->model, $name, $value);
         }
     }
 
-    private function doFilter(Builder $query, $filter, $value)
+    private function doFilter(Builder $query, $model, $filter, $value)
     {
         if (is_numeric($filter)) {
-            foreach ($value as $k => $v) {
-                $this->doFilter($query, $k, $v);
+            foreach ($value as $key => $val) {
+                $this->doFilter($query, $model, $key, $val);
             }
         } elseif (strtolower($filter) === 'or') {
-            foreach ($value as $k => $v) {
-                $query->orWhere(function ($query) use ($k, $v) {
-                    $this->doFilter($query, $k, $v);
+            foreach ($value as $key => $val) {
+                $query->orWhere(function ($query) use ($model, $key, $val) {
+                    $this->doFilter($query, $model, $key, $val);
                 });
             }
         } elseif (strtolower($filter) === 'and') {
-            foreach ($value as $k => $v) {
-                $query->where(function ($query) use ($k, $v) {
-                    $this->doFilter($query, $k, $v);
+            foreach ($value as $key => $val) {
+                $query->where(function ($query) use ($model, $key, $val) {
+                    $this->doFilter($query, $model, $key, $val);
                 });
             }
+        } elseif (strpos($filter,'.')) {
+            $filterTableName = reset(explode('.', $filter));
+            $filterName = null;
+            $needle = '.';
+            $pos = strpos($filter, $needle);
+
+            if ($pos !== false) {
+                $filterName = substr($filter, $pos+1);
+            }
+
+            $incModel = $model->{$filterTableName}()->getRelated();
+            $query->whereHas($filterTableName, function ($query) use ($incModel, $filterName, $value) {
+                $this->doFilter($query, $incModel, $filterName, $value);
+            });
         } else {
             $params = explode('__', $filter);
             $operator = null;
@@ -54,15 +68,19 @@ trait FiltersResources
             } else {
                 throw new ValidationException(Error::create([
                     'status' => 422,
-                    'title'  => 'Unknown value passed for filter',
+                    'title' => "Unknown value passed for filter",
                     'detail' => "Unknown value {{$name}}",
-                    'source' => ['parameter' => "filter[{$name}]=$value"], ]));
+                    'source' => ['parameter' => "filter[{$name}]=$value"]
+                ]));
             }
+
+            $name = $this->modelKeyForField($name, $model);
 
             if (!Schema::connection($this->model->getConnectionName())->hasColumn($this->model->getTable(), $name)) {
                 throw new ValidationException(Error::create([
                     'status' => 422,
-                    'title'  => "Unknown key passed for filter: {$name}", ]));
+                    'title' => "Unknown key passed for filter: {$name}"
+                ]));
             }
 
             $this->applyFilter($query, $operator, $name, $value);
@@ -101,7 +119,7 @@ trait FiltersResources
                 $filterQuery->whereNull($name);
                 break;
             case 'null':
-                if (filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
+                if (filter_var($value,FILTER_VALIDATE_BOOLEAN)) {
                     $filterQuery->whereNull($name);
                 } else {
                     $filterQuery->whereNotNull($name);
@@ -140,14 +158,5 @@ trait FiltersResources
                 $filterQuery->where($name, 'COLLATE UTF8_GENERAL_CI like', "%{$value}");
                 break;
         }
-    }
-
-    /**
-     * @param Builder    $query
-     * @param Collection $includedResources
-     */
-    protected function with($query, Collection $includedResources)
-    {
-        $query->with($includedResources);
     }
 }
