@@ -56,7 +56,7 @@ class CharacterSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->membershipsCount($resource);
-                }
+                },
             ],
 
             'replacementClaims' => [
@@ -64,7 +64,7 @@ class CharacterSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->replacementClaimsCounts($resource);
-                }
+                },
             ],
 
             'invoices' => [
@@ -72,7 +72,7 @@ class CharacterSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->receivedInvoicesCounts($resource);
-                }
+                },
             ],
 
             'user' => [
@@ -90,9 +90,9 @@ class CharacterSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return [
-                        $resource->comments->count()
+                        $resource->comments->count(),
                     ];
-                }
+                },
             ],
 
             'corporation' => [
@@ -105,7 +105,7 @@ class CharacterSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->notificationsCounts($resource);
-                }
+                },
             ],
 
             'roles' => [
@@ -113,7 +113,7 @@ class CharacterSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->rolesCount($resource);
-                }
+                },
             ],
 
             'rsvps' => [
@@ -121,9 +121,9 @@ class CharacterSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return [
-                        'count' => $resource->rsvps->count()
+                        'count' => $resource->rsvps->count(),
                     ];
-                }
+                },
             ],
         ];
     }

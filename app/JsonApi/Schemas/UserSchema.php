@@ -54,17 +54,17 @@ class UserSchema extends SchemaProvider
             'notifications' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::META => function () use ($resource) {
+                self::META         => function () use ($resource) {
                     return $this->notificationsCounts($resource);
-                }
+                },
             ],
 
             'characters' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::META => function () use ($resource) {
+                self::META         => function () use ($resource) {
                     return ['count' => $resource->characters->count()];
-                }
+                },
             ],
         ];
     }

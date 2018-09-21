@@ -5,7 +5,7 @@ namespace App\Contracts;
 use Illuminate\Support\Collection;
 
 /**
- * Interface IsMemberContract
+ * Interface IsMemberContract.
  *
  * @property Collection memberships
  */

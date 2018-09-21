@@ -5,7 +5,7 @@ namespace App\Contracts;
 use Illuminate\Support\Collection;
 
 /**
- * Interface HasRolesContract
+ * Interface HasRolesContract.
  *
  * @property Collection roles
  */

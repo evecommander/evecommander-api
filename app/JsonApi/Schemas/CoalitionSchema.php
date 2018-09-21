@@ -57,7 +57,7 @@ class CoalitionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->handbooksCount($resource);
-                }
+                },
             ],
 
             'members' => [
@@ -65,7 +65,7 @@ class CoalitionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->membersCount($resource);
-                }
+                },
             ],
 
             'defaultMembershipLevel' => [
@@ -78,7 +78,7 @@ class CoalitionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->membershipLevelsCount($resource);
-                }
+                },
             ],
 
             'memberships' => [
@@ -86,7 +86,7 @@ class CoalitionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->membershipsCount($resource);
-                }
+                },
             ],
 
             'replacementClaims' => [
@@ -94,7 +94,7 @@ class CoalitionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->replacementClaimsCounts($resource);
-                }
+                },
             ],
 
             'invoices' => [
@@ -102,7 +102,7 @@ class CoalitionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->issuedInvoicesCounts($resource);
-                }
+                },
             ],
 
             'receivedInvoices' => [
@@ -110,7 +110,7 @@ class CoalitionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->receivedInvoicesCounts($resource);
-                }
+                },
             ],
 
             'notifications' => [
@@ -118,7 +118,7 @@ class CoalitionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->notificationsCounts($resource);
-                }
+                },
             ],
 
             'leader' => [
@@ -132,7 +132,7 @@ class CoalitionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->rolesCount($resource);
-                }
+                },
             ],
 
             'subscriptions' => [
@@ -140,7 +140,7 @@ class CoalitionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->subscriptionsCount($resource);
-                }
+                },
             ],
 
             'alliances' => [
@@ -148,9 +148,9 @@ class CoalitionSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return [
-                        'count' => $resource->alliances->count()
+                        'count' => $resource->alliances->count(),
                     ];
-                }
+                },
             ],
         ];
     }

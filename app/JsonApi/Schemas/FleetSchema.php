@@ -57,19 +57,19 @@ class FleetSchema extends SchemaProvider
             'notifications' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::META => function () use ($resource) {
+                self::META         => function () use ($resource) {
                     return $this->notificationsCounts($resource);
-                }
+                },
             ],
 
             'comments' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::META => function () use ($resource) {
+                self::META         => function () use ($resource) {
                     return [
-                        'count' => $resource->comments->count()
+                        'count' => $resource->comments->count(),
                     ];
-                }
+                },
             ],
 
             'fleetType' => [

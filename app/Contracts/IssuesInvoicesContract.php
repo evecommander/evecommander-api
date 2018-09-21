@@ -5,7 +5,7 @@ namespace App\Contracts;
 use Illuminate\Support\Collection;
 
 /**
- * Interface IssuesInvoicesContract
+ * Interface IssuesInvoicesContract.
  *
  * @property Collection invoices
  * @property Collection fulfilledInvoices

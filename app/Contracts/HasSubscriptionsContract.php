@@ -5,7 +5,7 @@ namespace App\Contracts;
 use Illuminate\Support\Collection;
 
 /**
- * Interface HasSubscriptionsContract
+ * Interface HasSubscriptionsContract.
  *
  * @property Collection subscriptions
  */
