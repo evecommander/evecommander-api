@@ -39,7 +39,7 @@ class RefreshSDE extends Command
     protected $client = null;
 
     /**
-     * @var ProgressBar $progressBar
+     * @var ProgressBar
      */
     protected $progressBar = null;
 
@@ -75,7 +75,7 @@ class RefreshSDE extends Command
                 $this->progressBar->finish();
                 $this->progressBar->clear();
                 $this->progressBar = null;
-            }
+            },
         ]);
 
         parent::__construct();
@@ -84,9 +84,9 @@ class RefreshSDE extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
-     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function handle()
     {
@@ -99,7 +99,7 @@ class RefreshSDE extends Command
         $this->line("\nDecompressing Data File");
         $decompressed = bzdecompress(Storage::disk('local')->get(self::SDE_SCHEMA_URI));
 
-        $this->line("Writing decompressed data to ".storage_path('app/'.self::SDE_LOCAL_FILE));
+        $this->line('Writing decompressed data to '.storage_path('app/'.self::SDE_LOCAL_FILE));
         Storage::disk('local')->put(self::SDE_LOCAL_FILE, $decompressed);
         unset($decompressed);
 
@@ -141,9 +141,9 @@ class RefreshSDE extends Command
     /**
      * @param string $uri
      *
-     * @return bool
-     *
      * @throws \Exception
+     *
+     * @return bool
      */
     private function verifyChecksum(string $uri)
     {
@@ -156,7 +156,7 @@ class RefreshSDE extends Command
         $matches = $expected === $checksum;
 
         if ($matches) {
-            $this->line("YES! The checksums match!");
+            $this->line('YES! The checksums match!');
         } else {
             $this->error("OH NOES, the checksums don't match...");
         }
@@ -167,9 +167,9 @@ class RefreshSDE extends Command
     /**
      * @param string $filename
      *
-     * @return string
-     *
      * @throws \Exception
+     *
+     * @return string
      */
     private function getChecksum(string $filename)
     {
@@ -195,7 +195,7 @@ class RefreshSDE extends Command
         $username = env('DB_USERNAME');
         $password = env('DB_PASSWORD');
         $database = env('DB_DATABASE');
-        $file = storage_path("app/".self::SDE_LOCAL_FILE);
+        $file = storage_path('app/'.self::SDE_LOCAL_FILE);
         $output = [];
         $return = 0;
         $command = "PGPASSWORD=\"{$password}\" pg_restore --host={$host} --port={$port} --username={$username} --dbname={$database} --role=postgres --clean --if-exists --no-owner {$file}";
@@ -209,9 +209,9 @@ class RefreshSDE extends Command
         }
 
         if ($return === 0) {
-            $this->line("Restore command finished successfully");
+            $this->line('Restore command finished successfully');
         } else {
-            $this->error("Error running restore command");
+            $this->error('Error running restore command');
         }
     }
 }
