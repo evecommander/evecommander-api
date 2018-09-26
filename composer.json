@@ -9,6 +9,7 @@
         "cloudcreativity/laravel-json-api": "^1.0.0-beta.3",
         "evecommander/esi-client-php": "^0.8.1",
         "fideloper/proxy": "~4.0",
+        "guzzlehttp/guzzle": "^6.3",
         "irazasyed/jwt-auth-guard": "^1.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "~1.0",
