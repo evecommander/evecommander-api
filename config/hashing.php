@@ -15,6 +15,6 @@ return [
     |
     */
 
-    'driver' => 'argon',
+    'driver' => 'bcrypt',
 
 ];
