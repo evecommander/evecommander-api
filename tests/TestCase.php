@@ -17,12 +17,12 @@ abstract class TestCase extends BaseTestCase
     protected $api = 'v1';
 
     /**
-     * @var User $user
+     * @var User
      */
     protected $user;
 
     /**
-     * @var string $password
+     * @var string
      */
     protected $password;
 
@@ -52,13 +52,14 @@ abstract class TestCase extends BaseTestCase
 
         return [
             'user'     => factory(User::class)->create(['password' => Hash::make($password)]),
-            'password' => $password
+            'password' => $password,
         ];
     }
 
     /**
-     * @param User $user
+     * @param User   $user
      * @param string $password
+     *
      * @return mixed
      */
     protected function getAccessToken(User $user, string $password)
@@ -69,12 +70,13 @@ abstract class TestCase extends BaseTestCase
     /**
      * @param $email
      * @param $password
+     *
      * @return \Illuminate\Foundation\Testing\TestResponse
      */
     protected function doLogin($email, $password)
     {
-        return $this->json('POST','/login', [
-            'email' => $email,
+        return $this->json('POST', '/login', [
+            'email'    => $email,
             'password' => $password,
         ]);
     }
