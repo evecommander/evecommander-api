@@ -18,7 +18,7 @@ class AuthTest extends TestCase
         $this->doLogin($userInfo['user']->email, $userInfo['password'])
             ->assertOk()
             ->assertJson([
-                'token_type' => 'bearer'
+                'token_type' => 'bearer',
             ]);
     }
 
@@ -34,7 +34,7 @@ class AuthTest extends TestCase
         $this->doLogin($userInfo['user']->email, $this->faker->password())
             ->assertStatus(401)
             ->assertJson([
-                'error' => 'Unauthorized'
+                'error' => 'Unauthorized',
             ]);
     }
 
@@ -48,7 +48,7 @@ class AuthTest extends TestCase
         $userInfo = $this->getSampleUser();
 
         $this->post('/me', [], [
-            'authorization' => "bearer {$userInfo['token']}"
+            'authorization' => "bearer {$userInfo['token']}",
         ])
             ->assertOk()
             ->assertJson($userInfo['user']->getVisible());
@@ -64,11 +64,11 @@ class AuthTest extends TestCase
         $userInfo = $this->getSampleUser();
 
         $this->post('/refresh', [], [
-            'authorization' => "bearer {$userInfo['token']}"
+            'authorization' => "bearer {$userInfo['token']}",
         ])
             ->assertOk()
             ->assertJson([
-                'token_type' => 'bearer'
+                'token_type' => 'bearer',
             ]);
     }
 
@@ -82,11 +82,11 @@ class AuthTest extends TestCase
         $userInfo = $this->getSampleUser();
 
         $this->post('/logout', [], [
-            'authorization' => "bearer {$userInfo['token']}"
+            'authorization' => "bearer {$userInfo['token']}",
         ])
             ->assertOk()
             ->assertJson([
-                'message' => 'Successfully logged out'
+                'message' => 'Successfully logged out',
             ]);
     }
 }
