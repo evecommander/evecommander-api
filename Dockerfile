@@ -51,12 +51,12 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 ADD . /var/www/html
 WORKDIR /var/www/html
 
+RUN touch storage/logs/laravel.log
+
 RUN composer install
 RUN php artisan optimize
 
 RUN chmod -R 777 /var/www/html/storage
-
-RUN touch /var/log/cron.log
 
 ADD ./docker/production/cron/artisan-schedule-run /etc/cron.d/artisan-schedule-run
 RUN chmod 0644 /etc/cron.d/artisan-schedule-run

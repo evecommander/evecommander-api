@@ -51,14 +51,14 @@ services:
 
   cron:
     container_name: cron
-    image: wizofgoz/evecommander-api:latest
+    image: wizofgoz/evecommander-php:latest
     command: ["/bin/sh", "-c", "env /bin/bash -o posix -c 'export -p' > /etc/cron.d/project_env.sh && chmod +x /etc/cron.d/project_env.sh && crontab /etc/cron.d/artisan-schedule-run && cron && tail -f /var/log/cron.log"]
     networks:
       - docker-network
 
   worker:
     container_name: worker
-    image: wizofgoz/evecommander-api:latest
+    image: wizofgoz/evecommander-php:latest
     depends_on:
       - redis
     command: ["php", "artisan", "queue:work"]
