@@ -16,7 +16,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string email
  * @property string password
  * @property array settings
- * @property boolean is_admin
+ * @property bool is_admin
  * @property Carbon created_at
  * @property Carbon updated_at
  *

@@ -6,7 +6,6 @@ use CloudCreativity\LaravelJsonApi\Exceptions\HandlesErrors;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Neomerx\JsonApi\Exceptions\JsonApiException;
 
 class Handler extends ExceptionHandler
 {
