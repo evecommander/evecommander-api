@@ -12,7 +12,7 @@ RUN apk --no-cache add \
     postgresql-dev \
     cron \
   && pecl channel-update pecl.php.net \
-  && pecl install apcu
+  && pecl install apcu \
   && docker-php-ext-install -j$(nproc) bz2 \
     curl \
     mbstring \
