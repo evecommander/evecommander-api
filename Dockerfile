@@ -10,7 +10,6 @@ RUN apk --no-cache add \
     libtool \
     make \
     postgresql-dev \
-    cron \
   && pecl channel-update pecl.php.net \
   && pecl install apcu \
   && docker-php-ext-install -j$(nproc) bz2 \
