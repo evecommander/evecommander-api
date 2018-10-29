@@ -58,7 +58,7 @@ RUN chmod -R 777 /var/www/html/storage
 
 RUN touch /var/log/cron.log
 
-ADD deploy/cron/artisan-schedule-run /etc/cron.d/artisan-schedule-run
+ADD ./docker/production/cron/artisan-schedule-run /etc/cron.d/artisan-schedule-run
 RUN chmod 0644 /etc/cron.d/artisan-schedule-run
 RUN chmod +x /etc/cron.d/artisan-schedule-run
 RUN touch /var/log/cron.log
