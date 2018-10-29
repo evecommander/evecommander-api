@@ -76,7 +76,7 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset'  => 'utf8',
             'prefix'   => '',
-            'schema'   => 'public',
+            'schema'   => 'evesde',
             'sslmode'  => 'prefer',
         ],
 

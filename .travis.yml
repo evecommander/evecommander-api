@@ -27,8 +27,6 @@ before_script:
   - cp .env.example .env
   - php artisan key:generate
   - php artisan jwt:secret
-  - php artisan config:cache
-  - php artisan route:cache
   - psql -c "CREATE USER commander PASSWORD 'secret';"
   - psql -c "CREATE DATABASE eve_commander WITH OWNER = commander;"
   - psql -c "CREATE DATABASE eve_sde WITH OWNER = commander;"

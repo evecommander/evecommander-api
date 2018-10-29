@@ -16,6 +16,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string email
  * @property string password
  * @property array settings
+ * @property boolean is_admin
  * @property Carbon created_at
  * @property Carbon updated_at
  *
@@ -45,6 +46,12 @@ class User extends Authenticatable implements HasNotificationsContract, JWTSubje
      */
     protected $hidden = [
         'password',
+        'is_admin',
+    ];
+
+    protected $casts = [
+        'settings' => 'array',
+        'is_admin' => 'boolean',
     ];
 
     /**
@@ -64,7 +71,13 @@ class User extends Authenticatable implements HasNotificationsContract, JWTSubje
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        $claims = [];
+
+        if ($this->is_admin) {
+            $claims['adm'] = true;
+        }
+
+        return $claims;
     }
 
     /**

@@ -55,7 +55,7 @@ else
 fi
 
 # Create base docker-compose command to run
-COMPOSE="docker-compose"
+COMPOSE="docker-compose -f ./docker/dev/docker-compose.yml"
 
 # If we pass any arguments...
 if [ $# -gt 0 ]; then
