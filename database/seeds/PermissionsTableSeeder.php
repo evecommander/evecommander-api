@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PermissionsTableSeeder extends Seeder
 {
@@ -15,14 +16,14 @@ class PermissionsTableSeeder extends Seeder
         DB::table('permissions')->insert([
             // Organization Management
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Organization',
                 'description' => 'Can modify organization settings',
                 'slug'        => 'organization_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Delete Organization',
                 'description' => 'Can delete organization from '.env('APP_NAME'),
                 'slug'        => 'organization_delete',
@@ -30,14 +31,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Memberships
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Memberships',
                 'description' => 'Can modify memberships for the organization',
                 'slug'        => 'memberships_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Memberships',
                 'description' => 'Can view memberships that belong to the organization',
                 'slug'        => 'memberships_read',
@@ -45,14 +46,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Membership Levels
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Membership Levels',
                 'description' => 'Can modify membership levels for the organization',
                 'slug'        => 'membership_levels_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Membership Levels',
                 'description' => 'Can view membership levels that belong to the organization',
                 'slug'        => 'membership_levels_read',
@@ -60,14 +61,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Membership Fees
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Membership Fees',
                 'description' => 'Can modify membership fees for the organization',
                 'slug'        => 'membership_fees_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Membership Fees',
                 'description' => 'Can view membership fees that belong to the organization',
                 'slug'        => 'membership_fees_read',
@@ -75,14 +76,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Handbooks
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Handbooks',
                 'description' => 'Can modify handbooks for the organization',
                 'slug'        => 'handbooks_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Handbooks',
                 'description' => 'Can view handbooks that belong to the organization',
                 'slug'        => 'handbooks_read',
@@ -90,14 +91,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Discounts
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Discounts',
                 'description' => 'Can modify discounts for the organization',
                 'slug'        => 'discounts_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Discounts',
                 'description' => 'Can view discounts that belong to the organization',
                 'slug'        => 'discounts_read',
@@ -105,14 +106,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Billing Conditions
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Billing Conditions',
                 'description' => 'Can modify billing conditions for the organization',
                 'slug'        => 'billing_conditions_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Billing Conditions',
                 'description' => 'Can view billing conditions that belong to the organization',
                 'slug'        => 'billing_conditions_read',
@@ -120,14 +121,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Doctrines
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Doctrines',
                 'description' => 'Can modify doctrines for the organization',
                 'slug'        => 'doctrines_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Doctrines',
                 'description' => 'Can view doctrines that belong to the organization',
                 'slug'        => 'doctrines_read',
@@ -135,14 +136,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Fittings
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Fittings',
                 'description' => 'Can modify fittings for the organization',
                 'slug'        => 'fittings_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Fittings',
                 'description' => 'Can view fittings that belong to the organization',
                 'slug'        => 'fittings_read',
@@ -150,14 +151,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Replacement Claims
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Replacement Claims',
                 'description' => 'Can modify replacement claims for the organization',
                 'slug'        => 'replacement_claims_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Replacement Claims',
                 'description' => 'Can view replacement claims that belong to the organization',
                 'slug'        => 'replacement_claims_read',
@@ -165,14 +166,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Invoice
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Invoices',
                 'description' => 'Can modify invoices on behalf of the organization',
                 'slug'        => 'invoices_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Invoices',
                 'description' => 'Can view invoices that belong to the organization',
                 'slug'        => 'invoices_read',
@@ -180,7 +181,7 @@ class PermissionsTableSeeder extends Seeder
 
             // Received Invoices
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Received Invoices',
                 'description' => 'Can view invoices that were issued to the organization',
                 'slug'        => 'received_invoices_read',
@@ -188,14 +189,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Roles
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Roles',
                 'description' => 'Can modify roles for the organization',
                 'slug'        => 'roles_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Roles',
                 'description' => 'Can view roles that belong to the organization',
                 'slug'        => 'roles_read',
@@ -203,14 +204,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Fleets
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Fleets',
                 'description' => 'Can modify fleets for the organization',
                 'slug'        => 'fleets_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Fleets',
                 'description' => 'Can view fleets that belong to the organization',
                 'slug'        => 'fleets_read',
@@ -218,14 +219,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Fleet Types
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Fleet Types',
                 'description' => 'Can modify fleet types for the organization',
                 'slug'        => 'fleet_types_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'View Fleet Types',
                 'description' => 'Can view fleet types that belong to the organization',
                 'slug'        => 'fleet_types_read',
@@ -233,14 +234,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Notifications
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Notifications',
                 'description' => 'Can modify notifications for the organization',
                 'slug'        => 'notifications_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Read Notifications',
                 'description' => 'Can view notifications that belong to the organization',
                 'slug'        => 'notifications_read',
@@ -248,7 +249,7 @@ class PermissionsTableSeeder extends Seeder
 
             // Members
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Read Members',
                 'description' => 'Can view members that belong to the organization',
                 'slug'        => 'members_read',
@@ -256,7 +257,7 @@ class PermissionsTableSeeder extends Seeder
 
             // Member Of
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Read Member Of',
                 'description' => 'Can view the organization that this organization is a member of',
                 'slug'        => 'member_of_read',
@@ -264,14 +265,14 @@ class PermissionsTableSeeder extends Seeder
 
             // Subscriptions
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Modify Subscriptions',
                 'description' => 'Can modify subscriptions for the organization',
                 'slug'        => 'subscriptions_modify',
             ],
 
             [
-                'id'          => \Faker\Provider\Uuid::uuid(),
+                'id'          => Str::orderedUuid(),
                 'name'        => 'Read Subscriptions',
                 'description' => 'Can view subscriptions that belong to the organization',
                 'slug'        => 'subscriptions_read',

@@ -14,8 +14,6 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, WithFaker, MakesJsonApiRequests, DatabaseTransactions;
 
-    protected $api = 'v1';
-
     /**
      * @var User
      */
@@ -28,6 +26,7 @@ abstract class TestCase extends BaseTestCase
 
     public function setUp()
     {
+        $this->api = 'v1';
         parent::setUp();
         Carbon::setTestNow();
     }

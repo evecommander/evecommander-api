@@ -1,0 +1,110 @@
+version: "3"
+services:
+  nginx-proxy:
+    container_name: proxy
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./proxy/vhost.d:/etc/nginx/vhost.d"
+      - "./proxy/html:/usr/share/nginx/html"
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+      - "./proxy/certs:/etc/nginx/certs"
+    depends_on:
+      - api
+    networks:
+      - docker-network
+
+  letsencrypt-nginx-proxy-companion:
+    container_name: letsencrypt-companion
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./proxy/vhost.d:/etc/nginx/vhost.d"
+      - "./proxy/html:/usr/share/nginx/html"
+      - "./proxy/certs:/etc/nginx/certs"
+
+  frontend:
+    container_name: angular
+    image: wizofgoz/evecommander-web:latest
+    environment:
+      VIRTUAL_HOST: evecommander.com
+      LETSENCRYPT_HOST: evecommander.com
+      LETSENCRYPT_EMAIL: "${LETSENCRYPT_EMAIL}"
+
+  api:
+    container_name: api
+    image: wizofgoz/evecommander-php:latest
+    environment:
+      VIRTUAL_HOST: api.evecommander.com
+      VIRTUAL_PROTO: fastcgi
+      VIRTUAL_ROOT: /var/www/html/public
+      LETSENCRYPT_HOST: evecommander.com,www.evecommander.com
+      LETSENCRYPT_EMAIL: "${LETSENCRYPT_EMAIL}"
+    ports:
+      - "9000:9000"
+    volumes:
+      - apivolume:/var/www
+    networks:
+      - docker-network
+
+  cron:
+    container_name: cron
+    image: wizofgoz/evecommander-api:latest
+    command: ["/bin/sh", "-c", "env /bin/bash -o posix -c 'export -p' > /etc/cron.d/project_env.sh && chmod +x /etc/cron.d/project_env.sh && crontab /etc/cron.d/artisan-schedule-run && cron && tail -f /var/log/cron.log"]
+    networks:
+      - docker-network
+
+  worker:
+    container_name: worker
+    image: wizofgoz/evecommander-api:latest
+    depends_on:
+      - redis
+    command: ["php", "artisan", "queue:work"]
+    networks:
+      - docker-network
+
+  pgsql:
+    container_name: db
+    image: postgres:10-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DATABASE: "eve_commander"
+      POSTGRES_USERNAME: "${PGSQL_USERNAME}"
+      POSTGRES_PASSWORD: "${PGSQL_PASSWORD}"
+    volumes:
+      - localpgsql:/var/lib/postgresql/data
+    networks:
+      - docker-network
+
+  echo:
+    container_name: echo
+    image: lagun4ik/laravel-echo-server
+    ports:
+      - "1194:1194/udp"
+    restart: always
+    volumes:
+      - ./echo/:/app/
+    networks:
+      - docker-network
+
+  redis:
+    container_name: cache
+    image: redis:alpine
+    volumes:
+      - localredis:/data
+    networks:
+      - docker-network
+
+volumes:
+  localpgsql:
+    driver: "local"
+
+  localredis:
+    driver: "local"
+
+networks:
+  docker-network:
+    driver: bridge

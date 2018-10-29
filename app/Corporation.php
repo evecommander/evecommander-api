@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
  * @property string id
  * @property int api_id
  * @property string name
- * @property string default_membership_level
+ * @property string default_membership_level_id
  * @property array settings
  * @property Carbon created_at
  * @property Carbon updated_at
