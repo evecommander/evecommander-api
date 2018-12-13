@@ -10,16 +10,17 @@ services:
   - redis-server
 
 addons:
-  postgresql: "10"
+  postgresql: "11"
   apt:
     packages:
-     - postgresql-10
-     - postgresql-client-10
+     - postgresql-11
+     - postgresql-client-11
 
 language: php
 
 php:
   - "7.2"
+  - "7.3"
 
 before_script:
   - composer install --optimize-autoloader
@@ -39,16 +40,17 @@ after_success:
   # PHP-FPM container image
   - export REPO=$DOCKER_USERNAME/evecommander-php;
   - docker build -t $REPO:$COMMIT -f ./docker/production/php/ .;
-  - docker tag $REPO:$COMMIT $REPO:latest;
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER;
+  - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BRANCH-latest;
+  - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER;
   # Nginx image
   - export NGINX_REPO=$DOCKER_USERNAME/evecommander-nginx;
   - docker build -t $NGINX_REPO:$COMMIT -f ./docker/production/nginx/ .;
-  - docker tag $NGINX_REPO:$COMMIT $NGINX_REPO:latest;
-  - docker tag $NGINX_REPO:$COMMIT $NGINX_REPO:travis-$TRAVIS_BUILD_NUMBER;
+  - docker tag $NGINX_REPO:$COMMIT $NGINX_REPO:$TRAVIS_BRANCH-latest;
+  - docker tag $NGINX_REPO:$COMMIT $NGINX_REPO:$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER;
 
 deploy:
   provider: script
   script: bash docker_push
   on:
-    branch: master
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^master|develop|staging$
