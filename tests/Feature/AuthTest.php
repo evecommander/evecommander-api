@@ -47,7 +47,7 @@ class AuthTest extends TestCase
     {
         $userInfo = $this->getSampleUser();
 
-        $this->post('/auth/me', [], [
+        $this->get('/auth/me', [], [
             'authorization' => "bearer {$userInfo['token']}",
         ])
             ->assertOk()
