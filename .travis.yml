@@ -39,12 +39,12 @@ after_success:
   - rm .env
   # PHP-FPM container image
   - export REPO=$DOCKER_USERNAME/evecommander-php;
-  - docker build -t $REPO:$COMMIT -f ./docker/production/php/ .;
+  - docker build -t $REPO:$COMMIT -f ./docker/production/php/Dockerfile .;
   - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BRANCH-latest;
   - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER;
   # Nginx image
   - export NGINX_REPO=$DOCKER_USERNAME/evecommander-nginx;
-  - docker build -t $NGINX_REPO:$COMMIT -f ./docker/production/nginx/ .;
+  - docker build -t $NGINX_REPO:$COMMIT -f ./docker/production/nginx/Dockerfile .;
   - docker tag $NGINX_REPO:$COMMIT $NGINX_REPO:$TRAVIS_BRANCH-latest;
   - docker tag $NGINX_REPO:$COMMIT $NGINX_REPO:$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER;
 
