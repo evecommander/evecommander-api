@@ -74,7 +74,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function doLogin($email, $password)
     {
-        return $this->json('POST', '/login', [
+        return $this->json('POST', '/auth/login', [
             'email'    => $email,
             'password' => $password,
         ]);

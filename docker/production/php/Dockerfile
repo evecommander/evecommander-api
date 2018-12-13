@@ -45,15 +45,11 @@ RUN echo "cgi.fix_pathinfo=0" > $PHP_INI_DIR/conf.d/path-info.ini
 # Disable expose PHP
 RUN echo "expose_php=0" > $PHP_INI_DIR/conf.d/path-info.ini
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 ADD . /var/www/html
+
 WORKDIR /var/www/html
 
 RUN touch storage/logs/laravel.log
-
-RUN composer install
 
 RUN chmod -R 777 /var/www/html/storage
 
