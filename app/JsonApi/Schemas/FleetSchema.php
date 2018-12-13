@@ -34,13 +34,14 @@ class FleetSchema extends SchemaProvider
     public function getAttributes($resource)
     {
         return [
-            'title'       => $resource->title,
-            'description' => $resource->description,
-            'status'      => $resource->status,
-            'start-time'  => $resource->start_time->toIso8601String(),
-            'end-time'    => $resource->end_time->toIso8601String(),
-            'created-at'  => $resource->created_at->toIso8601String(),
-            'updated-at'  => $resource->updated_at->toIso8601String(),
+            'title'         => $resource->title,
+            'description'   => $resource->description,
+            'status'        => $resource->status,
+            'start-time'    => $resource->start_time->toIso8601String(),
+            'end-time'      => $resource->end_time->toIso8601String(),
+            'created-at'    => $resource->created_at->toIso8601String(),
+            'updated-at'    => $resource->updated_at->toIso8601String(),
+            'track-history' => $resource->track_history,
         ];
     }
 
@@ -72,10 +73,10 @@ class FleetSchema extends SchemaProvider
                 },
             ],
 
-            'fleetType' => [
+            'fleet-type' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset($includeRelationships['fleetType']),
+                self::SHOW_DATA    => isset($includeRelationships['fleet-type']),
                 self::DATA         => function () use ($resource) {
                     return $resource->fleetType;
                 },
@@ -90,21 +91,60 @@ class FleetSchema extends SchemaProvider
                 },
             ],
 
-            'createdBy' => [
+            'created-by' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset($includeRelationships['createdBy']),
+                self::SHOW_DATA    => isset($includeRelationships['created-by']),
                 self::DATA         => function () use ($resource) {
                     return $resource->createdBy;
                 },
             ],
 
-            'lastUpdatedBy' => [
+            'last-updated-by' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset($includeRelationships['lastUpdatedBy']),
+                self::SHOW_DATA    => isset($includeRelationships['last-updated-by']),
                 self::DATA         => function () use ($resource) {
                     return $resource->lastUpdatedBy;
+                },
+            ],
+
+            'tracker-character' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => isset($includeRelationships['tracker-character']),
+                self::DATA         => function () use ($resource) {
+                    return $resource->tracker_character_id;
+                },
+            ],
+
+            'members' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->members->count(),
+                    ];
+                },
+            ],
+
+            'wings' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->wings->count(),
+                    ];
+                },
+            ],
+
+            'squads' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->squads->count(),
+                    ];
                 },
             ],
         ];

@@ -18,16 +18,6 @@ class MembershipFeeAdapter extends AbstractAdapter
     protected $attributes = [];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'organization',
-        'billingConditions',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

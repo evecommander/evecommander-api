@@ -69,12 +69,12 @@ class CorporationSchema extends SchemaProvider
                 },
             ],
 
-            'defaultMembershipLevel' => [
+            'default-membership-level' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
 
-            'membershipLevels' => [
+            'membership-levels' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
@@ -90,7 +90,7 @@ class CorporationSchema extends SchemaProvider
                 },
             ],
 
-            'replacementClaims' => [
+            'replacement-claims' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
@@ -106,7 +106,7 @@ class CorporationSchema extends SchemaProvider
                 },
             ],
 
-            'receivedInvoices' => [
+            'received-invoices' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {

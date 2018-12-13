@@ -18,16 +18,6 @@ class DiscountAdapter extends AbstractAdapter
     protected $attributes = [];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'organization',
-        'billingCondition',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

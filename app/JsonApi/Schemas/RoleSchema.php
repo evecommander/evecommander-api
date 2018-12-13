@@ -77,7 +77,7 @@ class RoleSchema extends SchemaProvider
                 },
             ],
 
-            'membershipLevels' => [
+            'membership-levels' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {

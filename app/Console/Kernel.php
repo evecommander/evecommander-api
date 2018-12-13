@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\GenerateUser;
+use App\Jobs\QueueFleetRefreshes;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -27,6 +28,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
+
+        $schedule->job(new QueueFleetRefreshes)->everyFiveMinutes()->withoutOverlapping();
 
         $schedule->command('invoices:process')
             ->twiceDaily()

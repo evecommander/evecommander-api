@@ -18,16 +18,6 @@ class InvoiceItemAdapter extends AbstractAdapter
     protected $attributes = [];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'comments',
-        'invoice',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

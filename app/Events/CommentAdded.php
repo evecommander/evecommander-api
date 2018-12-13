@@ -34,8 +34,6 @@ class CommentAdded implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        $type = implode('.', explode('\\', $this->comment->commentable_type));
-
-        return new PrivateChannel("{$type}.{$this->comment->commentable_id}");
+        return new PrivateChannel("{$this->comment->commentable_type}.{$this->comment->commentable_id}");
     }
 }

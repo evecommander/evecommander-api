@@ -109,6 +109,8 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
      * @param OAuth2Token $token
      *
      * @throws InvalidApiResponse
+     *
+     * @return array
      */
     private function getCharacterID(OAuth2Token $token)
     {
@@ -126,6 +128,8 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
         if (!isset($response['CharacterID'])) {
             throw new InvalidApiResponse();
         }
+
+        return $response;
     }
 
     /**

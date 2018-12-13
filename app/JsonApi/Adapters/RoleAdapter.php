@@ -18,18 +18,6 @@ class RoleAdapter extends AbstractAdapter
     protected $attributes = [];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'organization',
-        'permissions',
-        'characters',
-        'membershipLevels',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

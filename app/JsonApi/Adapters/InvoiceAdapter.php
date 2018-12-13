@@ -18,19 +18,8 @@ class InvoiceAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'issuer',
-        'recipient',
-        'items',
-        'payments',
-        'comments',
-        'notifications',
-        'lastUpdatedBy',
+    protected $guarded = [
+        'last-updated-by',
     ];
 
     /**

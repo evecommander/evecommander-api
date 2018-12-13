@@ -19,13 +19,14 @@ use Illuminate\Support\Facades\Route;
 
 Broadcast::routes();
 
-Route::post('login', 'AuthController@login');
-
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+    Route::get('me', 'AuthController@me');
+});
 
+Route::group(['middleware' => 'auth'], function () {
     Route::get('characters/callback', 'Api\\CharacterController@callback')
         ->middleware('auth.callback');
     Route::get('characters/{character}/refresh', 'Api\\CharacterController@refreshToken')

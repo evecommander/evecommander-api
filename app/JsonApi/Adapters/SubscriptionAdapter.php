@@ -17,11 +17,6 @@ class SubscriptionAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    protected $relationships = [
-        'character',
-        'organization',
-    ];
-
     /**
      * Adapter constructor.
      *

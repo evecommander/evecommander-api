@@ -59,10 +59,10 @@ class MembershipSchema extends SchemaProvider
                 },
             ],
 
-            'membershipLevel' => [
+            'membership-level' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset($includeRelationships['membershipLevel']),
+                self::SHOW_DATA    => isset($includeRelationships['membership-level']),
                 self::DATA         => function () use ($resource) {
                     return $resource->membershipLevel;
                 },
@@ -86,19 +86,19 @@ class MembershipSchema extends SchemaProvider
                 },
             ],
 
-            'createdBy' => [
+            'created-by' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset($includeRelationships['createdBy']),
+                self::SHOW_DATA    => isset($includeRelationships['created-by']),
                 self::DATA         => function () use ($resource) {
                     return $resource->createdBy;
                 },
             ],
 
-            'lastUpdatedBy' => [
+            'last-updated-by' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset($includeRelationships['lastUpdatedBy']),
+                self::SHOW_DATA    => isset($includeRelationships['last-updated-by']),
                 self::DATA         => function () use ($resource) {
                     return $resource->lastUpdatedBy;
                 },

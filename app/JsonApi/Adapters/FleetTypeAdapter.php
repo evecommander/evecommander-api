@@ -18,16 +18,6 @@ class FleetTypeAdapter extends AbstractAdapter
     protected $attributes = [];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'fleets',
-        'organization',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

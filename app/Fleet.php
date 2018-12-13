@@ -17,6 +17,7 @@ use Illuminate\Support\Carbon;
  * @property string fleet_type_id
  * @property string organization_id
  * @property string organization_type
+ * @property integer api_id
  * @property string title
  * @property string description
  * @property string status
@@ -24,6 +25,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon end_time
  * @property string created_by
  * @property string last_updated_by
+ * @property boolean track_history
+ * @property string tracker_character_id
  * @property Carbon created_at
  * @property Carbon updated_at
  *
@@ -37,6 +40,10 @@ use Illuminate\Support\Carbon;
  * @property Character createdBy
  * @property Character lastUpdatedBy
  * @property \Illuminate\Database\Eloquent\Collection rsvps
+ * @property Character trackerCharacter
+ * @property \Illuminate\Database\Eloquent\Collection members
+ * @property \Illuminate\Database\Eloquent\Collection wings
+ * @property \Illuminate\Database\Eloquent\Collection squads
  */
 class Fleet extends Model implements HasNotificationsContract
 {
@@ -92,7 +99,7 @@ class Fleet extends Model implements HasNotificationsContract
      */
     public function createdBy()
     {
-        return $this->belongsTo(Character::class);
+        return $this->belongsTo(Character::class, 'created_by');
     }
 
     /**
@@ -102,7 +109,7 @@ class Fleet extends Model implements HasNotificationsContract
      */
     public function lastUpdatedBy()
     {
-        return $this->belongsTo(Character::class);
+        return $this->belongsTo(Character::class, 'last_updated_by');
     }
 
     /**
@@ -113,5 +120,45 @@ class Fleet extends Model implements HasNotificationsContract
     public function rsvps()
     {
         return $this->hasMany(Rsvp::class);
+    }
+
+    /**
+     * Get relation between this fleet and the character that will be used to track it's history.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function trackerCharacter()
+    {
+        return $this->belongsTo(Character::class, 'tracker_character_id');
+    }
+
+    /**
+     * Get relation between this fleet and any FleetMembers that are attributed to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function members()
+    {
+        return $this->hasMany(FleetMember::class);
+    }
+
+    /**
+     * Get relation between this fleet and any Wings that are attributed to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function wings()
+    {
+        return $this->hasMany(Wing::class);
+    }
+
+    /**
+     * Get relation between this fleet and any Squads that are attributed to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function squads()
+    {
+        return $this->hasMany(Squad::class);
     }
 }

@@ -17,15 +17,9 @@ class HandbookAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'organization',
-        'createdBy',
-        'lastUpdatedBy',
+    protected $guarded = [
+        'created-by',
+        'last-updated-by',
     ];
 
     /**

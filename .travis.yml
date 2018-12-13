@@ -36,10 +36,16 @@ script:
 
 after_success:
   - rm .env
+  # PHP-FPM container image
   - export REPO=$DOCKER_USERNAME/evecommander-php;
-  - docker build -t $REPO:$COMMIT .;
+  - docker build -t $REPO:$COMMIT -f ./docker/production/php/ .;
   - docker tag $REPO:$COMMIT $REPO:latest;
   - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER;
+  # Nginx image
+  - export NGINX_REPO=$DOCKER_USERNAME/evecommander-nginx;
+  - docker build -t $NGINX_REPO:$COMMIT -f ./docker/production/nginx/ .;
+  - docker tag $NGINX_REPO:$COMMIT $NGINX_REPO:latest;
+  - docker tag $NGINX_REPO:$COMMIT $NGINX_REPO:travis-$TRAVIS_BUILD_NUMBER;
 
 deploy:
   provider: script

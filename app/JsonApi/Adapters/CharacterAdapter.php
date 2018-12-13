@@ -19,24 +19,6 @@ class CharacterAdapter extends AbstractAdapter
     protected $attributes = [];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'user',
-        'token',
-        'comments',
-        'memberships',
-        'invoices',
-        'notifications',
-        'corporation',
-        'roles',
-        'subscriptions',
-        'rsvps',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

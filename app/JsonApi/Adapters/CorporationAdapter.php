@@ -24,27 +24,6 @@ class CorporationAdapter extends AbstractAdapter
     ];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'handbooks',
-        'members',
-        'defaultMembershipLevel',
-        'membershipLevels',
-        'memberships',
-        'alliance',
-        'characters',
-        'replacementClaims',
-        'invoices',
-        'receivedInvoices',
-        'notifications',
-        'roles',
-        'subscriptions',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

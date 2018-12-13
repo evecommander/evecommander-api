@@ -18,17 +18,6 @@ class FittingAdapter extends AbstractAdapter
     protected $attributes = [];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'organization',
-        'doctrine',
-        'replacementClaims',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

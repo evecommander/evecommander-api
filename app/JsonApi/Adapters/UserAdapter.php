@@ -18,16 +18,6 @@ class UserAdapter extends AbstractAdapter
     protected $attributes = [];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'characters',
-        'notifications',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

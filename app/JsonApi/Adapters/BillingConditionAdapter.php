@@ -18,17 +18,6 @@ class BillingConditionAdapter extends AbstractAdapter
     protected $attributes = [];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'organization',
-        'discounts',
-        'membershipFees',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

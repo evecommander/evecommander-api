@@ -17,16 +17,9 @@ class DoctrineAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'organization',
-        'fittings',
-        'createdBy',
-        'lastUpdatedBy',
+    protected $guarded = [
+        'created-by',
+        'last-updated-by',
     ];
 
     /**

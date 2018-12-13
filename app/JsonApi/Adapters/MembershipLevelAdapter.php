@@ -18,20 +18,8 @@ class MembershipLevelAdapter extends AbstractAdapter
     protected $attributes = [];
 
     protected $guarded = [
-        'createdBy',
-    ];
-
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'memberships',
-        'organization',
-        'createdBy',
-        'lastUpdatedBy',
-        'roles',
+        'created-by',
+        'last-updated-by'
     ];
 
     /**

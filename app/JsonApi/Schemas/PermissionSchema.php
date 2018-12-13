@@ -49,7 +49,7 @@ class PermissionSchema extends SchemaProvider
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
         return [
-            'membershipLevels' => [
+            'membership-levels' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {

@@ -57,7 +57,7 @@ class DiscountSchema extends SchemaProvider
                 },
             ],
 
-            'billingCondition' => [
+            'billing-condition' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::SHOW_DATA    => isset($includeRelationships['billing-condition']),

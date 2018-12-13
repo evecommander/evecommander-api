@@ -18,19 +18,8 @@ class ReplacementClaimAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    protected $guarded = [];
-
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'character',
-        'organization',
-        'comments',
-        'notifications',
-        'lastUpdatedBy',
+    protected $guarded = [
+        'last-updated-by',
     ];
 
     /**

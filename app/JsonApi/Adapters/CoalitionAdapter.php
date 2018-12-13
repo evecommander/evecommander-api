@@ -23,27 +23,6 @@ class CoalitionAdapter extends AbstractAdapter
     ];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'handbooks',
-        'members',
-        'defaultMembershipLevel',
-        'membershipLevels',
-        'memberships',
-        'replacementClaims',
-        'invoices',
-        'leader',
-        'receivedInvoices',
-        'notifications',
-        'roles',
-        'subscriptions',
-        'alliances',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

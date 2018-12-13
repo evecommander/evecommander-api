@@ -57,7 +57,7 @@ class MembershipFeeSchema extends SchemaProvider
                 },
             ],
 
-            'billingConditions' => [
+            'billing-conditions' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
