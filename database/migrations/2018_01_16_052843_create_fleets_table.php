@@ -30,7 +30,7 @@ class CreateFleetsTable extends Migration
                 Fleet::STATUS_FORM_UP,
                 Fleet::STATUS_IN_PROGRESS,
                 Fleet::STATUS_COMPLETED,
-                Fleet::STATUS_CANCELLED
+                Fleet::STATUS_CANCELLED,
             ])->default(Fleet::STATUS_PENDING);
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();

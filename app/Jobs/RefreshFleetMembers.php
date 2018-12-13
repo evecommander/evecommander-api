@@ -9,10 +9,10 @@ use App\Squad;
 use App\Wing;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Swagger\Client\Api\FleetsApi;
 use Swagger\Client\Model\GetFleetsFleetIdMembers200Ok;
@@ -22,7 +22,7 @@ class RefreshFleetMembers implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var Fleet $fleet
+     * @var Fleet
      */
     public $fleet;
 
@@ -82,7 +82,7 @@ class RefreshFleetMembers implements ShouldQueue
         /** @var GetFleetsFleetIdMembers200Ok $newMember */
         foreach ($new as $characterApiID => $newMember) {
             /** @var FleetMember $fleetMember */
-            $fleetMember = isset($current[$characterApiID]) ? $current[$characterApiID] : new FleetMember;
+            $fleetMember = isset($current[$characterApiID]) ? $current[$characterApiID] : new FleetMember();
             $fleetMember->character_api_id = $newMember->getCharacterId();
             $fleetMember->join_time = Carbon::create($newMember->getJoinTime());
             $fleetMember->role = $newMember->getRole();

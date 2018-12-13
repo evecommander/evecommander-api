@@ -6,7 +6,6 @@ use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class SquadSchema extends SchemaProvider
 {
-
     /**
      * @var string
      */
@@ -15,6 +14,7 @@ class SquadSchema extends SchemaProvider
     /**
      * @param $resource
      *      the domain record being serialized.
+     *
      * @return string
      */
     public function getId($resource)
@@ -24,14 +24,15 @@ class SquadSchema extends SchemaProvider
 
     /**
      * @param \App\Squad $resource
-     *      the domain record being serialized.
+     *                             the domain record being serialized.
+     *
      * @return array
      */
     public function getAttributes($resource)
     {
         return [
             'api-id' => $resource->api_id,
-            'name' => $resource->name,
+            'name'   => $resource->name,
         ];
     }
 

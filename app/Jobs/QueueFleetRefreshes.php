@@ -4,10 +4,10 @@ namespace App\Jobs;
 
 use App\Fleet;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 
 class QueueFleetRefreshes implements ShouldQueue
@@ -35,7 +35,7 @@ class QueueFleetRefreshes implements ShouldQueue
             Fleet::STATUS_PENDING,
             Fleet::STATUS_STANDBY,
             Fleet::STATUS_FORM_UP,
-            Fleet::STATUS_IN_PROGRESS
+            Fleet::STATUS_IN_PROGRESS,
         ])->has('trackerCharacter')->get();
 
         $activeFleets->map(function (Fleet $fleet) {

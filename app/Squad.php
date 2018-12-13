@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class Squad
+ * Class Squad.
  *
  * @property string id
- * @property integer api_id
+ * @property int api_id
  * @property string name
  *
  * Relations

@@ -7,7 +7,6 @@ use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class FleetMemberSchema extends SchemaProvider
 {
-
     /**
      * @var string
      */
@@ -16,6 +15,7 @@ class FleetMemberSchema extends SchemaProvider
     /**
      * @param $resource
      *      the domain record being serialized.
+     *
      * @return string
      */
     public function getId($resource)
@@ -25,18 +25,19 @@ class FleetMemberSchema extends SchemaProvider
 
     /**
      * @param FleetMember $resource
-     *      the domain record being serialized.
+     *                              the domain record being serialized.
+     *
      * @return array
      */
     public function getAttributes($resource)
     {
         return [
             'character-api-id' => $resource->character_api_id,
-            'join-time' => $resource->join_time->toIso8601String(),
-            'role' => $resource->role,
-            'ship-type-id' => $resource->ship_type_id,
-            'solar-system-id' => $resource->solar_system_id,
-            'station-id' => $resource->station_id,
+            'join-time'        => $resource->join_time->toIso8601String(),
+            'role'             => $resource->role,
+            'ship-type-id'     => $resource->ship_type_id,
+            'solar-system-id'  => $resource->solar_system_id,
+            'station-id'       => $resource->station_id,
             'takes-fleet-warp' => $resource->takes_fleet_warp,
         ];
     }
