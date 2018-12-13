@@ -9,20 +9,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class FleetMember
+ * Class FleetMember.
  *
  * @property string id
  * @property string fleet_id
- * @property integer wing_id
- * @property integer squad_id
- * @property integer character_api_id
+ * @property int wing_id
+ * @property int squad_id
+ * @property int character_api_id
  * @property string character_id
  * @property Carbon join_time
  * @property string role
- * @property integer ship_type_id
- * @property integer solar_system_id
- * @property integer station_id
- * @property boolean takes_fleet_warp
+ * @property int ship_type_id
+ * @property int solar_system_id
+ * @property int station_id
+ * @property bool takes_fleet_warp
  *
  * Relations
  * @property Fleet fleet
@@ -41,7 +41,7 @@ class FleetMember extends Model implements Auditable
     const ROLE_SQUAD_MEMBER = 'squad_member';
 
     protected $dates = [
-        'join_time'
+        'join_time',
     ];
 
     /**

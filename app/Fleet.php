@@ -17,7 +17,7 @@ use Illuminate\Support\Carbon;
  * @property string fleet_type_id
  * @property string organization_id
  * @property string organization_type
- * @property integer api_id
+ * @property int api_id
  * @property string title
  * @property string description
  * @property string status
@@ -25,7 +25,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon end_time
  * @property string created_by
  * @property string last_updated_by
- * @property boolean track_history
+ * @property bool track_history
  * @property string tracker_character_id
  * @property Carbon created_at
  * @property Carbon updated_at

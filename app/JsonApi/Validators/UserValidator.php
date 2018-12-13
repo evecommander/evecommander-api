@@ -2,7 +2,6 @@
 
 namespace App\JsonApi\Validators;
 
-use App\Rules\IsUUID;
 use CloudCreativity\LaravelJsonApi\Contracts\Validators\RelationshipsValidatorInterface;
 use CloudCreativity\LaravelJsonApi\Validators\AbstractValidatorProvider;
 
@@ -33,11 +32,11 @@ class UserValidator extends AbstractValidatorProvider
                 'sometimes',
                 'string',
                 'confirmed',
-                'min:5'
+                'min:5',
             ],
             'settings' => [
                 'sometimes',
-                'array'
+                'array',
             ],
         ];
     }

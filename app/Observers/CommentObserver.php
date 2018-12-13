@@ -7,7 +7,6 @@ use App\Comment;
 use App\Events\CommentAdded;
 use App\Events\CommentDeleted;
 use App\Events\CommentUpdated;
-use App\Fleet;
 use App\Invoice;
 use App\Membership;
 use App\Notifications\Invoice\CommentPosted;

@@ -6,11 +6,11 @@ use App\Fleet;
 use App\Squad;
 use App\Wing;
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Collection;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 use Swagger\Client\Api\FleetsApi;
 use Swagger\Client\Model\GetFleetsFleetIdWings200Ok;
 use Swagger\Client\Model\GetFleetsFleetIdWingsSquad;
@@ -20,27 +20,27 @@ class RefreshFleet implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var Fleet $fleet
+     * @var Fleet
      */
     public $fleet;
 
     /**
-     * @var Collection $wingsToDelete
+     * @var Collection
      */
     private $wingsToDelete;
 
     /**
-     * @var Collection $squadsToDelete
+     * @var Collection
      */
     private $squadsToDelete;
 
     /**
-     * @var Collection $allCurrentSquads
+     * @var Collection
      */
     private $allCurrentSquads;
 
     /**
-     * @var Collection $allNewSquads
+     * @var Collection
      */
     private $allNewSquads;
 
@@ -103,7 +103,7 @@ class RefreshFleet implements ShouldQueue
         /** @var GetFleetsFleetIdWings200Ok $newWing */
         foreach ($new as $wingApiID => $newWing) {
             /** @var Wing $wing */
-            $wing = isset($current[$wingApiID]) ? $current[$wingApiID] : new Wing;
+            $wing = isset($current[$wingApiID]) ? $current[$wingApiID] : new Wing();
 
             $wing->api_id = $newWing->getId();
             $wing->name = $newWing->getName();
@@ -122,7 +122,7 @@ class RefreshFleet implements ShouldQueue
     /**
      * Update current squads in a wing to reflect the current data.
      *
-     * @param Wing $wing
+     * @param Wing       $wing
      * @param Collection $new
      * @param Collection $current
      */
@@ -131,7 +131,7 @@ class RefreshFleet implements ShouldQueue
         /** @var GetFleetsFleetIdWingsSquad $newSquad */
         foreach ($new as $newSquad) {
             /** @var Squad $squad */
-            $squad = isset($current[$newSquad->getId()]) ? $current[$newSquad->getId()] : new Squad;
+            $squad = isset($current[$newSquad->getId()]) ? $current[$newSquad->getId()] : new Squad();
 
             $squad->api_id = $newSquad->getId();
             $squad->name = $newSquad->getName();

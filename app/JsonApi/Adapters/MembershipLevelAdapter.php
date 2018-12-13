@@ -19,7 +19,7 @@ class MembershipLevelAdapter extends AbstractAdapter
 
     protected $guarded = [
         'created-by',
-        'last-updated-by'
+        'last-updated-by',
     ];
 
     /**

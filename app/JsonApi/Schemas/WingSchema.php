@@ -6,7 +6,6 @@ use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class WingSchema extends SchemaProvider
 {
-
     /**
      * @var string
      */
@@ -15,6 +14,7 @@ class WingSchema extends SchemaProvider
     /**
      * @param $resource
      *      the domain record being serialized.
+     *
      * @return string
      */
     public function getId($resource)
@@ -24,21 +24,22 @@ class WingSchema extends SchemaProvider
 
     /**
      * @param \App\Wing $resource
-     *      the domain record being serialized.
+     *                            the domain record being serialized.
+     *
      * @return array
      */
     public function getAttributes($resource)
     {
         return [
             'api-id' => $resource->api_id,
-            'name' => $resource->name,
+            'name'   => $resource->name,
         ];
     }
 
     /**
      * @param \App\Wing $resource
-     * @param bool       $isPrimary
-     * @param array      $includeRelationships
+     * @param bool      $isPrimary
+     * @param array     $includeRelationships
      *
      * @return array
      */

@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
-        $schedule->job(new QueueFleetRefreshes)->everyFiveMinutes()->withoutOverlapping();
+        $schedule->job(new QueueFleetRefreshes())->everyFiveMinutes()->withoutOverlapping();
 
         $schedule->command('invoices:process')
             ->twiceDaily()

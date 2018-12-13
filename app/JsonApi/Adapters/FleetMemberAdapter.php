@@ -18,7 +18,7 @@ class FleetMemberAdapter extends AbstractAdapter
     protected $attributes = [];
 
     protected $guarded = [
-        'history'
+        'history',
     ];
 
     /**
