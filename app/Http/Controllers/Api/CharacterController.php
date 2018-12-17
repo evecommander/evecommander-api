@@ -16,11 +16,15 @@ class CharacterController extends JsonApiController
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     *
+     * @return Response
      */
     public function callback(Request $request)
     {
         $user = Auth::user();
         ProcessAuthCallback::dispatch($user, $request->get('code'));
+
+        return response()->make("Importing character now.\nYou may close this tab now.", 202);
     }
 
     /**
