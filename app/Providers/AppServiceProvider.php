@@ -34,10 +34,6 @@ class AppServiceProvider extends ServiceProvider
     {
         JsonApi::defaultApi('v1');
 
-        Horizon::auth(function (Request $request) {
-            return $request->user()->is_admin;
-        });
-
         // register model observers
         Comment::observe(CommentObserver::class);
         Doctrine::observe(DoctrineObserver::class);

@@ -53,7 +53,7 @@ RUN touch storage/logs/laravel.log
 
 RUN chmod -R 777 /var/www/html/storage
 
-ADD ./docker/production/cron/artisan-schedule-run /etc/cron.d/artisan-schedule-run
+ADD ./docker/production/cron/artisan-schedule-run /var/spool/cron/crontabs/root
 RUN chmod 0644 /etc/cron.d/artisan-schedule-run
 RUN chmod +x /etc/cron.d/artisan-schedule-run
 RUN touch /var/log/cron.log
