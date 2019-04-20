@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Class BillingConditionGroup
- * @package App
+ * Class BillingConditionGroup.
  *
  * @property string id
  * @property string type
@@ -41,7 +40,8 @@ class BillingConditionGroup extends Model
      * Test whether the condition group passes.
      *
      * @param Organization|Character $subject
-     * @param string $action
+     * @param string                 $action
+     *
      * @return bool
      */
     public function conditionPasses($subject, $action)
@@ -106,7 +106,7 @@ class BillingConditionGroup extends Model
      */
     public function parentGroup()
     {
-        return $this->belongsTo(BillingConditionGroup::class, 'parent_group_id');
+        return $this->belongsTo(self::class, 'parent_group_id');
     }
 
     /**
@@ -116,6 +116,6 @@ class BillingConditionGroup extends Model
      */
     public function childGroups()
     {
-        return $this->hasMany(BillingConditionGroup::class, 'parent_group_id');
+        return $this->hasMany(self::class, 'parent_group_id');
     }
 }

@@ -20,8 +20,9 @@ class MembershipChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param  \App\User       $user
-     * @param  \App\Membership $membership
+     * @param \App\User       $user
+     * @param \App\Membership $membership
+     *
      * @return array|bool
      */
     public function join(User $user, Membership $membership)

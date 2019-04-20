@@ -15,8 +15,8 @@ class MembershipLevelPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -28,8 +28,8 @@ class MembershipLevelPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the membership level.
      *
-     * @param User    $user
-     * @param Model   $membershipLevel
+     * @param User  $user
+     * @param Model $membershipLevel
      *
      * @return bool
      */
@@ -42,8 +42,8 @@ class MembershipLevelPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create membership levels.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -65,8 +65,8 @@ class MembershipLevelPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the membership level.
      *
-     * @param User    $user
-     * @param Model   $membershipLevel
+     * @param User  $user
+     * @param Model $membershipLevel
      *
      * @return bool
      */
@@ -79,8 +79,8 @@ class MembershipLevelPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the membership level.
      *
-     * @param User    $user
-     * @param Model   $membershipLevel
+     * @param User  $user
+     * @param Model $membershipLevel
      *
      * @return bool
      */

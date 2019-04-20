@@ -7,10 +7,10 @@ use App\ReplacementClaim;
 use Carbon\CarbonInterval;
 use CloudCreativity\LaravelJsonApi\Queue\ClientDispatchable;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 use Swagger\Client\Api\KillmailsApi;
 use Swagger\Client\Api\MarketApi;
@@ -26,7 +26,7 @@ class CreateReplacementClaim implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param Character $character
+     * @param Character        $character
      * @param ReplacementClaim $replacementClaim
      */
     public function __construct(Character $character, ReplacementClaim $replacementClaim)
@@ -38,9 +38,9 @@ class CreateReplacementClaim implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @return void
-     *
      * @throws \Swagger\Client\ApiException
+     *
+     * @return void
      */
     public function handle()
     {
@@ -57,9 +57,10 @@ class CreateReplacementClaim implements ShouldQueue
 
     /**
      * @param int $itemTypeId
-     * @return mixed
      *
      * @throws \Swagger\Client\ApiException
+     *
+     * @return mixed
      */
     protected function getPriceForItemType(int $itemTypeId)
     {

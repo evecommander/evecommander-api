@@ -70,7 +70,7 @@ class Invoice extends Model implements HasNotificationsContract
      *
      * @throws \Exception
      */
-    protected static function onCreate(Invoice $model)
+    protected static function onCreate(self $model)
     {
         $model->code = 'I-'.substr(bin2hex(random_bytes(16)), 0, 16);
     }

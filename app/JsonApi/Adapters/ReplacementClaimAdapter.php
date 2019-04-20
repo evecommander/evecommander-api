@@ -7,9 +7,6 @@ use App\ReplacementClaim;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use Illuminate\Support\Facades\Auth;
-use Swagger\Client\Api\KillmailsApi;
-use Swagger\Client\Api\MarketApi;
-use Swagger\Client\Configuration;
 
 class ReplacementClaimAdapter extends AbstractAdapter
 {
@@ -68,6 +65,5 @@ class ReplacementClaimAdapter extends AbstractAdapter
 
     protected function creating(ReplacementClaim $replacementClaim)
     {
-
     }
 }

@@ -20,8 +20,9 @@ class InvoiceChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param  \App\User    $user
-     * @param  \App\Invoice $invoice
+     * @param \App\User    $user
+     * @param \App\Invoice $invoice
+     *
      * @return array|bool
      */
     public function join(User $user, Invoice $invoice)

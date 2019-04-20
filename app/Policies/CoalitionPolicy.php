@@ -22,8 +22,8 @@ class CoalitionPolicy implements ResourcePolicyInterface
         AuthorizesNotificationsRelation;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -35,8 +35,8 @@ class CoalitionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the coalition.
      *
-     * @param User    $user
-     * @param Model   $coalition
+     * @param User  $user
+     * @param Model $coalition
      *
      * @return bool
      */
@@ -51,8 +51,8 @@ class CoalitionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create coalitions.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -64,8 +64,8 @@ class CoalitionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the coalition.
      *
-     * @param User    $user
-     * @param Model   $coalition
+     * @param User  $user
+     * @param Model $coalition
      *
      * @return bool
      */
@@ -77,8 +77,8 @@ class CoalitionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the coalition.
      *
-     * @param User    $user
-     * @param Model   $coalition
+     * @param User  $user
+     * @param Model $coalition
      *
      * @return bool
      */

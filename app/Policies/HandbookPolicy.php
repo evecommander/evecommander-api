@@ -15,8 +15,8 @@ class HandbookPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -28,8 +28,8 @@ class HandbookPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the handbook.
      *
-     * @param User    $user
-     * @param Model   $handbook
+     * @param User  $user
+     * @param Model $handbook
      *
      * @return bool
      */
@@ -42,8 +42,8 @@ class HandbookPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create handbooks.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -65,8 +65,8 @@ class HandbookPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the handbook.
      *
-     * @param User    $user
-     * @param Model   $handbook
+     * @param User  $user
+     * @param Model $handbook
      *
      * @return bool
      */
@@ -79,8 +79,8 @@ class HandbookPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the handbook.
      *
-     * @param User    $user
-     * @param Model   $handbook
+     * @param User  $user
+     * @param Model $handbook
      *
      * @return bool
      */

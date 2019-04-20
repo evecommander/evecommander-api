@@ -15,8 +15,8 @@ class RolePolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -28,8 +28,8 @@ class RolePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the role.
      *
-     * @param User    $user
-     * @param Model   $role
+     * @param User  $user
+     * @param Model $role
      *
      * @return bool
      */
@@ -42,8 +42,8 @@ class RolePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create roles.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -65,8 +65,8 @@ class RolePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the role.
      *
-     * @param User    $user
-     * @param Model   $role
+     * @param User  $user
+     * @param Model $role
      *
      * @return bool
      */
@@ -79,8 +79,8 @@ class RolePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the role.
      *
-     * @param User    $user
-     * @param Model   $role
+     * @param User  $user
+     * @param Model $role
      *
      * @return bool
      */
@@ -91,8 +91,8 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param User    $user
-     * @param Role    $role
+     * @param User $user
+     * @param Role $role
      *
      * @return bool
      */
@@ -102,8 +102,8 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param User    $user
-     * @param Role    $role
+     * @param User $user
+     * @param Role $role
      *
      * @return bool
      */
@@ -113,8 +113,8 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param User    $user
-     * @param Role    $role
+     * @param User $user
+     * @param Role $role
      *
      * @return bool
      */
@@ -124,8 +124,8 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param User    $user
-     * @param Role    $role
+     * @param User $user
+     * @param Role $role
      *
      * @return bool
      */
@@ -135,8 +135,8 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param User    $user
-     * @param Role    $role
+     * @param User $user
+     * @param Role $role
      *
      * @return bool
      */
@@ -146,8 +146,8 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param User    $user
-     * @param Role    $role
+     * @param User $user
+     * @param Role $role
      *
      * @return bool
      */
@@ -157,8 +157,8 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param User    $user
-     * @param Role    $role
+     * @param User $user
+     * @param Role $role
      *
      * @return bool
      */
@@ -168,8 +168,8 @@ class RolePolicy implements ResourcePolicyInterface
     }
 
     /**
-     * @param User    $user
-     * @param Role    $role
+     * @param User $user
+     * @param Role $role
      *
      * @return bool
      */

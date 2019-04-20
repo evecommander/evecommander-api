@@ -15,8 +15,8 @@ class DoctrinePolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -28,8 +28,8 @@ class DoctrinePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the doctrine.
      *
-     * @param User    $user
-     * @param Model   $doctrine
+     * @param User  $user
+     * @param Model $doctrine
      *
      * @return bool
      */
@@ -42,8 +42,8 @@ class DoctrinePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create doctrines.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -65,8 +65,8 @@ class DoctrinePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the doctrine.
      *
-     * @param User    $user
-     * @param Model   $doctrine
+     * @param User  $user
+     * @param Model $doctrine
      *
      * @return bool
      */
@@ -79,8 +79,8 @@ class DoctrinePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the doctrine.
      *
-     * @param User    $user
-     * @param Model   $doctrine
+     * @param User  $user
+     * @param Model $doctrine
      *
      * @return bool
      */

@@ -13,8 +13,8 @@ class UserPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -26,8 +26,8 @@ class UserPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the model.
      *
-     * @param User    $user
-     * @param Model   $requestedUser
+     * @param User  $user
+     * @param Model $requestedUser
      *
      * @return bool
      */
@@ -40,8 +40,8 @@ class UserPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create models.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -53,8 +53,8 @@ class UserPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the model.
      *
-     * @param User    $user
-     * @param Model   $requestedUser
+     * @param User  $user
+     * @param Model $requestedUser
      *
      * @return bool
      */
@@ -67,8 +67,8 @@ class UserPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the model.
      *
-     * @param User    $user
-     * @param Model   $requestedUser
+     * @param User  $user
+     * @param Model $requestedUser
      *
      * @return bool
      */

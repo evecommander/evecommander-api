@@ -15,8 +15,8 @@ class DiscountPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -28,8 +28,8 @@ class DiscountPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the discount.
      *
-     * @param User    $user
-     * @param Model   $discount
+     * @param User  $user
+     * @param Model $discount
      *
      * @return bool
      */
@@ -42,8 +42,8 @@ class DiscountPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create discounts.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -65,8 +65,8 @@ class DiscountPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the discount.
      *
-     * @param User    $user
-     * @param Model   $discount
+     * @param User  $user
+     * @param Model $discount
      *
      * @return bool
      */
@@ -79,8 +79,8 @@ class DiscountPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the discount.
      *
-     * @param User    $user
-     * @param Model   $discount
+     * @param User  $user
+     * @param Model $discount
      *
      * @return bool
      */

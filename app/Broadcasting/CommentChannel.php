@@ -20,8 +20,9 @@ class CommentChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param  \App\User    $user
-     * @param  \App\Comment $comment
+     * @param \App\User    $user
+     * @param \App\Comment $comment
+     *
      * @return array|bool
      */
     public function join(User $user, Comment $comment)

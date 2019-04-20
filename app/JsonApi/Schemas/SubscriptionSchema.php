@@ -33,8 +33,8 @@ class SubscriptionSchema extends SchemaProvider
     {
         return [
             'notification-type' => $resource->notification,
-            'created-at' => $resource->created_at->toAtomString(),
-            'updated-at' => $resource->updated_at->toAtomString(),
+            'created-at'        => $resource->created_at->toAtomString(),
+            'updated-at'        => $resource->updated_at->toAtomString(),
         ];
     }
 
@@ -71,7 +71,7 @@ class SubscriptionSchema extends SchemaProvider
     public function getPrimaryMeta($resource)
     {
         return [
-            'available-notifications' => Subscription::AVAILABLE_NOTIFICATIONS
+            'available-notifications' => Subscription::AVAILABLE_NOTIFICATIONS,
         ];
     }
 }

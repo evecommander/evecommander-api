@@ -15,8 +15,8 @@ class SubscriptionPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -28,8 +28,8 @@ class SubscriptionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the subscription.
      *
-     * @param User    $user
-     * @param Model   $subscription
+     * @param User  $user
+     * @param Model $subscription
      *
      * @return bool
      */
@@ -42,8 +42,8 @@ class SubscriptionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create subscriptions.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -65,8 +65,8 @@ class SubscriptionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the subscription.
      *
-     * @param User    $user
-     * @param Model   $subscription
+     * @param User  $user
+     * @param Model $subscription
      *
      * @return bool
      */
@@ -79,8 +79,8 @@ class SubscriptionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the subscription.
      *
-     * @param User    $user
-     * @param Model   $subscription
+     * @param User  $user
+     * @param Model $subscription
      *
      * @return bool
      */

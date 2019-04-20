@@ -10,8 +10,7 @@ use App\MembershipLevel;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class ModifiedAmounts
- * @package App\Abstracts
+ * Class ModifiedAmounts.
  *
  * @property string amount_type
  * @property float amount
@@ -111,6 +110,7 @@ abstract class ModifiedAmounts extends Model
     /**
      * @param $subject
      * @param $action
+     *
      * @return bool
      */
     public function isApplicable($subject, $action)

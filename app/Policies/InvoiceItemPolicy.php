@@ -15,8 +15,8 @@ class InvoiceItemPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -28,8 +28,8 @@ class InvoiceItemPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the invoice item.
      *
-     * @param User    $user
-     * @param Model   $invoiceItem
+     * @param User  $user
+     * @param Model $invoiceItem
      *
      * @return bool
      */
@@ -42,8 +42,8 @@ class InvoiceItemPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create invoice items.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -65,8 +65,8 @@ class InvoiceItemPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the invoice item.
      *
-     * @param User    $user
-     * @param Model   $invoiceItem
+     * @param User  $user
+     * @param Model $invoiceItem
      *
      * @return bool
      */
@@ -79,8 +79,8 @@ class InvoiceItemPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the invoice item.
      *
-     * @param User    $user
-     * @param Model   $invoiceItem
+     * @param User  $user
+     * @param Model $invoiceItem
      *
      * @return bool
      */

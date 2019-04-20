@@ -7,7 +7,6 @@ use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class NotificationSchema extends SchemaProvider
 {
-
     /**
      * @var string
      */
@@ -15,7 +14,8 @@ class NotificationSchema extends SchemaProvider
 
     /**
      * @param DatabaseNotification $resource
-     *      the domain record being serialized.
+     *                                       the domain record being serialized.
+     *
      * @return string
      */
     public function getId($resource)
@@ -25,7 +25,8 @@ class NotificationSchema extends SchemaProvider
 
     /**
      * @param DatabaseNotification $resource
-     *      the domain record being serialized.
+     *                                       the domain record being serialized.
+     *
      * @return array
      */
     public function getAttributes($resource)
@@ -41,8 +42,8 @@ class NotificationSchema extends SchemaProvider
 
     /**
      * @param DatabaseNotification $resource
-     * @param bool         $isPrimary
-     * @param array        $includeRelationships
+     * @param bool                 $isPrimary
+     * @param array                $includeRelationships
      *
      * @return array
      */

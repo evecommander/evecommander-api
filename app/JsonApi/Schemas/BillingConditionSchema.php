@@ -86,7 +86,7 @@ class BillingConditionSchema extends SchemaProvider
                 self::DATA         => function () use ($resource) {
                     return $resource->billingConditionGroup;
                 },
-            ]
+            ],
         ];
     }
 }

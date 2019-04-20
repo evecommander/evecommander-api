@@ -19,9 +19,7 @@ use App\Observers\MembershipObserver;
 use App\Observers\ReplacementClaimObserver;
 use App\ReplacementClaim;
 use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
-use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Horizon\Horizon;
 use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider

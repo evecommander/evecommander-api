@@ -24,8 +24,8 @@ class AlliancePolicy implements ResourcePolicyInterface
         AuthorizesMembershipsRelation;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -37,8 +37,8 @@ class AlliancePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the alliance.
      *
-     * @param User    $user
-     * @param Model   $alliance
+     * @param User  $user
+     * @param Model $alliance
      *
      * @return bool
      */
@@ -53,8 +53,8 @@ class AlliancePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create alliances.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -66,8 +66,8 @@ class AlliancePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the alliance.
      *
-     * @param User    $user
-     * @param Model   $alliance
+     * @param User  $user
+     * @param Model $alliance
      *
      * @return bool
      */
@@ -79,8 +79,8 @@ class AlliancePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the alliance.
      *
-     * @param User    $user
-     * @param Model   $alliance
+     * @param User  $user
+     * @param Model $alliance
      *
      * @return bool
      */

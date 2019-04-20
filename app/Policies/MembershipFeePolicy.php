@@ -15,8 +15,8 @@ class MembershipFeePolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -28,8 +28,8 @@ class MembershipFeePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the membership fee.
      *
-     * @param User    $user
-     * @param Model   $membershipFee
+     * @param User  $user
+     * @param Model $membershipFee
      *
      * @return bool
      */
@@ -42,8 +42,8 @@ class MembershipFeePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create membership fees.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -65,8 +65,8 @@ class MembershipFeePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the membership fee.
      *
-     * @param User    $user
-     * @param Model   $membershipFee
+     * @param User  $user
+     * @param Model $membershipFee
      *
      * @return bool
      */
@@ -79,8 +79,8 @@ class MembershipFeePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the membership fee.
      *
-     * @param User    $user
-     * @param Model   $membershipFee
+     * @param User  $user
+     * @param Model $membershipFee
      *
      * @return bool
      */

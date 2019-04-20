@@ -20,8 +20,9 @@ class CharacterChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param  \App\User        $user
-     * @param  \App\Character   $character
+     * @param \App\User      $user
+     * @param \App\Character $character
+     *
      * @return array|bool
      */
     public function join(User $user, Character $character)

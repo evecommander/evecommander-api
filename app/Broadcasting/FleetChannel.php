@@ -20,8 +20,9 @@ class FleetChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param  \App\User  $user
-     * @param  \App\Fleet $fleet
+     * @param \App\User  $user
+     * @param \App\Fleet $fleet
+     *
      * @return array|bool
      */
     public function join(User $user, Fleet $fleet)

@@ -25,7 +25,7 @@ class OAuth2Token extends Model
     use UuidTrait;
 
     protected $hidden = [
-        'refresh_token' // the client is forced to have the server refresh the token on it's behalf
+        'refresh_token', // the client is forced to have the server refresh the token on it's behalf
     ];
 
     /**
@@ -42,6 +42,7 @@ class OAuth2Token extends Model
      * Accessor for Refresh Token field.
      *
      * @param $value
+     *
      * @return mixed
      */
     public function getRefreshTokenAttribute($value)

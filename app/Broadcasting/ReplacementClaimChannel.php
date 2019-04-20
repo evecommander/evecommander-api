@@ -20,8 +20,9 @@ class ReplacementClaimChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param  \App\User             $user
-     * @param  \App\ReplacementClaim $replacementClaim
+     * @param \App\User             $user
+     * @param \App\ReplacementClaim $replacementClaim
+     *
      * @return array|bool
      */
     public function join(User $user, ReplacementClaim $replacementClaim)

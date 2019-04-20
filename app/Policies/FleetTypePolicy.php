@@ -15,8 +15,8 @@ class FleetTypePolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -28,8 +28,8 @@ class FleetTypePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the fleet type.
      *
-     * @param User    $user
-     * @param Model   $fleetType
+     * @param User  $user
+     * @param Model $fleetType
      *
      * @return bool
      */
@@ -42,8 +42,8 @@ class FleetTypePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create fleet types.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -65,8 +65,8 @@ class FleetTypePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the fleet type.
      *
-     * @param User    $user
-     * @param Model   $fleetType
+     * @param User  $user
+     * @param Model $fleetType
      *
      * @return bool
      */
@@ -79,8 +79,8 @@ class FleetTypePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the fleet type.
      *
-     * @param User    $user
-     * @param Model   $fleetType
+     * @param User  $user
+     * @param Model $fleetType
      *
      * @return bool
      */

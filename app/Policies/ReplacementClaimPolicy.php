@@ -19,8 +19,8 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -32,8 +32,8 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the replacement claim.
      *
-     * @param User    $user
-     * @param Model   $replacementClaim
+     * @param User  $user
+     * @param Model $replacementClaim
      *
      * @return bool
      */
@@ -46,8 +46,8 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create replacement claims.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -75,7 +75,7 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
             }])->exists();
         }
 
-        /** @var Corporation $organization */
+        /* @var Corporation $organization */
         return $user->characters()->with(['corporation' => function (Builder $query) use ($organization) {
             $query->where('corporations.id', '=', $organization->id);
         }])->exists();
@@ -84,8 +84,8 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the replacement claim.
      *
-     * @param User    $user
-     * @param Model   $replacementClaim
+     * @param User  $user
+     * @param Model $replacementClaim
      *
      * @return bool
      */
@@ -98,8 +98,8 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the replacement claim.
      *
-     * @param User    $user
-     * @param Model   $replacementClaim
+     * @param User  $user
+     * @param Model $replacementClaim
      *
      * @return bool
      */

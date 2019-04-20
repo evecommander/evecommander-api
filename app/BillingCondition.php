@@ -47,7 +47,8 @@ class BillingCondition extends Model
      * Test whether the condition passes.
      *
      * @param Organization|Character $subject
-     * @param string $action
+     * @param string                 $action
+     *
      * @return bool
      */
     public function conditionPasses($subject, $action)
