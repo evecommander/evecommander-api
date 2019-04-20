@@ -17,15 +17,9 @@ class CommentAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'character',
-        'comments',
-        'commentable',
+    protected $guarded = [
+        'created-at',
+        'updated-at',
     ];
 
     /**

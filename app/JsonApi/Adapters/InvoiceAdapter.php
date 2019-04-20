@@ -6,6 +6,7 @@ use App\Invoice;
 use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceAdapter extends AbstractAdapter
 {
@@ -18,19 +19,10 @@ class InvoiceAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'issuer',
-        'recipient',
-        'items',
-        'payments',
-        'comments',
-        'notifications',
-        'lastUpdatedBy',
+    protected $guarded = [
+        'created-at',
+        'updated-at',
+        'last-updated-by',
     ];
 
     /**
@@ -76,5 +68,10 @@ class InvoiceAdapter extends AbstractAdapter
     public function lastUpdatedBy()
     {
         return $this->belongsTo();
+    }
+
+    protected function updating(Invoice $invoice)
+    {
+        $invoice->lastUpdatedBy()->associate(Auth::user());
     }
 }

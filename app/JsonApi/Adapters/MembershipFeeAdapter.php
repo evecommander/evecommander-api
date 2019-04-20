@@ -17,14 +17,9 @@ class MembershipFeeAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'organization',
-        'billingConditions',
+    protected $guarded = [
+        'created-at',
+        'updated-at',
     ];
 
     /**
@@ -43,6 +38,11 @@ class MembershipFeeAdapter extends AbstractAdapter
     }
 
     public function billingConditions()
+    {
+        return $this->hasMany();
+    }
+
+    public function billingConditionGroups()
     {
         return $this->hasMany();
     }

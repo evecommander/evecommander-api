@@ -27,7 +27,7 @@ class CharacterAdded implements ShouldBroadcast
     public function __construct(User $user, Character $character)
     {
         $this->user = $user;
-        $this->character = $character;
+        $this->character = $character->loadMissing('token');
     }
 
     /**
@@ -37,7 +37,7 @@ class CharacterAdded implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('user.'.$this->user->id);
+        return new PrivateChannel('/users/'.$this->user->id);
     }
 
     /**
@@ -48,8 +48,8 @@ class CharacterAdded implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'character' => $this->character,
-            'token'     => $this->character->token,
+            'character' => $this->character->toArray(),
+            'token'     => $this->character->token->toArray(),
         ];
     }
 }

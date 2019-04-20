@@ -32,6 +32,7 @@ class CommentObserver
                 /** @var Invoice $invoice */
                 $invoice = $comment->commentable;
                 $notification = new CommentPosted($invoice, $comment);
+
                 if ($comment->character_id === $invoice->recipient_id) {
                     // send notification to characters subscribed to the event on the invoice issuer
                     $notifiables = $invoice->issuer
@@ -73,6 +74,7 @@ class CommentObserver
                 /** @var Membership $membership */
                 $membership = $comment->commentable;
                 $notification = new \App\Notifications\Membership\CommentPosted($membership, $comment);
+
                 if ($comment->character_id === $membership->member_id) {
                     // send notification to characters subscribed to the event on the membership's organization
                     $notifiables = $membership->organization
@@ -118,6 +120,7 @@ class CommentObserver
                 /** @var ReplacementClaim $replacementClaim */
                 $replacementClaim = $comment->commentable;
                 $notification = new \App\Notifications\ReplacementClaim\CommentPosted($replacementClaim, $comment);
+
                 if ($comment->character_id === $replacementClaim->character_id) {
                     // send notification to characters subscribed to the event on the replacement claim's organization
                     $notifiables = $replacementClaim->organization

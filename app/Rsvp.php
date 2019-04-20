@@ -26,6 +26,18 @@ class Rsvp extends Model
 {
     use UuidTrait;
 
+    const RESPONSE_YES = 'yes';
+    const RESPONSE_MAYBE = 'maybe';
+    const RESPONSE_PENDING = 'pending';
+    const RESPONSE_NO = 'no';
+
+    const AVAILABLE_RESPONSES = [
+        self::RESPONSE_YES,
+        self::RESPONSE_MAYBE,
+        self::RESPONSE_PENDING,
+        self::RESPONSE_NO,
+    ];
+
     protected $casts = [
         'confirmed' => 'boolean',
     ];

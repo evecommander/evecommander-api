@@ -33,7 +33,7 @@ class OAuth2TokenSchema extends SchemaProvider
         return [
             'access-token'  => $resource->access_token,
             'refresh-token' => $resource->refresh_token,
-            'expires-on'    => $resource->expires_on->toIso8601String(),
+            'expires-at'    => $resource->expires_on->toIso8601String(),
             'created-at'    => $resource->created_at->toIso8601String(),
             'updated-at'    => $resource->updated_at->toIso8601String(),
         ];

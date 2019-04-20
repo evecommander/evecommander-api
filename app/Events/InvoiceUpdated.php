@@ -35,10 +35,9 @@ class InvoiceUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        $type = implode('.', explode('\\', $this->invoice->recipient_type));
-        $channelName = "{$type}.{$this->invoice->recipient_id}".
-            ($this->invoice->recipient_type !== Character::class ? '.Invoices' : '');
+        $type = $this->invoice->recipient_type === Character::class ? 'characters' : 'organizations';
+        $extra = ($this->invoice->recipient_type === Character::class ? '' : '/received-invoices');
 
-        return new PrivateChannel($channelName);
+        return new PrivateChannel("/{$type}/{$this->invoice->recipient_id}".$extra);
     }
 }

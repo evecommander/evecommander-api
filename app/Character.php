@@ -194,4 +194,24 @@ class Character extends Model implements
     {
         return $this->replacementClaims()->where('status', ReplacementClaim::STATUS_PAYED);
     }
+
+    /**
+     * Get relation between this character and any fleets it has been a part of.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function fleets()
+    {
+        return $this->hasManyThrough(Fleet::class, FleetMember::class);
+    }
+
+    /**
+     * Get relation between this character and any fleet members that belong to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function fleetMemberships()
+    {
+        return $this->hasMany(FleetMember::class);
+    }
 }

@@ -34,6 +34,6 @@ class HandbookUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("App.Handbook.{$this->handbook->id}");
+        return new PrivateChannel("/handbooks/{$this->handbook->id}");
     }
 }

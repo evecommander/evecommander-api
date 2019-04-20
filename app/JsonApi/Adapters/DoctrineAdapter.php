@@ -2,9 +2,11 @@
 
 namespace App\JsonApi\Adapters;
 
+use App\Doctrine;
 use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
+use Illuminate\Support\Facades\Auth;
 
 class DoctrineAdapter extends AbstractAdapter
 {
@@ -17,16 +19,11 @@ class DoctrineAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'organization',
-        'fittings',
-        'createdBy',
-        'lastUpdatedBy',
+    protected $guarded = [
+        'created-at',
+        'updated-at',
+        'created-by',
+        'last-updated-by',
     ];
 
     /**
@@ -36,7 +33,7 @@ class DoctrineAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Doctrine(), $paging);
+        parent::__construct(new Doctrine(), $paging);
     }
 
     public function organization()
@@ -57,5 +54,15 @@ class DoctrineAdapter extends AbstractAdapter
     public function lastUpdatedBy()
     {
         return $this->belongsTo();
+    }
+
+    protected function creating(Doctrine $doctrine)
+    {
+        $doctrine->createdBy()->associate(Auth::user());
+    }
+
+    protected function updating(Doctrine $doctrine)
+    {
+        $doctrine->lastUpdatedBy()->associate(Auth::user());
     }
 }

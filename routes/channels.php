@@ -13,68 +13,78 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.User.{id}', function (\App\User $user, $id) {
-    return (int) $user->id === (int) $id;
-});
+Broadcast::channel('/users/{user}', \App\Broadcasting\UserChannel::class);
 
-Broadcast::channel('App.Character.{id}', function (\App\User $user, $id) {
-    return $user->characters()->where('characters.id', '=', $id)->exists();
-});
+Broadcast::channel('/characters/{character}', \App\Broadcasting\CharacterChannel::class);
 
 // Start Organization channels
-Broadcast::channel('App.Corporation.{corporation}.Fleets', function (\App\User $user, \App\Corporation $corporation) {
-    return $user->can('readRelationship', [$corporation, 'fleets', request()]);
-});
+Broadcast::channel(
+    '/organizations/{organization}',
+    \App\Broadcasting\OrganizationChannel::class
+);
 
-Broadcast::channel('App.Alliance.{alliance}.Fleets', function (\App\User $user, \App\Alliance $alliance) {
-    return $user->can('readRelationship', [$alliance, 'fleets', request()]);
-});
+Broadcast::channel(
+    '/organizations/{organization}/fleets',
+    \App\Broadcasting\OrganizationFleetsChannel::class
+);
 
-Broadcast::channel('App.Coalition.{coalition}.Fleets', function (\App\User $user, \App\Coalition $coalition) {
-    return $user->can('readRelationship', [$coalition, 'fleets', request()]);
-});
+Broadcast::channel(
+    '/organizations/{organization}/handbooks',
+    \App\Broadcasting\OrganizationHandbooksChannel::class
+);
 
-Broadcast::channel('App.Corporation.{corporation}.Handbooks', function (\App\User $user, \App\Corporation $corporation) {
-    return $user->can('readRelationship', [$corporation, 'handbooks', request()]);
-});
+Broadcast::channel(
+    '/organizations/{organization}/received-invoices',
+    \App\Broadcasting\OrganizationReceivedInvoicesChannel::class
+);
 
-Broadcast::channel('App.Alliance.{alliance}.Handbooks', function (\App\User $user, \App\Alliance $alliance) {
-    return $user->can('readRelationship', [$alliance, 'handbooks', request()]);
-});
+Broadcast::channel(
+    '/organizations/{organization}/issued-invoices',
+    \App\Broadcasting\OrganizationIssuedInvoicesChannel::class
+);
 
-Broadcast::channel('App.Coalition.{coalition}.Handbooks', function (\App\User $user, \App\Coalition $coalition) {
-    return $user->can('readRelationship', [$coalition, 'handbooks', request()]);
-});
+Broadcast::channel(
+    '/organizations/{organization}/replacement-claims',
+    \App\Broadcasting\OrganizationReplacementClaimsChannel::class
+);
 
-Broadcast::channel('App.Corporation.{corporation}.Invoices', function (\App\User $user, \App\Corporation $corporation) {
-    return $user->can('readRelationship', [$corporation, 'receivedInvoices', request()]);
-});
+Broadcast::channel(
+    '/organizations/{organization}/notifications',
+    \App\Broadcasting\OrganizationNotificationsChannel::class
+);
 
-Broadcast::channel('App.Alliance.{alliance}.Invoices', function (\App\User $user, \App\Alliance $alliance) {
-    return $user->can('readRelationship', [$alliance, 'receivedInvoices', request()]);
-});
+Broadcast::channel(
+    '/organizations/{organization}/discounts',
+    \App\Broadcasting\OrganizationDiscountsChannel::class
+);
 
-Broadcast::channel('App.Coalition.{coalition}.Invoices', function (\App\User $user, \App\Coalition $coalition) {
-    return $user->can('readRelationship', [$coalition, 'receivedInvoices', request()]);
-});
+Broadcast::channel(
+    '/organizations/{organization}/roles',
+    \App\Broadcasting\OrganizationRolesChannel::class
+);
+
+Broadcast::channel(
+    '/organizations/{organization}/fleet-types',
+    \App\Broadcasting\OrganizationFleetTypesChannel::class
+);
+
+Broadcast::channel(
+    '/organizations/{organization}/subscriptions',
+    \App\Broadcasting\OrganizationSubscriptionsChannel::class
+);
 // End Organization Channels
 
-Broadcast::channel('App.Fleet.{fleet}', function (\App\User $user, \App\Fleet $fleet) {
-    return $user->can('read', [$fleet, request()]);
-});
+Broadcast::channel('/fleets/{fleet}', \App\Broadcasting\FleetChannel::class);
 
-Broadcast::channel('App.Handbook.{handbook}', function (\App\User $user, \App\Handbook $handbook) {
-    return $user->can('read', [$handbook, request()]);
-});
+Broadcast::channel('/handbooks/{handbook}', \App\Broadcasting\HandbookChannel::class);
 
-Broadcast::channel('App.Membership.{membership}', function (\App\User $user, \App\Membership $membership) {
-    return $user->can('read', [$membership, request()]);
-});
+Broadcast::channel('/memberships/{membership}', \App\Broadcasting\MembershipChannel::class);
 
-Broadcast::channel('App.ReplacementClaim.{replacementClaim}', function (\App\User $user, \App\ReplacementClaim $replacementClaim) {
-    return $user->can('read', [$replacementClaim, request()]);
-});
+Broadcast::channel(
+    '/replacement-claims/{replacementClaim}',
+    \App\Broadcasting\ReplacementClaimChannel::class
+);
 
-Broadcast::channel('App.Invoice.{invoice}', function (\App\User $user, \App\Invoice $invoice) {
-    return $user->can('read', [$invoice, request()]);
-});
+Broadcast::channel('/invoices/{invoice}', \App\Broadcasting\InvoiceChannel::class);
+
+Broadcast::channel('/comments/{comment}', \App\Broadcasting\CommentChannel::class);

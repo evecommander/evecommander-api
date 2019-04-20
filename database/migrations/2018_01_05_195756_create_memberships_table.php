@@ -23,6 +23,8 @@ class CreateMembershipsTable extends Migration
             $table->text('notes');
             $table->uuid('created_by');
             $table->uuid('last_updated_by');
+            $table->date('last_invoiced')->useCurrent();
+            $table->date('next_invoiced');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();

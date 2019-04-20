@@ -77,13 +77,31 @@ class RoleSchema extends SchemaProvider
                 },
             ],
 
-            'membershipLevels' => [
+            'membership-levels' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return [
                         'count' => $resource->membershipLevels->count(),
                     ];
+                },
+            ],
+
+            'created-by' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => isset($includeRelationships['created-by']),
+                self::DATA         => function () use ($resource) {
+                    return $resource->createdBy;
+                },
+            ],
+
+            'last-updated-by' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => isset($includeRelationships['last-updated-by']),
+                self::DATA         => function () use ($resource) {
+                    return $resource->lastUpdatedBy;
                 },
             ],
         ];

@@ -25,7 +25,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'id'          => Str::orderedUuid(),
                 'name'        => 'Delete Organization',
-                'description' => 'Can delete organization from '.env('APP_NAME'),
+                'description' => 'Can delete organization from '.config('app.name'),
                 'slug'        => 'organization_delete',
             ],
 
@@ -164,19 +164,19 @@ class PermissionsTableSeeder extends Seeder
                 'slug'        => 'replacement_claims_read',
             ],
 
-            // Invoice
+            // Issued Invoices
             [
                 'id'          => Str::orderedUuid(),
-                'name'        => 'Modify Invoices',
+                'name'        => 'Modify Issued Invoices',
                 'description' => 'Can modify invoices on behalf of the organization',
-                'slug'        => 'invoices_modify',
+                'slug'        => 'issued_invoices_modify',
             ],
 
             [
                 'id'          => Str::orderedUuid(),
-                'name'        => 'View Invoices',
+                'name'        => 'View Issued Invoices',
                 'description' => 'Can view invoices that belong to the organization',
-                'slug'        => 'invoices_read',
+                'slug'        => 'issued_invoices_read',
             ],
 
             // Received Invoices

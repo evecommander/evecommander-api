@@ -31,6 +31,7 @@ class MembershipFeeSchema extends SchemaProvider
     public function getAttributes($resource)
     {
         return [
+            'name'        => $resource->name,
             'amount-type' => $resource->amount_type,
             'amount'      => $resource->amount,
             'created-at'  => $resource->created_at->toIso8601String(),
@@ -57,12 +58,22 @@ class MembershipFeeSchema extends SchemaProvider
                 },
             ],
 
-            'billingConditions' => [
+            'billing-conditions' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return [
                         'count' => $resource->billingConditions->count(),
+                    ];
+                },
+            ],
+
+            'billing-condition-groups' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->billingConditionGroups->count(),
                     ];
                 },
             ],

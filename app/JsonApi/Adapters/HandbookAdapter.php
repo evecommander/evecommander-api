@@ -2,9 +2,11 @@
 
 namespace App\JsonApi\Adapters;
 
+use App\Handbook;
 use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
+use Illuminate\Support\Facades\Auth;
 
 class HandbookAdapter extends AbstractAdapter
 {
@@ -17,15 +19,12 @@ class HandbookAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'organization',
-        'createdBy',
-        'lastUpdatedBy',
+    protected $guarded = [
+        'created-at',
+        'updated-at',
+        'deleted-at',
+        'created-by',
+        'last-updated-by',
     ];
 
     /**
@@ -35,7 +34,7 @@ class HandbookAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Handbook(), $paging);
+        parent::__construct(new Handbook(), $paging);
     }
 
     public function organization()
@@ -51,5 +50,15 @@ class HandbookAdapter extends AbstractAdapter
     public function lastUpdatedBy()
     {
         return $this->belongsTo();
+    }
+
+    protected function creating(Handbook $handbook)
+    {
+        $handbook->createdBy()->associate(Auth::user());
+    }
+
+    protected function updating(Handbook $handbook)
+    {
+        $handbook->lastUpdatedBy()->associate(Auth::user());
     }
 }

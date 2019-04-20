@@ -19,29 +19,12 @@ class AllianceAdapter extends AbstractAdapter
     protected $attributes = [];
 
     protected $guarded = [
+        'api-id',
+        'name',
+        'created-at',
+        'updated-at',
         'corporations',
         'coalition',
-    ];
-
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'handbooks',
-        'members',
-        'defaultMembershipLevel',
-        'membershipLevels',
-        'memberships',
-        'coalition',
-        'replacementClaims',
-        'invoices',
-        'receivedInvoices',
-        'notifications',
-        'corporations',
-        'roles',
-        'subscriptions',
     ];
 
     /**
@@ -98,7 +81,7 @@ class AllianceAdapter extends AbstractAdapter
         return $this->hasMany();
     }
 
-    public function invoices()
+    public function issuedInvoices()
     {
         return $this->hasMany();
     }
@@ -119,6 +102,26 @@ class AllianceAdapter extends AbstractAdapter
     }
 
     public function subscriptions()
+    {
+        return $this->hasMany();
+    }
+
+    public function fleets()
+    {
+        return $this->hasMany();
+    }
+
+    public function fleetTypes()
+    {
+        return $this->hasMany();
+    }
+
+    public function billingConditions()
+    {
+        return $this->hasMany();
+    }
+
+    public function billingConditionGroups()
     {
         return $this->hasMany();
     }

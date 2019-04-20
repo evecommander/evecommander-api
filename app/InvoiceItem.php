@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float cost
  * @property Carbon created_at
  * @property Carbon updated_at
+ * @property float total
  *
  * Relationships
  * @property \Illuminate\Database\Eloquent\Collection comments
@@ -34,5 +35,10 @@ class InvoiceItem extends Model
     public function invoice()
     {
         return $this->belongsTo(Invoice::class);
+    }
+
+    public function getTotalAttribute()
+    {
+        return (float) $this->quantity * $this->cost;
     }
 }

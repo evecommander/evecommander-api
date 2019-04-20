@@ -2,13 +2,14 @@
 
 namespace App\Contracts;
 
+use App\MembershipLevel;
 use Illuminate\Support\Collection;
 
 /**
  * Interface HasMembersContract.
  *
  * @property Collection members
- * @property Collection defaultMembershipLevel
+ * @property MembershipLevel defaultMembershipLevel
  * @property Collection membershipLevels
  */
 interface HasMembersContract

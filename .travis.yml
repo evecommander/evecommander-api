@@ -9,23 +9,28 @@ services:
   - docker
   - redis-server
 
+dist: xenial
+
 addons:
-  postgresql: "10"
-  apt:
-    packages:
-     - postgresql-10
-     - postgresql-client-10
+  postgresql: "11.2"
 
 language: php
 
 php:
   - "7.2"
+  - "7.3"
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get --yes remove postgresql\*
+  - sudo apt-get install -y postgresql-11 postgresql-client-11
+  - sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
+  - sudo service postgresql restart 11
 
 before_script:
   - composer install --optimize-autoloader
   - cp .env.example .env
   - php artisan key:generate
-  - php artisan jwt:secret
   - psql -c "CREATE USER commander PASSWORD 'secret';"
   - psql -c "CREATE DATABASE eve_commander WITH OWNER = commander;"
   - psql -c "CREATE DATABASE eve_sde WITH OWNER = commander;"
@@ -36,13 +41,20 @@ script:
 
 after_success:
   - rm .env
+  # PHP-FPM container image
   - export REPO=$DOCKER_USERNAME/evecommander-php;
-  - docker build -t $REPO:$COMMIT .;
-  - docker tag $REPO:$COMMIT $REPO:latest;
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER;
+  - docker build -t $REPO:$COMMIT -f ./docker/production/php/Dockerfile .;
+  - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BRANCH-latest;
+  - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER;
+  # Nginx image
+  - export NGINX_REPO=$DOCKER_USERNAME/evecommander-nginx;
+  - docker build -t $NGINX_REPO:$COMMIT -f ./docker/production/nginx/Dockerfile .;
+  - docker tag $NGINX_REPO:$COMMIT $NGINX_REPO:$TRAVIS_BRANCH-latest;
+  - docker tag $NGINX_REPO:$COMMIT $NGINX_REPO:$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER;
 
 deploy:
   provider: script
   script: bash docker_push
   on:
-    branch: master
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^master|develop|staging$

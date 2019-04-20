@@ -2,12 +2,8 @@
 
 namespace App\Policies\Traits;
 
-use App\Abstracts\Organization;
-use App\Character;
-use App\Http\Middleware\CheckCharacter;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 trait AuthorizesRelations
@@ -15,58 +11,48 @@ trait AuthorizesRelations
     /**
      * Determine whether the user can read the given relationship.
      *
-     * @param User    $user
-     * @param Model   $resource
-     * @param string  $relation
-     * @param Request $request
+     * @param User   $user
+     * @param Model  $resource
+     * @param string $relation
      *
      * @return bool
      */
-    public function readRelationship(User $user, Model $resource, string $relation, Request $request): bool
+    public function readRelationship(User $user, Model $resource, string $relation): bool
     {
-        return $this->authorizeRelation($resource, $relation, 'read', $request);
+        return $this->authorizeRelation($user, $resource, $relation, 'read');
     }
 
     /**
      * Determine whether the user can modify the given relationship.
      *
-     * @param User    $user
-     * @param Model   $resource
-     * @param string  $relation
-     * @param Request $request
+     * @param User   $user
+     * @param Model  $resource
+     * @param string $relation
      *
      * @return bool
      */
-    public function modifyRelationship(User $user, Model $resource, string $relation, Request $request): bool
+    public function modifyRelationship(User $user, Model $resource, string $relation): bool
     {
-        return $this->authorizeRelation($resource, $relation, 'modify', $request);
+        return $this->authorizeRelation($user, $resource, $relation, 'modify');
     }
 
     /**
-     * @param Model   $resource
-     * @param string  $relation
-     * @param string  $action
-     * @param Request $request
+     * @param User   $user
+     * @param Model  $organization
+     * @param string $relation
+     * @param string $action
      *
      * @return bool
      */
-    protected function authorizeRelation(Model $resource, string $relation, string $action, Request $request): bool
+    protected function authorizeRelation(User $user, Model $organization, string $relation, string $action): bool
     {
         $methodName = $action.Str::studly($relation);
 
         // if a specialized method is available for the relation, pass the buck to it
         if (is_callable([$this, $methodName])) {
-            return $this->$methodName($resource, $request);
+            return $this->$methodName($user, $organization);
         }
 
-        /** @var Character $character */
-        $character = Character::find($request->header(CheckCharacter::CHARACTER_HEADER));
-
-        if (!($resource instanceof Organization)) {
-            return false;
-        }
-
-        // check if the character has the permission $relation_$action
-        return $character->hasPermission(Str::snake("{$relation}_{$action}"), $resource);
+        return $user->hasCharacterWithPermission($organization, $relation, $action);
     }
 }

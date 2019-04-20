@@ -20,15 +20,15 @@ class InvoiceObserver
     /**
      * Handle to the invoice "creating" event.
      *
-     * @param \App\Invoice $invoice
+     * @param Invoice $invoice
      *
-     * @return void
+     * @throws \Exception
      */
     public function creating(Invoice $invoice)
     {
         $this->calculateTotal($invoice);
-        $this->setDueDate($invoice);
-        $this->setHardDueDate($invoice);
+        $invoice->due_date = Carbon::now()->add($invoice->issuer->dueDateInterval);
+        $invoice->hard_due_date = Carbon::now()->add($invoice->issuer->hardDueDateInterval);
         $invoice->code = 'I-'.substr(bin2hex(random_bytes(16)), 0, 16);
     }
 
@@ -44,84 +44,11 @@ class InvoiceObserver
         $total = 0;
 
         /** @var InvoiceItem $item */
-        foreach ($invoice->items as $item) {
-            $total += ($item->cost * $item->quantity);
+        foreach ($invoice->items()->get() as $item) {
+            $total += $item->total;
         }
 
         $invoice->total = $total;
-    }
-
-    /**
-     * Set the due date for the invoice based on the issuer's settings.
-     *
-     * @param Invoice $invoice
-     *
-     * @return void
-     */
-    protected function setDueDate(Invoice $invoice)
-    {
-        $issuerSettings = $invoice->issuer->settings;
-
-        if (isset($issuerSettings['invoices']['due_date']['number']) && isset($issuerSettings['invoices']['due_date']['units'])) {
-            $number = $issuerSettings['invoices']['due_date']['number'];
-            $units = $issuerSettings['invoices']['due_date']['units'];
-            switch ($units) {
-                case 'days':
-                    $invoice->due_date = Carbon::create()->addDays($number);
-
-                    return;
-
-                case 'weeks':
-                    $invoice->due_date = Carbon::create()->addWeeks($number);
-
-                    return;
-
-                case 'months':
-                    $invoice->due_date = Carbon::create()->addMonths($number);
-
-                    return;
-            }
-        }
-
-        // default is 2 weeks
-        $invoice->due_date = Carbon::create()->addWeeks(2);
-    }
-
-    /**
-     * Set the hard due date for the invoice based on the issuer's settings.
-     *
-     * @param Invoice $invoice
-     *
-     * @return void
-     */
-    protected function setHardDueDate(Invoice $invoice)
-    {
-        $issuerSettings = $invoice->issuer->settings;
-
-        if (isset($issuerSettings['invoices']['hard_due_date']['number']) &&
-            isset($issuerSettings['invoices']['hard_due_date']['units'])) {
-            $number = $issuerSettings['invoices']['hard_due_date']['number'];
-            $units = $issuerSettings['invoices']['hard_due_date']['units'];
-            switch ($units) {
-                case 'days':
-                    $invoice->hard_due_date = Carbon::create()->addDays($number);
-
-                    return;
-
-                case 'weeks':
-                    $invoice->hard_due_date = Carbon::create()->addWeeks($number);
-
-                    return;
-
-                case 'months':
-                    $invoice->hard_due_date = Carbon::create()->addMonths($number);
-
-                    return;
-            }
-        }
-
-        // default is 1 month
-        $invoice->hard_due_date = Carbon::create()->addMonth();
     }
 
     /**

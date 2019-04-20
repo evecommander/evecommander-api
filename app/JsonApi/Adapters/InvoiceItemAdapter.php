@@ -2,6 +2,9 @@
 
 namespace App\JsonApi\Adapters;
 
+use App\Invoice;
+use App\InvoiceItem;
+use App\Jobs\RecalculateInvoiceTotal;
 use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
@@ -17,14 +20,9 @@ class InvoiceItemAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'comments',
-        'invoice',
+    protected $guarded = [
+        'created-at',
+        'updated-at',
     ];
 
     /**
@@ -34,7 +32,7 @@ class InvoiceItemAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\InvoiceItem(), $paging);
+        parent::__construct(new InvoiceItem(), $paging);
     }
 
     public function comments()
@@ -45,5 +43,17 @@ class InvoiceItemAdapter extends AbstractAdapter
     public function invoice()
     {
         return $this->belongsTo();
+    }
+
+    /**
+     * Update the invoice total when an invoice item is updated.
+     *
+     * @param InvoiceItem $invoiceItem
+     */
+    protected function saved(InvoiceItem $invoiceItem)
+    {
+        /** @var Invoice $invoice */
+        $invoice = $invoiceItem->invoice()->get();
+        RecalculateInvoiceTotal::dispatch($invoice);
     }
 }

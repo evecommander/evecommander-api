@@ -18,16 +18,6 @@ class RsvpAdapter extends AbstractAdapter
     protected $attributes = [];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'fleet',
-        'character',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

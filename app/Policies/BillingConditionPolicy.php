@@ -9,20 +9,18 @@ use App\Policies\Traits\AuthorizesRelations;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class BillingConditionPolicy implements ResourcePolicyInterface
 {
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
-     * @param Request $request
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
-    public function index(User $user, string $type, Request $request): bool
+    public function index(User $user, string $type): bool
     {
         return false;
     }
@@ -30,29 +28,29 @@ class BillingConditionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the billing condition.
      *
-     * @param User    $user
-     * @param Model   $condition
-     * @param Request $request
+     * @param User  $user
+     * @param Model $condition
      *
      * @return bool
      */
-    public function read(User $user, Model $condition, Request $request): bool
+    public function read(User $user, Model $condition): bool
     {
         /* @var BillingCondition $condition */
-        return $this->authorizeRelation($condition->organization, 'billing_condition', 'read', $request);
+        return $this->readRelationship($user, $condition->organization, 'billing_condition');
     }
 
     /**
      * Determine whether the user can create billing conditions.
      *
-     * @param User    $user
-     * @param string  $type
-     * @param Request $request
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
-    public function create(User $user, string $type, Request $request): bool
+    public function create(User $user, string $type): bool
     {
+        $request = \request();
+
         // this is run before validation so reject bad requests
         if (!$request->has('organization_type') || !$request->has('organization_id')) {
             return false;
@@ -61,77 +59,46 @@ class BillingConditionPolicy implements ResourcePolicyInterface
         /** @var Organization $organization */
         $organization = $request->get('organization_type')::find($request->get('organization_id'));
 
-        return $this->authorizeRelation($organization, 'billing_condition', 'modify', $request);
+        return $this->modifyRelationship($user, $organization, 'billing_condition');
     }
 
     /**
      * Determine whether the user can update the billing condition.
      *
-     * @param User    $user
-     * @param Model   $condition
-     * @param Request $request
+     * @param User  $user
+     * @param Model $condition
      *
      * @return bool
      */
-    public function update(User $user, Model $condition, Request $request): bool
+    public function update(User $user, Model $condition): bool
     {
         /* @var BillingCondition $condition */
-        return $this->authorizeRelation($condition->organization, 'billing_condition', 'modify', $request);
+        return $this->modifyRelationship($user, $condition->organization, 'billing_condition');
     }
 
     /**
      * Determine whether the user can delete the billing condition.
      *
-     * @param User    $user
-     * @param Model   $condition
-     * @param Request $request
+     * @param User  $user
+     * @param Model $condition
      *
      * @return bool
      */
-    public function delete(User $user, Model $condition, Request $request): bool
+    public function delete(User $user, Model $condition): bool
     {
         /* @var BillingCondition $condition */
-        return $this->authorizeRelation($condition->organization, 'billing_condition', 'modify', $request);
-    }
-
-    /**
-     * Determine whether the user can read the relationship.
-     *
-     * @param User    $user
-     * @param Model   $condition
-     * @param string  $field
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function readRelationship(User $user, Model $condition, string $field, Request $request): bool
-    {
-        /* @var BillingCondition $condition */
-        return $this->authorizeRelation($condition->organization, $field, 'read', $request);
-    }
-
-    /**
-     * Determine whether the user can modify the relationship.
-     *
-     * @param User    $user
-     * @param Model   $condition
-     * @param string  $field
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function modifyRelationship(User $user, Model $condition, string $field, Request $request): bool
-    {
-        /* @var BillingCondition $condition */
-        return $this->authorizeRelation($condition->organization, $field, 'modify', $request);
+        return $this->modifyRelationship($user, $condition->organization, 'billing_condition');
     }
 
     /**
      * Determine whether the user can read the organization relation.
      *
+     * @param User         $user
+     * @param Organization $organization
+     *
      * @return bool
      */
-    public function readOrganization(Organization $organization, Request $request)
+    public function readOrganization(User $user, Organization $organization)
     {
         return true;
     }
@@ -139,9 +106,12 @@ class BillingConditionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can modify the organization relation.
      *
+     * @param User         $user
+     * @param Organization $organization
+     *
      * @return bool
      */
-    public function modifyOrganization(Organization $organization, Request $request)
+    public function modifyOrganization(User $user, Organization $organization)
     {
         return false;
     }
@@ -149,52 +119,52 @@ class BillingConditionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can read the discounts relation.
      *
+     * @param User         $user
      * @param Organization $organization
-     * @param Request      $request
      *
      * @return bool
      */
-    public function readDiscounts(Organization $organization, Request $request)
+    public function readDiscounts(User $user, Organization $organization)
     {
-        return $this->authorizeRelation($organization, 'billing_condition', 'read', $request);
+        return $this->readRelationship($user, $organization, 'billing_condition');
     }
 
     /**
      * Determine whether the user can modify the discounts relation.
      *
+     * @param User         $user
      * @param Organization $organization
-     * @param Request      $request
      *
      * @return bool
      */
-    public function modifyDiscounts(Organization $organization, Request $request)
+    public function modifyDiscounts(User $user, Organization $organization)
     {
-        return $this->authorizeRelation($organization, 'billing_condition', 'modify', $request);
+        return $this->modifyRelationship($user, $organization, 'billing_condition');
     }
 
     /**
      * Determine whether the user can read the membership fees relation.
      *
+     * @param User         $user
      * @param Organization $organization
-     * @param Request      $request
      *
      * @return bool
      */
-    public function readMembershipFees(Organization $organization, Request $request)
+    public function readMembershipFees(User $user, Organization $organization)
     {
-        return $this->authorizeRelation($organization, 'billing_condition', 'read', $request);
+        return $this->readRelationship($user, $organization, 'billing_condition');
     }
 
     /**
      * Determine whether the user can modify the membership fees relation.
      *
+     * @param User         $user
      * @param Organization $organization
-     * @param Request      $request
      *
      * @return bool
      */
-    public function modifyMembershipFees(Organization $organization, Request $request)
+    public function modifyMembershipFees(User $user, Organization $organization)
     {
-        return $this->authorizeRelation($organization, 'billing_condition', 'modify', $request);
+        return $this->modifyRelationship($user, $organization, 'billing_condition');
     }
 }

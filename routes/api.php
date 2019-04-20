@@ -1,8 +1,8 @@
 <?php
 
 use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
-use CloudCreativity\LaravelJsonApi\Routing\ApiGroup;
-use Illuminate\Contracts\Routing\Registrar;
+use CloudCreativity\LaravelJsonApi\Routing\RelationshipsRegistration;
+use CloudCreativity\LaravelJsonApi\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
@@ -19,278 +19,261 @@ use Illuminate\Support\Facades\Route;
 
 Broadcast::routes();
 
-Route::post('login', 'AuthController@login');
+Route::post('/users/forgot-password', 'Api\\UserController@sendResetLinkEmail');
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+Route::post('/users/reset-password', 'Api\\UserController@reset');
 
-    Route::get('characters/callback', 'Api\\CharacterController@callback')
-        ->middleware('auth.callback');
-    Route::get('characters/{character}/refresh', 'Api\\CharacterController@refreshToken')
-        ->middleware('json-api.auth:default');
+Route::get('characters/callback', 'Api\\CharacterController@callback')
+    ->middleware('auth.callback');
 
-    JsonApi::register('v1', [
-        'namespace'  => 'Api',
-        'middleware' => 'json-api.auth:default',
-    ], function (ApiGroup $api, Registrar $router) {
-        $api->resource('users', [
-            'except' => [
-                'index',
-                'create',
-            ],
-            'has-many' => [
-                'characters',
-                'notifications',
-            ],
-        ]);
+Route::get('me', 'AuthController@me')->middleware('auth:api');
 
-        $api->resource('characters', [
-            'controller' => true,
-            'has-one'    => [
-                'user'        => ['except' => 'replace'],
-                'token'       => ['except' => 'replace', 'inverse' => 'oauth2-tokens'],
-                'corporation' => ['except' => ['replace']],
-            ],
-            'has-many' => [
-                'comments',
-                'invoices',
-                'notifications',
-            ],
-        ]);
+JsonApi::register('v1', [
+    'namespace'  => 'Api',
+    'middleware' => 'json-api.auth:default',
+], function (RouteRegistrar $api) {
+    $api->resource('users')
+        ->controller()
+        ->except('index')
+        ->relationships(function (RelationshipsRegistration $relations) {
+            $relations->hasMany('characters');
+            $relations->hasMany('notifications');
+        });
+
+    Route::group(['middleware' => 'auth:api'], function () use ($api) {
+        $api->resource('characters')
+            ->controller()
+            ->relationships(function (RelationshipsRegistration $relations) {
+                $relations->hasOne('user')->except('replace');
+                $relations->hasOne('token', 'oauth2-tokens')->except('replace');
+                $relations->hasOne('corporation')->readOnly();
+
+                $relations->hasMany('comments');
+                $relations->hasMany('invoices');
+                $relations->hasMany('notifications');
+                $relations->hasMany('memberships');
+            });
 
         // All of these routes must have a X-Character header to tell what character is making the request
         Route::group(['middleware' => 'character'], function () use ($api) {
-            $api->resource('corporations', [
-                'has-one' => [
-                    'defaultMembershipLevel',
-                ],
-                'has-many' => [
-                    'handbooks',
-                    'members',
-                    'membershipLevels',
-                    'memberships',
-                    'alliance'   => ['except' => ['replace']],
-                    'characters' => ['only' => ['related', 'read']],
-                    'replacementClaims',
-                    'invoices',
-                    'receivedInvoices',
-                    'notifications',
-                ],
-            ]);
+            $api->resource('corporations')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('default-membership-level', 'membership-levels');
 
-            $api->resource('alliances', [
-                'has-one' => [
-                    'defaultMembershipLevel',
-                ],
-                'has-many' => [
-                    'handbooks',
-                    'members',
-                    'membershipLevels',
-                    'memberships',
-                    'coalition' => ['except' => ['replace']],
-                    'replacementClaims',
-                    'invoices',
-                    'receivedInvoices',
-                    'notifications',
-                    'corporations' => ['only' => ['related', 'read']],
-                ],
-            ]);
+                    $relations->hasMany('handbooks');
+                    $relations->hasMany('members', 'memberships');
+                    $relations->hasMany('membership-levels');
+                    $relations->hasMany('memberships');
+                    $relations->hasMany('alliance')->readOnly();
+                    $relations->hasMany('characters')->readOnly();
+                    $relations->hasMany('replacement-claims');
+                    $relations->hasMany('invoices');
+                    $relations->hasMany('received-invoices', 'invoices');
+                    $relations->hasMany('notifications');
+                });
 
-            $api->resource('coalitions', [
-                'has-one' => [
-                    'defaultMembershipLevel',
-                    'leader',
-                ],
-                'has-many' => [
-                    'handbooks',
-                    'members',
-                    'membershipLevels',
-                    'memberships',
-                    'replacementClaims',
-                    'invoices',
-                    'receivedInvoices',
-                    'notifications',
-                    'alliances' => ['only' => ['related', 'read']],
-                ],
-            ]);
+            $api->resource('alliances')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('default-membership-level', 'membership-levels');
 
-            $api->resource('billing-conditions', [
-                'has-one' => [
-                    'organization',
-                ],
-                'has-many' => [
-                    'discounts',
-                    'membershipFees',
-                ],
-            ]);
+                    $relations->hasMany('handbooks');
+                    $relations->hasMany('members', 'memberships');
+                    $relations->hasMany('membership-levels');
+                    $relations->hasMany('memberships');
+                    $relations->hasMany('coalition')->readOnly();
+                    $relations->hasMany('corporations')->readOnly();
+                    $relations->hasMany('replacement-claims');
+                    $relations->hasMany('invoices');
+                    $relations->hasMany('received-invoices', 'invoices');
+                    $relations->hasMany('notifications');
+                });
 
-            $api->resource('comments', [
-                'has-one' => [
-                    'character',
-                    'commentable',
-                ],
-                'has-many' => [
-                    'comments',
-                ],
-            ]);
+            $api->resource('coalitions')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('default-membership-level', 'membership-levels');
+                    $relations->hasOne('leader', 'characters');
 
-            $api->resource('discounts', [
-                'has-one' => [
-                    'organization',
-                    'billingCondition',
-                ],
-            ]);
+                    $relations->hasMany('handbooks');
+                    $relations->hasMany('members', 'memberships');
+                    $relations->hasMany('membership-levels');
+                    $relations->hasMany('memberships');
+                    $relations->hasMany('alliances')->readOnly();
+                    $relations->hasMany('replacement-claims');
+                    $relations->hasMany('invoices');
+                    $relations->hasMany('received-invoices', 'invoices');
+                    $relations->hasMany('notifications');
+                });
 
-            $api->resource('doctrines', [
-                'has-one' => [
-                    'organization',
-                    'createdBy',
-                    'lastUpdatedBy',
-                ],
-                'has-many' => [
-                    'fittings',
-                ],
-            ]);
+            $api->resource('billing-conditions')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
 
-            $api->resource('fittings', [
-                'has-one' => [
-                    'organization',
-                    'doctrine',
-                ],
-                'has-many' => [
-                    'replacementClaims',
-                ],
-            ]);
+                    $relations->hasMany('discounts');
+                    $relations->hasMany('membership-fees');
+                });
 
-            $api->resource('fleets', [
-                'has-one' => [
-                    'fleetType',
-                    'organization',
-                    'createdBy',
-                    'lastUpdatedBy',
-                ],
-                'has-many' => [
-                    'comments',
-                    'notifications',
-                ],
-            ]);
+            $api->resource('comments')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('character');
+                    $relations->hasOne('commentable'); // TODO: find out how to route for polymorphic relations
 
-            $api->resource('fleet-types', [
-                'has-one' => [
-                    'organization',
-                ],
-                'has-many' => [
-                    'fleets',
-                ],
-            ]);
+                    $relations->hasMany('comments');
+                });
 
-            $api->resource('handbooks', [
-                'has-one' => [
-                    'organization',
-                    'createdBy',
-                    'lastUpdatedBy',
-                ],
-            ]);
+            $api->resource('discounts')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('billing-condition');
+                });
 
-            $api->resource('invoices', [
-                'has-one' => [
-                    'issuer',
-                    'recipient',
-                    'lastUpdatedBy',
-                ],
-                'has-many' => [
-                    'items',
-                    'payments',
-                    'comments',
-                    'notifications',
-                ],
-            ]);
+            $api->resource('doctrines')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('created-by', 'characters');
+                    $relations->hasOne('last-updated-by', 'characters');
 
-            $api->resource('invoice-items', [
-                'has-one' => [
-                    'invoice',
-                ],
-                'has-many' => [
-                    'comments',
-                ],
-            ]);
+                    $relations->hasMany('fittings');
+                });
 
-            $api->resource('memberships', [
-                'has-one' => [
-                    'membershipLevel',
-                    'organization',
-                    'member',
-                    'createdBy',
-                    'lastUpdatedBy',
-                ],
-                'has-many' => [
-                    'notifications',
-                ],
-            ]);
+            $api->resource('fittings')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('doctrine');
 
-            $api->resource('membership-fees', [
-                'has-one' => [
-                    'organization',
-                ],
-                'has-many' => [
-                    'billingConditions',
-                ],
-            ]);
+                    $relations->hasMany('replacement-claims');
+                });
 
-            $api->resource('membership-levels', [
-                'has-one' => [
-                    'organization',
-                    'createdBy',
-                    'lastUpdatedBy',
-                ],
-                'has-many' => [
-                    'memberships',
-                ],
-            ]);
+            $api->resource('fleets')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('fleet-type');
+                    $relations->hasOne('created-by', 'characters');
+                    $relations->hasOne('last-updated-by', 'characters');
 
-            $api->resource('permissions', [
-                'has-many' => [
-                    'membershipLevels',
-                ],
-            ]);
+                    $relations->hasMany('comments');
+                    $relations->hasMany('notifications');
+                });
 
-            $api->resource('replacement-claims', [
-                'has-one' => [
-                    'character',
-                    'organization',
-                ],
-                'has-many' => [
-                    'comments',
-                    'notifications',
-                ],
-            ]);
+            $api->resource('fleet-members')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('fleet')->readOnly();
+                    $relations->hasOne('wing')->readOnly();
+                    $relations->hasOne('squad')->readOnly();
+                })->readOnly();
 
-            $api->resource('roles', [
-                'has-one' => [
-                    'organization',
-                ],
-                'has-many' => [
-                    'permissions',
-                    'characters',
-                    'membershipLevels',
-                ],
-            ]);
+            $api->resource('fleet-types')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
 
-            $api->resource('rsvps', [
-                'has-one' => [
-                    'fleet',
-                    'character',
-                ],
-            ]);
+                    $relations->hasMany('fleets');
+                });
 
-            $api->resource('subscriptions', [
-                'has-one' => [
-                    'character',
-                    'organization',
-                ],
-            ]);
+            $api->resource('handbooks')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('created-by', 'characters');
+                    $relations->hasOne('last-updated-by', 'characters');
+                });
+
+            $api->resource('invoices')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('issuer'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('recipient'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('last-updated-by', 'characters');
+
+                    $relations->hasMany('items');
+                    $relations->hasMany('payments')->readOnly();
+                    $relations->hasMany('comments');
+                    $relations->hasMany('notifications');
+                });
+
+            $api->resource('invoice-items')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('invoice');
+
+                    $relations->hasMany('comments');
+                });
+
+            $api->resource('memberships')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('membership-level');
+                    $relations->hasOne('member'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('created-by', 'characters');
+                    $relations->hasOne('last-updated-by', 'characters');
+
+                    $relations->hasMany('notifications');
+                });
+
+            $api->resource('membership-fees')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
+
+                    $relations->hasMany('billing-conditions');
+                });
+
+            $api->resource('membership-levels')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('created-by', 'characters');
+                    $relations->hasOne('last-updated-by', 'characters');
+
+                    $relations->hasMany('memberships');
+                });
+
+            $api->resource('permissions')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasMany('membership-levels');
+                })->readOnly();
+
+            $api->resource('queue-jobs')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('resource'); // TODO: find out how to route for polymorphic relations
+                })->readOnly();
+
+            $api->resource('replacement-claims')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('character');
+
+                    $relations->hasMany('comments');
+                    $relations->hasMany('notifications');
+                });
+
+            $api->resource('roles')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
+
+                    $relations->hasMany('permissions');
+                    $relations->hasMany('characters');
+                    $relations->hasMany('membership-levels');
+                });
+
+            $api->resource('rsvps')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('fleet');
+                    $relations->hasOne('character');
+                });
+
+            $api->resource('squads')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('wing')->readOnly();
+
+                    $relations->hasMany('members')->readOnly();
+                })->readOnly();
+
+            $api->resource('subscriptions')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('character');
+                });
+
+            $api->resource('wings')
+                ->relationships(function (RelationshipsRegistration $relations) {
+                    $relations->hasOne('fleet')->readOnly();
+
+                    $relations->hasMany('squads')->readOnly();
+                })->readOnly();
         });
     });
 });

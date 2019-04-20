@@ -18,16 +18,6 @@ class PermissionAdapter extends AbstractAdapter
     protected $attributes = [];
 
     /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'membershipLevels',
-        'roles',
-    ];
-
-    /**
      * Adapter constructor.
      *
      * @param StandardStrategy $paging

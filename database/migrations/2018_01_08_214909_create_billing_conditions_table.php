@@ -15,14 +15,17 @@ class CreateBillingConditionsTable extends Migration
     {
         Schema::create('billing_conditions', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->uuid('billing_condition_group_id')->index()->nullable();
             $table->uuid('organization_id')->index();
             $table->string('organization_type')->index();
             $table->string('name');
             $table->text('description');
-            $table->enum('type', ['joining', 'exit', 'min_members', 'max_members', 'min_amount', 'max_amount']);
+            $table->enum('type', ['joining', 'exiting', 'min_members', 'max_members']);
             $table->unsignedInteger('quantity')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
+
+            $table->foreign('billing_condition_group_id')->references('id')->on('billing_condition_groups');
         });
 
         // add trigger to new table

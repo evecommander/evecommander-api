@@ -3,18 +3,18 @@
 namespace App\Policies\Traits;
 
 use App\Abstracts\Organization;
-use Illuminate\Http\Request;
+use App\User;
 
 trait AuthorizesMembershipsRelation
 {
     /**
+     * @param User         $user
      * @param Organization $organization
-     * @param Request      $request
      *
      * @return bool
      */
-    public function modifyMembers(Organization $organization, Request $request)
+    public function modifyMembers(User $user, Organization $organization)
     {
-        return $this->authorizeRelation($organization, 'memberships', 'modify', $request);
+        return $this->modifyRelationship($user, $organization, 'memberships');
     }
 }

@@ -9,20 +9,18 @@ use App\Policies\Traits\AuthorizesRelations;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class FleetTypePolicy implements ResourcePolicyInterface
 {
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
-     * @param Request $request
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
-    public function index(User $user, string $type, Request $request): bool
+    public function index(User $user, string $type): bool
     {
         return false;
     }
@@ -30,29 +28,29 @@ class FleetTypePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the fleet type.
      *
-     * @param User    $user
-     * @param Model   $fleetType
-     * @param Request $request
+     * @param User  $user
+     * @param Model $fleetType
      *
      * @return bool
      */
-    public function read(User $user, Model $fleetType, Request $request): bool
+    public function read(User $user, Model $fleetType): bool
     {
         /* @var FleetType $fleetType */
-        return $this->authorizeRelation($fleetType->organization, 'fleet_types', 'read', $request);
+        return $this->readRelationship($user, $fleetType->organization, 'fleet_types');
     }
 
     /**
      * Determine whether the user can create fleet types.
      *
-     * @param User    $user
-     * @param string  $type
-     * @param Request $request
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
-    public function create(User $user, string $type, Request $request): bool
+    public function create(User $user, string $type): bool
     {
+        $request = \request();
+
         // this is run before validation so reject bad requests
         if (!$request->has('organization_type') || !$request->has('organization_id')) {
             return false;
@@ -61,79 +59,77 @@ class FleetTypePolicy implements ResourcePolicyInterface
         /** @var Organization $organization */
         $organization = $request->get('organization_type')::find($request->get('organization_id'));
 
-        return $this->authorizeRelation($organization, 'fleet_types', 'modify', $request);
+        return $this->modifyRelationship($user, $organization, 'fleet_types');
     }
 
     /**
      * Determine whether the user can update the fleet type.
      *
-     * @param User    $user
-     * @param Model   $fleetType
-     * @param Request $request
+     * @param User  $user
+     * @param Model $fleetType
      *
      * @return bool
      */
-    public function update(User $user, Model $fleetType, Request $request): bool
+    public function update(User $user, Model $fleetType): bool
     {
         /* @var FleetType $fleetType */
-        return $this->authorizeRelation($fleetType->organization, 'fleet_types', 'modify', $request);
+        return $this->modifyRelationship($user, $fleetType->organization, 'fleet_types');
     }
 
     /**
      * Determine whether the user can delete the fleet type.
      *
-     * @param User    $user
-     * @param Model   $fleetType
-     * @param Request $request
+     * @param User  $user
+     * @param Model $fleetType
      *
      * @return bool
      */
-    public function delete(User $user, Model $fleetType, Request $request): bool
+    public function delete(User $user, Model $fleetType): bool
     {
         /* @var FleetType $fleetType */
-        return $this->authorizeRelation($fleetType->organization, 'fleet_types', 'modify', $request);
+        return $this->modifyRelationship($user, $fleetType->organization, 'fleet_types');
     }
 
     /**
+     * @param User      $user
      * @param FleetType $fleetType
-     * @param Request   $request
      *
      * @return bool
      */
-    public function readOrganization(FleetType $fleetType, Request $request): bool
+    public function readOrganization(User $user, FleetType $fleetType): bool
     {
-        return $request->user()->can('read', [$fleetType->organization, $request]);
+        return $user->can('read', [$fleetType->organization]);
     }
 
     /**
+     * @param User      $user
      * @param FleetType $fleetType
-     * @param Request   $request
      *
      * @return bool
      */
-    public function modifyOrganization(FleetType $fleetType, Request $request): bool
+    public function modifyOrganization(User $user, FleetType $fleetType): bool
     {
         return false;
     }
 
     /**
+     * @param User      $user
      * @param FleetType $fleetType
-     * @param Request   $request
      *
      * @return bool
      */
-    public function readFleets(FleetType $fleetType, Request $request): bool
+    public function readFleets(User $user, FleetType $fleetType): bool
     {
-        return $request->user()->can('read', [$fleetType->organization, $request]);
+        return $user->can('read', [$fleetType->organization]);
     }
 
     /**
+     * @param User      $user
      * @param FleetType $fleetType
-     * @param Request   $request
      *
      * @return bool
      */
-    public function modifyFleets(FleetType $fleetType, Request $request): bool
+    public function modifyFleets(User $user, FleetType $fleetType): bool
     {
         return false;
     }

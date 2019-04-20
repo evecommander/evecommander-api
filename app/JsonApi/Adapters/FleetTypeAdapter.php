@@ -17,14 +17,9 @@ class FleetTypeAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'fleets',
-        'organization',
+    protected $guarded = [
+        'created-at',
+        'updated-at',
     ];
 
     /**

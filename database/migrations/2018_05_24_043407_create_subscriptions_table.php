@@ -18,7 +18,7 @@ class CreateSubscriptionsTable extends Migration
             $table->uuid('character_id')->index();
             $table->uuid('organization_id')->index();
             $table->string('organization_type')->index();
-            $table->string('notification')->index();
+            $table->string('notification_type')->index();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 

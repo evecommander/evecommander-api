@@ -17,7 +17,7 @@ class CreateRsvpsTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('fleet_id');
             $table->uuid('character_id');
-            $table->enum('response', [1, 0, -1]);
+            $table->enum('response', ['yes', 'maybe', 'pending', 'no']);
             $table->text('notes');
             $table->boolean('confirmed');
             $table->text('confirmation_notes');

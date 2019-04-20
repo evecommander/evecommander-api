@@ -84,7 +84,10 @@ class FleetObserver
     {
         $rsvps = $fleet->rsvps()
             ->with('character.user')
-            ->where('response', '>=', 0)
+            ->whereIn('response', [
+                Rsvp::RESPONSE_YES,
+                Rsvp::RESPONSE_MAYBE,
+            ])
             ->get();
 
         $notifiables = $rsvps->map(function (Rsvp $rsvp) use ($fleet) {

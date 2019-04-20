@@ -8,20 +8,18 @@ use App\Policies\Traits\AuthorizesRelations;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class PermissionPolicy implements ResourcePolicyInterface
 {
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
-     * @param Request $request
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
-    public function index(User $user, string $type, Request $request): bool
+    public function index(User $user, string $type): bool
     {
         return false;
     }
@@ -29,13 +27,12 @@ class PermissionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the permission.
      *
-     * @param User    $user
-     * @param Model   $permission
-     * @param Request $request
+     * @param User  $user
+     * @param Model $permission
      *
      * @return bool
      */
-    public function read(User $user, Model $permission, Request $request): bool
+    public function read(User $user, Model $permission): bool
     {
         return true;
     }
@@ -43,13 +40,12 @@ class PermissionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create permissions.
      *
-     * @param User    $user
-     * @param string  $type
-     * @param Request $request
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
-    public function create(User $user, string $type, Request $request): bool
+    public function create(User $user, string $type): bool
     {
         return false;
     }
@@ -57,13 +53,12 @@ class PermissionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the permission.
      *
-     * @param User    $user
-     * @param Model   $permission
-     * @param Request $request
+     * @param User  $user
+     * @param Model $permission
      *
      * @return bool
      */
-    public function update(User $user, Model $permission, Request $request): bool
+    public function update(User $user, Model $permission): bool
     {
         return false;
     }
@@ -71,57 +66,56 @@ class PermissionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the permission.
      *
-     * @param User    $user
-     * @param Model   $permission
-     * @param Request $request
+     * @param User  $user
+     * @param Model $permission
      *
      * @return bool
      */
-    public function delete(User $user, Model $permission, Request $request): bool
+    public function delete(User $user, Model $permission): bool
     {
         return false;
     }
 
     /**
+     * @param User       $user
      * @param Permission $permission
-     * @param Request    $request
      *
      * @return bool
      */
-    public function readMembershipLevels(Permission $permission, Request $request): bool
+    public function readMembershipLevels(User $user, Permission $permission): bool
     {
         return false;
     }
 
     /**
+     * @param User       $user
      * @param Permission $permission
-     * @param Request    $request
      *
      * @return bool
      */
-    public function modifyMembershipLevels(Permission $permission, Request $request): bool
+    public function modifyMembershipLevels(User $user, Permission $permission): bool
     {
         return false;
     }
 
     /**
+     * @param User       $user
      * @param Permission $permission
-     * @param Request    $request
      *
      * @return bool
      */
-    public function readRoles(Permission $permission, Request $request): bool
+    public function readRoles(User $user, Permission $permission): bool
     {
         return false;
     }
 
     /**
+     * @param User       $user
      * @param Permission $permission
-     * @param Request    $request
      *
      * @return bool
      */
-    public function modifyRoles(Permission $permission, Request $request): bool
+    public function modifyRoles(User $user, Permission $permission): bool
     {
         return false;
     }

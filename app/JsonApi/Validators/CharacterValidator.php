@@ -2,10 +2,9 @@
 
 namespace App\JsonApi\Validators;
 
-use CloudCreativity\LaravelJsonApi\Contracts\Validators\RelationshipsValidatorInterface;
-use CloudCreativity\LaravelJsonApi\Validators\AbstractValidatorProvider;
+use CloudCreativity\LaravelJsonApi\Validation\AbstractValidators;
 
-class CharacterValidator extends AbstractValidatorProvider
+class CharacterValidator extends AbstractValidators
 {
     /**
      * @var string
@@ -13,42 +12,48 @@ class CharacterValidator extends AbstractValidatorProvider
     protected $resourceType = 'characters';
 
     /**
-     * Get the validation rules for the resource attributes.
+     * The include paths a client is allowed to request.
      *
-     * @param object|null $record
-     *                            the record being updated, or null if it is a create request.
+     * @var string[]|null
+     *                    the allowed paths, an empty array for none allowed, or null to allow all paths.
+     */
+    protected $allowedIncludePaths = null;
+
+    /**
+     * The sort field names a client is allowed send.
+     *
+     * @var string[]|null
+     *                    the allowed fields, an empty array for none allowed, or null to allow all fields.
+     */
+    protected $allowedSortParameters = [
+        'name',
+        'created-at',
+    ];
+
+    /**
+     * Get resource validation rules.
+     *
+     * @param mixed|null $record
+     *                           the record being updated, or null if creating a resource.
      *
      * @return array
      */
-    protected function attributeRules($record = null)
+    protected function rules($record = null): array
     {
         return [
-            //
+            // not editable in API
         ];
     }
 
     /**
-     * Define the validation rules for the resource relationships.
+     * Get query parameter validation rules.
      *
-     * @param RelationshipsValidatorInterface $relationships
-     * @param object|null                     $record
-     *                                                       the record being updated, or null if it is a create request.
-     *
-     * @return void
+     * @return array
      */
-    protected function relationshipRules(RelationshipsValidatorInterface $relationships, $record = null)
+    protected function queryRules(): array
     {
-        $relationships->hasOne('user', 'users', true);
-        $relationships->hasOne('token', 'oauth2-tokens', true);
-        $relationships->hasMany('comments', 'comments');
-        $relationships->hasMany('memberships', 'memberships');
-        $relationships->hasMany('invoices', 'invoices');
-        $relationships->hasMany('fulfilledInvoices', 'invoices');
-        $relationships->hasMany('overdueInvoices', 'invoices');
-        $relationships->hasMany('pendingInvoices', 'invoices');
-        $relationships->hasMany('defaultInvoices', 'invoices');
-        $relationships->hasMany('notifications', 'notifications');
-        $relationships->hasMany('readNotifications', 'notifications');
-        $relationships->hasMany('unreadNotifications', 'notifications');
+        return [
+            //
+        ];
     }
 }

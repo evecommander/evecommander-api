@@ -59,7 +59,7 @@ class CharacterSchema extends SchemaProvider
                 },
             ],
 
-            'replacementClaims' => [
+            'replacement-claims' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {

@@ -19,29 +19,10 @@ class CorporationAdapter extends AbstractAdapter
     protected $attributes = [];
 
     protected $guarded = [
+        'created-at',
+        'updated-at',
         'alliance',
         'characters',
-    ];
-
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'handbooks',
-        'members',
-        'defaultMembershipLevel',
-        'membershipLevels',
-        'memberships',
-        'alliance',
-        'characters',
-        'replacementClaims',
-        'invoices',
-        'receivedInvoices',
-        'notifications',
-        'roles',
-        'subscriptions',
     ];
 
     /**
@@ -98,7 +79,7 @@ class CorporationAdapter extends AbstractAdapter
         return $this->hasMany();
     }
 
-    public function invoices()
+    public function issuedInvoices()
     {
         return $this->hasMany();
     }
@@ -119,6 +100,26 @@ class CorporationAdapter extends AbstractAdapter
     }
 
     public function subscriptions()
+    {
+        return $this->hasMany();
+    }
+
+    public function fleets()
+    {
+        return $this->hasMany();
+    }
+
+    public function fleetTypes()
+    {
+        return $this->hasMany();
+    }
+
+    public function billingConditions()
+    {
+        return $this->hasMany();
+    }
+
+    public function billingConditionGroups()
     {
         return $this->hasMany();
     }

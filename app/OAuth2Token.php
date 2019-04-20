@@ -24,6 +24,10 @@ class OAuth2Token extends Model
 {
     use UuidTrait;
 
+    protected $hidden = [
+        'refresh_token', // the client is forced to have the server refresh the token on it's behalf
+    ];
+
     /**
      * Get the character that owns this OAuth2Token.
      *
@@ -32,5 +36,27 @@ class OAuth2Token extends Model
     public function character()
     {
         return $this->belongsTo(Character::class);
+    }
+
+    /**
+     * Accessor for Refresh Token field.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getRefreshTokenAttribute($value)
+    {
+        return decrypt($value, false);
+    }
+
+    /**
+     * Mutator for Refresh Token field.
+     *
+     * @param $value
+     */
+    public function setRefreshTokenAttribute($value)
+    {
+        $this->attributes['refresh_token'] = encrypt($value, false);
     }
 }

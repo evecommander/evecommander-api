@@ -6,6 +6,7 @@ use App\JsonApi\FiltersResources;
 use App\ReplacementClaim;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
+use Illuminate\Support\Facades\Auth;
 
 class ReplacementClaimAdapter extends AbstractAdapter
 {
@@ -18,19 +19,8 @@ class ReplacementClaimAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    protected $guarded = [];
-
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'character',
-        'organization',
-        'comments',
-        'notifications',
-        'lastUpdatedBy',
+    protected $guarded = [
+        'last-updated-by',
     ];
 
     /**
@@ -66,5 +56,14 @@ class ReplacementClaimAdapter extends AbstractAdapter
     public function lastUpdatedBy()
     {
         return $this->belongsTo();
+    }
+
+    protected function updating(ReplacementClaim $replacementClaim)
+    {
+        $replacementClaim->lastUpdatedBy()->associate(Auth::user());
+    }
+
+    protected function creating(ReplacementClaim $replacementClaim)
+    {
     }
 }

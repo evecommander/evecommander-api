@@ -2,10 +2,8 @@
 
 namespace App;
 
-use App\Abstracts\Organization;
-use App\Traits\ModifiesAmounts;
+use App\Abstracts\ModifiedAmounts;
 use App\Traits\UuidTrait;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
@@ -14,37 +12,16 @@ use Illuminate\Support\Carbon;
  * @property string id
  * @property string organization_id
  * @property string organization_type
- * @property string billing_condition_id
+ * @property string conditional_id
+ * @property string conditional_type
+ * @property string name
+ * @property string description
  * @property string amount_type
  * @property float amount
  * @property Carbon created_at
  * @property Carbon updated_at
- *
- * Relationships
- * @property Organization organization
- * @property BillingCondition billingCondition
  */
-class Discount extends Model
+class Discount extends ModifiedAmounts
 {
-    use ModifiesAmounts, UuidTrait;
-
-    /**
-     * Get the relation between this discount and the organization that owns it.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function organization()
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * Get relation between this discount and the billing condition that belongs to it.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function billingCondition()
-    {
-        return $this->belongsTo(BillingCondition::class);
-    }
+    use UuidTrait;
 }

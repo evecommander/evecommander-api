@@ -14,13 +14,14 @@ class CreateCharactersTable extends Migration
     public function up()
     {
         Schema::create('characters', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('id');
             $table->uuid('user_id');
             $table->unsignedInteger('api_id');
             $table->string('name');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 
+            $table->primary('id');
             $table->foreign('user_id')->references('id')->on('users');
         });
 

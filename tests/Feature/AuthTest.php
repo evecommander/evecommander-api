@@ -47,7 +47,7 @@ class AuthTest extends TestCase
     {
         $userInfo = $this->getSampleUser();
 
-        $this->post('/me', [], [
+        $this->get('/auth/me', [], [
             'authorization' => "bearer {$userInfo['token']}",
         ])
             ->assertOk()
@@ -63,7 +63,7 @@ class AuthTest extends TestCase
     {
         $userInfo = $this->getSampleUser();
 
-        $this->post('/refresh', [], [
+        $this->post('/auth/refresh', [], [
             'authorization' => "bearer {$userInfo['token']}",
         ])
             ->assertOk()
@@ -81,7 +81,7 @@ class AuthTest extends TestCase
     {
         $userInfo = $this->getSampleUser();
 
-        $this->post('/logout', [], [
+        $this->post('/auth/logout', [], [
             'authorization' => "bearer {$userInfo['token']}",
         ])
             ->assertOk()

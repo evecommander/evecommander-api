@@ -19,9 +19,8 @@ use App\Observers\MembershipObserver;
 use App\Observers\ReplacementClaimObserver;
 use App\ReplacementClaim;
 use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
-use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Horizon\Horizon;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,10 +32,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         JsonApi::defaultApi('v1');
-
-        Horizon::auth(function (Request $request) {
-            return $request->user()->is_admin;
-        });
 
         // register model observers
         Comment::observe(CommentObserver::class);
@@ -56,6 +51,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Passport::ignoreMigrations();
     }
 }

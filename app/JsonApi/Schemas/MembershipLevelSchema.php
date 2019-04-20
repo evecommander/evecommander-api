@@ -69,19 +69,19 @@ class MembershipLevelSchema extends SchemaProvider
                 },
             ],
 
-            'createdBy' => [
+            'created-by' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset($includeRelationships['createdBy']),
+                self::SHOW_DATA    => isset($includeRelationships['created-by']),
                 self::DATA         => function () use ($resource) {
                     return $resource->createdBy;
                 },
             ],
 
-            'lastUpdatedBy' => [
+            'last-updated-by' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset($includeRelationships['lastUpdatedBy']),
+                self::SHOW_DATA    => isset($includeRelationships['last-updated-by']),
                 self::DATA         => function () use ($resource) {
                     return $resource->lastUpdatedBy;
                 },
@@ -93,6 +93,26 @@ class MembershipLevelSchema extends SchemaProvider
                 self::META         => function () use ($resource) {
                     return [
                         'count' => $resource->roles->count(),
+                    ];
+                },
+            ],
+
+            'membership-fees' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->membershipFees->count(),
+                    ];
+                },
+            ],
+
+            'discounts' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->discounts->count(),
                     ];
                 },
             ],

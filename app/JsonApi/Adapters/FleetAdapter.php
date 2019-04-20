@@ -6,6 +6,7 @@ use App\Fleet;
 use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
+use Illuminate\Support\Facades\Auth;
 
 class FleetAdapter extends AbstractAdapter
 {
@@ -18,21 +19,10 @@ class FleetAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
-    protected $guarded = [];
-
-    /**
-     * Resource relationship fields that can be filled.
-     *
-     * @var array
-     */
-    protected $relationships = [
-        'fleetType',
-        'organization',
-        'createdBy',
-        'lastUpdatedBy',
-        'comments',
-        'notifications',
-        'rsvps',
+    protected $guarded = [
+        'api-id',
+        'created-by',
+        'last-updated-by',
     ];
 
     /**
@@ -78,5 +68,35 @@ class FleetAdapter extends AbstractAdapter
     public function rsvps()
     {
         return $this->hasMany();
+    }
+
+    public function trackerCharacter()
+    {
+        return $this->belongsTo();
+    }
+
+    public function members()
+    {
+        return $this->hasMany();
+    }
+
+    public function wings()
+    {
+        return $this->hasMany();
+    }
+
+    public function squads()
+    {
+        return $this->hasMany();
+    }
+
+    protected function creating(Fleet $fleet)
+    {
+        $fleet->createdBy()->associate(Auth::user());
+    }
+
+    protected function updating(Fleet $fleet)
+    {
+        $fleet->lastUpdatedBy()->associate(Auth::user());
     }
 }

@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
  * @property string id
  * @property string name
  * @property string description
+ * @property string icon
  * @property string organization_id
  * @property string organization_type
  * @property Carbon created_at

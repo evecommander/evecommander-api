@@ -47,7 +47,7 @@ export PGSQL_PORT=${PGSQL_PORT:-5432}
 export WWWUSER=${WWWUSER:-$UID}
 
 # Is the environment running
-PSRESULT="$(docker-compose ps -q)"
+PSRESULT="$(docker-compose -f ./docker/dev/docker-compose.yml ps -q)"
 if [ ! -z "$PSRESULT" ]; then
     EXEC="yes"
 else

@@ -42,6 +42,7 @@ class InvoiceSchema extends SchemaProvider
             'hard-due-date' => $resource->hard_due_date->toIso8601String(),
             'created-at'    => $resource->created_at->toIso8601String(),
             'updated-at'    => $resource->updated_at->toIso8601String(),
+            'due'           => $resource->currentTotal(),
         ];
     }
 
@@ -111,10 +112,10 @@ class InvoiceSchema extends SchemaProvider
                 },
             ],
 
-            'lastUpdatedBy' => [
+            'last-updated-by' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset($includeRelationships['lastUpdatedBy']),
+                self::SHOW_DATA    => isset($includeRelationships['last-updated-by']),
                 self::DATA         => function () use ($resource) {
                     return $resource->lastUpdatedBy;
                 },

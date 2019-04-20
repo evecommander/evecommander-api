@@ -9,20 +9,18 @@ use App\Role;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class RolePolicy implements ResourcePolicyInterface
 {
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
-     * @param Request $request
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
-    public function index(User $user, string $type, Request $request): bool
+    public function index(User $user, string $type): bool
     {
         return false;
     }
@@ -30,29 +28,29 @@ class RolePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the role.
      *
-     * @param User    $user
-     * @param Model   $role
-     * @param Request $request
+     * @param User  $user
+     * @param Model $role
      *
      * @return bool
      */
-    public function read(User $user, Model $role, Request $request): bool
+    public function read(User $user, Model $role): bool
     {
         /* @var Role $role */
-        return $this->authorizeRelation($role->organization, 'roles', 'read', $request);
+        return $this->readRelationship($user, $role->organization, 'roles');
     }
 
     /**
      * Determine whether the user can create roles.
      *
-     * @param User    $user
-     * @param string  $type
-     * @param Request $request
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
-    public function create(User $user, string $type, Request $request): bool
+    public function create(User $user, string $type): bool
     {
+        $request = \request();
+
         // this is run before validation so reject bad requests
         if (!$request->has('organization_type') || !$request->has('organization_id')) {
             return false;
@@ -61,123 +59,121 @@ class RolePolicy implements ResourcePolicyInterface
         /** @var Organization $organization */
         $organization = $request->get('organization_type')::find($request->get('organization_id'));
 
-        return $this->authorizeRelation($organization, 'roles', 'modify', $request);
+        return $this->modifyRelationship($user, $organization, 'roles');
     }
 
     /**
      * Determine whether the user can update the role.
      *
-     * @param User    $user
-     * @param Model   $role
-     * @param Request $request
+     * @param User  $user
+     * @param Model $role
      *
      * @return bool
      */
-    public function update(User $user, Model $role, Request $request): bool
+    public function update(User $user, Model $role): bool
     {
         /* @var Role $role */
-        return $this->authorizeRelation($role->organization, 'roles', 'modify', $request);
+        return $this->modifyRelationship($user, $role->organization, 'roles');
     }
 
     /**
      * Determine whether the user can delete the role.
      *
-     * @param User    $user
-     * @param Model   $role
-     * @param Request $request
+     * @param User  $user
+     * @param Model $role
      *
      * @return bool
      */
-    public function delete(User $user, Model $role, Request $request): bool
+    public function delete(User $user, Model $role): bool
     {
         /* @var Role $role */
-        return $this->authorizeRelation($role->organization, 'roles', 'modify', $request);
+        return $this->modifyRelationship($user, $role->organization, 'roles');
     }
 
     /**
-     * @param Role    $role
-     * @param Request $request
+     * @param User $user
+     * @param Role $role
      *
      * @return bool
      */
-    public function readOrganization(Role $role, Request $request): bool
+    public function readOrganization(User $user, Role $role): bool
     {
-        return $request->user()->can('read', [$role->organization, $request]);
+        return $user->can('read', [$role->organization]);
     }
 
     /**
-     * @param Role    $role
-     * @param Request $request
+     * @param User $user
+     * @param Role $role
      *
      * @return bool
      */
-    public function modifyOrganization(Role $role, Request $request): bool
-    {
-        return false;
-    }
-
-    /**
-     * @param Role    $role
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function readPermissions(Role $role, Request $request): bool
-    {
-        return $this->read($request->user(), $role, $request);
-    }
-
-    /**
-     * @param Role    $role
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function modifyPermissions(Role $role, Request $request): bool
-    {
-        return $this->update($request->user(), $role, $request);
-    }
-
-    /**
-     * @param Role    $role
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function readCharacters(Role $role, Request $request): bool
-    {
-        return $this->read($request->user(), $role, $request);
-    }
-
-    /**
-     * @param Role    $role
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function modifyCharacters(Role $role, Request $request): bool
+    public function modifyOrganization(User $user, Role $role): bool
     {
         return false;
     }
 
     /**
-     * @param Role    $role
-     * @param Request $request
+     * @param User $user
+     * @param Role $role
      *
      * @return bool
      */
-    public function readMembershipLevels(Role $role, Request $request): bool
+    public function readPermissions(User $user, Role $role): bool
     {
-        return $this->read($request->user(), $role, $request);
+        return $this->read($user, $role);
     }
 
     /**
-     * @param Role    $role
-     * @param Request $request
+     * @param User $user
+     * @param Role $role
      *
      * @return bool
      */
-    public function modifyMembershipLevels(Role $role, Request $request): bool
+    public function modifyPermissions(User $user, Role $role): bool
+    {
+        return $this->update($user, $role);
+    }
+
+    /**
+     * @param User $user
+     * @param Role $role
+     *
+     * @return bool
+     */
+    public function readCharacters(User $user, Role $role): bool
+    {
+        return $this->read($user, $role);
+    }
+
+    /**
+     * @param User $user
+     * @param Role $role
+     *
+     * @return bool
+     */
+    public function modifyCharacters(User $user, Role $role): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param User $user
+     * @param Role $role
+     *
+     * @return bool
+     */
+    public function readMembershipLevels(User $user, Role $role): bool
+    {
+        return $this->read($user, $role);
+    }
+
+    /**
+     * @param User $user
+     * @param Role $role
+     *
+     * @return bool
+     */
+    public function modifyMembershipLevels(User $user, Role $role): bool
     {
         return false;
     }
