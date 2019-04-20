@@ -19,7 +19,6 @@ use Illuminate\Support\Carbon;
  * Relationships
  * @property Coalition coalition
  * @property \Illuminate\Database\Eloquent\Collection corporations
- *
  */
 class Alliance extends Organization
 {

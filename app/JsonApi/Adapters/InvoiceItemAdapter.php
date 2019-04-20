@@ -46,7 +46,7 @@ class InvoiceItemAdapter extends AbstractAdapter
     }
 
     /**
-     * Update the invoice total when an invoice item is updated
+     * Update the invoice total when an invoice item is updated.
      *
      * @param InvoiceItem $invoiceItem
      */

@@ -17,7 +17,8 @@ class QueueJobSchema extends SchemaProvider
 
     /**
      * @param ClientJob $resource
-     *      the domain record being serialized.
+     *                            the domain record being serialized.
+     *
      * @return string
      */
     public function getId($resource)
@@ -27,21 +28,22 @@ class QueueJobSchema extends SchemaProvider
 
     /**
      * @param ClientJob $resource
-     *      the domain record being serialized.
+     *                            the domain record being serialized.
+     *
      * @return array
      */
     public function getAttributes($resource)
     {
         return [
-            'api' => $resource->api,
-            'attempts' => $resource->attempts,
-            'timeout' => $resource->timeout,
-            'timeout-at' => $resource->timeout_at->toAtomString(),
-            'tries' => $resource->tries,
-            'failed' => $resource->failed,
+            'api'          => $resource->api,
+            'attempts'     => $resource->attempts,
+            'timeout'      => $resource->timeout,
+            'timeout-at'   => $resource->timeout_at->toAtomString(),
+            'tries'        => $resource->tries,
+            'failed'       => $resource->failed,
             'completed-at' => $resource->completed_at->toAtomString(),
-            'created-at' => $resource->created_at->toAtomString(),
-            'updated-at' => $resource->updated_at->toAtomString(),
+            'created-at'   => $resource->created_at->toAtomString(),
+            'updated-at'   => $resource->updated_at->toAtomString(),
         ];
     }
 

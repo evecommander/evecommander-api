@@ -101,7 +101,7 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
         $curl = curl_init(static::EVE_AUTH_URL);
         $headers = $this->getBasicAuthHeader() + [
             'Content-Type: application/x-www-form-urlencoded',
-            'Host: login.eveonline.com'
+            'Host: login.eveonline.com',
         ];
 
         $options = [
@@ -110,7 +110,7 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
             CURLOPT_POST           => 1,
             CURLOPT_POSTFIELDS     => http_build_query([
                 'grant_type' => 'authorization_code',
-                'code'       => $this->authorizationCode
+                'code'       => $this->authorizationCode,
             ]),
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_SSL_VERIFYPEER => true,
@@ -121,7 +121,7 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
         curl_setopt_array($curl, $options);
 
         if (!$response = json_decode(curl_exec($curl), true)) {
-          trigger_error(curl_error($curl));
+            trigger_error(curl_error($curl));
         }
 
         $info = curl_getinfo($curl);
@@ -129,9 +129,9 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
 
         Log::debug('Response from getting access token', [
             'response' => $response,
-            'info' => $info,
-            'headers' => $headers,
-            'options' => $options,
+            'info'     => $info,
+            'headers'  => $headers,
+            'options'  => $options,
         ]);
 
         if (!isset($response['access_token'])) {
@@ -197,6 +197,7 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
 
     /**
      * @param int $corporationID
+     *
      * @throws ApiException
      *
      * @return Corporation

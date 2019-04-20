@@ -112,7 +112,7 @@ return [
     */
     'jobs' => [
         'resource' => 'queue-jobs',
-        'model' => \CloudCreativity\LaravelJsonApi\Queue\ClientJob::class,
+        'model'    => \CloudCreativity\LaravelJsonApi\Queue\ClientJob::class,
     ],
 
     /*

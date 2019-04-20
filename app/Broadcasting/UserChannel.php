@@ -19,8 +19,9 @@ class UserChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param  \App\User  $authenticatedUser
-     * @param  \App\User  $channelUser
+     * @param \App\User $authenticatedUser
+     * @param \App\User $channelUser
+     *
      * @return array|bool
      */
     public function join(User $authenticatedUser, User $channelUser)

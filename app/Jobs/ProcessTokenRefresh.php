@@ -21,7 +21,7 @@ class ProcessTokenRefresh extends AuthorizesAPI implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param User $user
+     * @param User      $user
      * @param Character $character
      *
      * @return void

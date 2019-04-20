@@ -14,8 +14,8 @@ class BillingConditionGroupPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -27,8 +27,8 @@ class BillingConditionGroupPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the billing condition group.
      *
-     * @param User    $user
-     * @param Model   $conditionGroup
+     * @param User  $user
+     * @param Model $conditionGroup
      *
      * @return bool
      */
@@ -40,8 +40,8 @@ class BillingConditionGroupPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create billing conditions.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -53,8 +53,8 @@ class BillingConditionGroupPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the billing condition.
      *
-     * @param User    $user
-     * @param Model   $conditionGroup
+     * @param User  $user
+     * @param Model $conditionGroup
      *
      * @return bool
      */
@@ -66,8 +66,8 @@ class BillingConditionGroupPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the billing condition.
      *
-     * @param User    $user
-     * @param Model   $conditionGroup
+     * @param User  $user
+     * @param Model $conditionGroup
      *
      * @return bool
      */

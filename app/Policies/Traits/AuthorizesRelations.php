@@ -11,9 +11,9 @@ trait AuthorizesRelations
     /**
      * Determine whether the user can read the given relationship.
      *
-     * @param User    $user
-     * @param Model   $resource
-     * @param string  $relation
+     * @param User   $user
+     * @param Model  $resource
+     * @param string $relation
      *
      * @return bool
      */
@@ -25,9 +25,9 @@ trait AuthorizesRelations
     /**
      * Determine whether the user can modify the given relationship.
      *
-     * @param User    $user
-     * @param Model   $resource
-     * @param string  $relation
+     * @param User   $user
+     * @param Model  $resource
+     * @param string $relation
      *
      * @return bool
      */
@@ -37,10 +37,10 @@ trait AuthorizesRelations
     }
 
     /**
-     * @param User    $user
-     * @param Model   $organization
-     * @param string  $relation
-     * @param string  $action
+     * @param User   $user
+     * @param Model  $organization
+     * @param string $relation
+     * @param string $action
      *
      * @return bool
      */

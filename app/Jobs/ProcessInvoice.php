@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Abstracts\ModifiedAmounts;
 use App\BillingCondition;
 use App\Discount;
 use App\Invoice;
@@ -10,8 +9,6 @@ use App\InvoiceItem;
 use App\Membership;
 use App\MembershipFee;
 use App\MembershipLevel;
-use Carbon\Carbon;
-use Carbon\CarbonInterval;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -35,7 +32,7 @@ class ProcessInvoice implements ShouldQueue
      * Create a new job instance.
      *
      * @param Membership $membership
-     * @param string $action
+     * @param string     $action
      *
      * @return void
      */
@@ -45,7 +42,7 @@ class ProcessInvoice implements ShouldQueue
             'membershipLevel.fees',
             'membershipLevel.discounts',
             'member',
-            'organization'
+            'organization',
         ]);
         $this->action = $action;
     }
@@ -75,7 +72,7 @@ class ProcessInvoice implements ShouldQueue
 
                 // percent fees will be pulled out for later
                 $percentFees = $fees->filter(function (MembershipFee $membershipFee) {
-                   return $membershipFee->isPercent();
+                    return $membershipFee->isPercent();
                 });
 
                 $fees = $fees->diff($percentFees);
@@ -116,7 +113,7 @@ class ProcessInvoice implements ShouldQueue
     protected function createInvoice()
     {
         $invoice = new Invoice();
-        $invoice->name = Str::title("{$this->action} membership of ") . $this->membership->organization->name;
+        $invoice->name = Str::title("{$this->action} membership of ").$this->membership->organization->name;
         $invoice->status = Invoice::STATE_PENDING;
         $invoice->recipient()->associate($this->membership->member);
         $invoice->issuer()->associate($this->membership->organization);
@@ -128,8 +125,9 @@ class ProcessInvoice implements ShouldQueue
     /**
      * Create an invoice item from the given membership fee or discount.
      *
-     * @param Invoice $invoice
+     * @param Invoice                $invoice
      * @param MembershipFee|Discount $source
+     *
      * @return InvoiceItem
      */
     protected function createInvoiceItem(Invoice $invoice, $source)

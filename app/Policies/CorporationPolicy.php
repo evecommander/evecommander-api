@@ -2,9 +2,7 @@
 
 namespace App\Policies;
 
-use App\Character;
 use App\Corporation;
-use App\Http\Middleware\CheckCharacter;
 use App\Policies\Interfaces\ResourcePolicyInterface;
 use App\Policies\Traits\AuthorizesDefaultMembershipLevelRelation;
 use App\Policies\Traits\AuthorizesMembershipsRelation;
@@ -15,7 +13,6 @@ use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class CorporationPolicy implements ResourcePolicyInterface
 {
@@ -27,8 +24,8 @@ class CorporationPolicy implements ResourcePolicyInterface
         AuthorizesMembershipsRelation;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -40,8 +37,8 @@ class CorporationPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the corporation.
      *
-     * @param User    $user
-     * @param Model   $corporation
+     * @param User  $user
+     * @param Model $corporation
      *
      * @return bool
      */
@@ -56,8 +53,8 @@ class CorporationPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create corporations.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -69,8 +66,8 @@ class CorporationPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the corporation.
      *
-     * @param User    $user
-     * @param Model   $corporation
+     * @param User  $user
+     * @param Model $corporation
      *
      * @return bool
      */
@@ -82,8 +79,8 @@ class CorporationPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the alliance.
      *
-     * @param User    $user
-     * @param Model   $corporation
+     * @param User  $user
+     * @param Model $corporation
      *
      * @return bool
      */

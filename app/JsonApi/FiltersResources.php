@@ -26,7 +26,7 @@ trait FiltersResources
     }
 
     /**
-     * @param Builder $query
+     * @param Builder    $query
      * @param Collection $filters
      */
     protected function filter($query, Collection $filters)
@@ -177,9 +177,11 @@ trait FiltersResources
      * If Relationship filters are enabled, add them to the model involved in this request.
      *
      * @param EncodingParametersInterface $parameters
+     *
      * @return array
      */
-    public function makeRelationFilters(EncodingParametersInterface $parameters) {
+    public function makeRelationFilters(EncodingParametersInterface $parameters)
+    {
         $unrecognized = $parameters->getUnrecognizedParameters();
 
         if (!isset($unrecognized['filterRelations']) || !filter_var($unrecognized['filterRelations'], FILTER_VALIDATE_BOOLEAN)) {
@@ -212,7 +214,7 @@ trait FiltersResources
      * Add filters to the Relation.
      *
      * @param Relation $query
-     * @param array $filters
+     * @param array    $filters
      */
     protected function addRelationFilters(Relation $query, array $filters)
     {
@@ -229,9 +231,9 @@ trait FiltersResources
             } else {
                 throw new ValidationException(Error::create([
                     'status' => 422,
-                    'title' => "Unknown value passed for filter",
+                    'title'  => 'Unknown value passed for filter',
                     'detail' => "Unknown value {{$name}}",
-                    'source' => ['parameter' => "filter[{$name}]=$val"]]));
+                    'source' => ['parameter' => "filter[{$name}]=$val"], ]));
             }
 
             $name = $this->modelKeyForField($name, $this->model);
@@ -258,9 +260,9 @@ trait FiltersResources
      */
     public function applyRelationFilter($filterQuery, $operator, $name, $value, Model $model)
     {
-        /** @var $filterQuery Builder|Relation */
+        /* @var $filterQuery Builder|Relation */
         if ($model->hasSetMutator($name)) {
-            $mutated = $model->{'set' . Str::studly($name) . 'Attribute'}($value);
+            $mutated = $model->{'set'.Str::studly($name).'Attribute'}($value);
             $value = !is_null($mutated) ? $mutated : $value;
         }
 

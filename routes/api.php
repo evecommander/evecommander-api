@@ -26,7 +26,6 @@ Route::post('/users/reset-password', 'Api\\UserController@reset');
 Route::get('characters/callback', 'Api\\CharacterController@callback')
     ->middleware('auth.callback');
 
-
 Route::get('me', 'AuthController@me')->middleware('auth:api');
 
 JsonApi::register('v1', [
@@ -53,7 +52,6 @@ JsonApi::register('v1', [
                 $relations->hasMany('invoices');
                 $relations->hasMany('notifications');
                 $relations->hasMany('memberships');
-
             });
 
         // All of these routes must have a X-Character header to tell what character is making the request
@@ -124,8 +122,8 @@ JsonApi::register('v1', [
 
             $api->resource('discounts')
                 ->relationships(function (RelationshipsRegistration $relations) {
-                   $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
-                   $relations->hasOne('billing-condition');
+                    $relations->hasOne('organization'); // TODO: find out how to route for polymorphic relations
+                    $relations->hasOne('billing-condition');
                 });
 
             $api->resource('doctrines')

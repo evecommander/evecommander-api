@@ -14,8 +14,8 @@ class PermissionPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -27,8 +27,8 @@ class PermissionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the permission.
      *
-     * @param User    $user
-     * @param Model   $permission
+     * @param User  $user
+     * @param Model $permission
      *
      * @return bool
      */
@@ -40,8 +40,8 @@ class PermissionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create permissions.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -53,8 +53,8 @@ class PermissionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the permission.
      *
-     * @param User    $user
-     * @param Model   $permission
+     * @param User  $user
+     * @param Model $permission
      *
      * @return bool
      */
@@ -66,8 +66,8 @@ class PermissionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the permission.
      *
-     * @param User    $user
-     * @param Model   $permission
+     * @param User  $user
+     * @param Model $permission
      *
      * @return bool
      */

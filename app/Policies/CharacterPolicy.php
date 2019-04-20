@@ -7,7 +7,6 @@ use App\Policies\Interfaces\ResourcePolicyInterface;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class CharacterPolicy implements ResourcePolicyInterface
 {
@@ -24,8 +23,8 @@ class CharacterPolicy implements ResourcePolicyInterface
     ];
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -37,8 +36,8 @@ class CharacterPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the character.
      *
-     * @param User    $user
-     * @param Model   $character
+     * @param User  $user
+     * @param Model $character
      *
      * @return bool
      */
@@ -50,8 +49,8 @@ class CharacterPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create characters.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -63,8 +62,8 @@ class CharacterPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the character.
      *
-     * @param User    $user
-     * @param Model   $character
+     * @param User  $user
+     * @param Model $character
      *
      * @return bool
      */
@@ -77,8 +76,8 @@ class CharacterPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the character.
      *
-     * @param User    $user
-     * @param Model   $character
+     * @param User  $user
+     * @param Model $character
      *
      * @return bool
      */
@@ -91,9 +90,9 @@ class CharacterPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can read the relationship.
      *
-     * @param User    $user
-     * @param Model   $character
-     * @param string  $relation
+     * @param User   $user
+     * @param Model  $character
+     * @param string $relation
      *
      * @return bool
      */
@@ -106,9 +105,9 @@ class CharacterPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can modify the relationship.
      *
-     * @param User    $user
-     * @param Model   $character
-     * @param string  $relation
+     * @param User   $user
+     * @param Model  $character
+     * @param string $relation
      *
      * @return bool
      */

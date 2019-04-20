@@ -15,7 +15,6 @@ use Jose\Component\Checker\ClaimCheckerManager;
 use Jose\Component\Checker\ExpirationTimeChecker;
 use Jose\Component\Checker\HeaderCheckerManager;
 use Jose\Component\Checker\IssuedAtChecker;
-use Jose\Component\Checker\NotBeforeChecker;
 use Jose\Component\Checker\Tests\Stub\IssuerChecker;
 use Jose\Component\Core\AlgorithmManager;
 use Jose\Component\Core\Converter\StandardConverter;
@@ -27,14 +26,8 @@ use Jose\Component\Signature\JWSTokenSupport;
 use Jose\Component\Signature\JWSVerifier;
 use Jose\Component\Signature\Serializer\CompactSerializer;
 use Jose\Component\Signature\Serializer\JWSSerializerManager;
-use Lcobucci\JWT\Signer\Key;
-use Namshi\JOSE\Base64\Encoder;
 use Namshi\JOSE\JWS;
-use Namshi\JOSE\SimpleJWS;
 use Swagger\Client\Configuration;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
-use Tymon\JWTAuth\Exceptions\TokenInvalidException;
-use Tymon\JWTAuth\JWT;
 use Tymon\JWTAuth\Token;
 
 class AuthorizesAPI
@@ -71,11 +64,12 @@ class AuthorizesAPI
 
     /**
      * @param $token
-     * @return bool
      *
      * @throws \Exception
      * @throws \Jose\Component\Checker\InvalidClaimException
      * @throws \Jose\Component\Checker\MissingMandatoryClaimException
+     *
+     * @return bool
      */
     protected function verifyJWT($token)
     {
@@ -89,7 +83,7 @@ class AuthorizesAPI
 
         $headerCheckerManager = HeaderCheckerManager::create([
             new AlgorithmChecker(['RS256', 'ES256']),
-            new IssuerChecker('login.eveonline.com')
+            new IssuerChecker('login.eveonline.com'),
         ], [
             new JWSTokenSupport(), // Adds JWS token type support
         ]);

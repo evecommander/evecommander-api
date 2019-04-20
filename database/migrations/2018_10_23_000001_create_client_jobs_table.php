@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2019 Cloud Creativity Limited
+ * Copyright 2019 Cloud Creativity Limited.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateClientJobsTable extends Migration
 {
-
     /**
      * Run the migrations.
      *

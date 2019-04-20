@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Abstracts\Organization;
 use App\Contracts\HasNotificationsContract;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +13,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use League\OAuth2\Server\Exception\OAuthServerException;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * Class User.
@@ -58,16 +56,17 @@ class User extends Authenticatable implements HasNotificationsContract
     ];
 
     protected $casts = [
-        'settings' => 'array',
-        'is_admin' => 'boolean',
+        'settings'          => 'array',
+        'is_admin'          => 'boolean',
         'is_email_verified' => 'boolean',
     ];
 
     /**
      * @param $password
-     * @return bool
      *
      * @throws OAuthServerException
+     *
+     * @return bool
      */
     public function validateForPassportPasswordGrant($password)
     {

@@ -6,7 +6,6 @@ use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class BillingConditionGroupSchema extends SchemaProvider
 {
-
     /**
      * @var string
      */
@@ -14,7 +13,8 @@ class BillingConditionGroupSchema extends SchemaProvider
 
     /**
      * @param \App\BillingConditionGroup $resource
-     *      the domain record being serialized.
+     *                                             the domain record being serialized.
+     *
      * @return string
      */
     public function getId($resource)
@@ -24,7 +24,8 @@ class BillingConditionGroupSchema extends SchemaProvider
 
     /**
      * @param \App\BillingConditionGroup $resource
-     *      the domain record being serialized.
+     *                                             the domain record being serialized.
+     *
      * @return array
      */
     public function getAttributes($resource)
@@ -91,7 +92,7 @@ class BillingConditionGroupSchema extends SchemaProvider
                 self::DATA         => function () use ($resource) {
                     return $resource->parentGroup;
                 },
-            ]
+            ],
         ];
     }
 }

@@ -14,8 +14,8 @@ class OAuth2TokenPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -27,8 +27,8 @@ class OAuth2TokenPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the o auth2 token.
      *
-     * @param User    $user
-     * @param Model   $oAuth2Token
+     * @param User  $user
+     * @param Model $oAuth2Token
      *
      * @return bool
      */
@@ -41,8 +41,8 @@ class OAuth2TokenPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create o auth2 tokens.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -54,8 +54,8 @@ class OAuth2TokenPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the o auth2 token.
      *
-     * @param User    $user
-     * @param Model   $oAuth2Token
+     * @param User  $user
+     * @param Model $oAuth2Token
      *
      * @return bool
      */
@@ -67,8 +67,8 @@ class OAuth2TokenPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the o auth2 token.
      *
-     * @param User    $user
-     * @param Model   $oAuth2Token
+     * @param User  $user
+     * @param Model $oAuth2Token
      *
      * @return bool
      */

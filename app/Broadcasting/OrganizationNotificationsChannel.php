@@ -21,8 +21,9 @@ class OrganizationNotificationsChannel extends OrganizationChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param  \App\User                   $user
-     * @param  \App\Abstracts\Organization $organization
+     * @param \App\User                   $user
+     * @param \App\Abstracts\Organization $organization
+     *
      * @return array|bool
      */
     public function join(User $user, Organization $organization)

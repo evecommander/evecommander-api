@@ -20,8 +20,9 @@ class HandbookChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param  \App\User     $user
-     * @param  \App\Handbook $handbook
+     * @param \App\User     $user
+     * @param \App\Handbook $handbook
+     *
      * @return array|bool
      */
     public function join(User $user, Handbook $handbook)

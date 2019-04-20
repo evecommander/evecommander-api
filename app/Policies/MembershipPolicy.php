@@ -16,8 +16,8 @@ class MembershipPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations, AuthorizesNotificationsRelation;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -29,8 +29,8 @@ class MembershipPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the membership.
      *
-     * @param User    $user
-     * @param Model   $membership
+     * @param User  $user
+     * @param Model $membership
      *
      * @return bool
      */
@@ -44,8 +44,8 @@ class MembershipPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create memberships.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -67,8 +67,8 @@ class MembershipPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the membership.
      *
-     * @param User    $user
-     * @param Model   $membership
+     * @param User  $user
+     * @param Model $membership
      *
      * @return bool
      */
@@ -82,8 +82,8 @@ class MembershipPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the membership.
      *
-     * @param User    $user
-     * @param Model   $membership
+     * @param User  $user
+     * @param Model $membership
      *
      * @return bool
      */

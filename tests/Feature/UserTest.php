@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\User;
-use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -31,7 +30,7 @@ class UserTest extends TestCase
         $expected = $this->api()->encoder()->serializeData($userInfo['user']);
 
         $this->doRead($userInfo['user']->getKey(), [], [
-            'Authorization' => "Bearer {$userInfo['token']}"
+            'Authorization' => "Bearer {$userInfo['token']}",
         ])->assertRead($expected);
     }
 
@@ -51,17 +50,17 @@ class UserTest extends TestCase
         $user->save();
 
         $data = [
-            'type' => 'users',
-            'id'   => $user->getKey(),
+            'type'       => 'users',
+            'id'         => $user->getKey(),
             'attributes' => [
                 'settings' => [
-                    'test' => 'something'
-                ]
-            ]
+                    'test' => 'something',
+                ],
+            ],
         ];
 
         $response = $this->doUpdate($data, [], [
-            'Authorization' => "Bearer {$userInfo['token']}"
+            'Authorization' => "Bearer {$userInfo['token']}",
         ]);
 
         $response->assertUpdated($data['attributes']['settings']);
@@ -75,13 +74,13 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $data = [
-            'type' => 'users',
-            'id'   => $user->getKey(),
+            'type'       => 'users',
+            'id'         => $user->getKey(),
             'attributes' => [
                 'settings' => [
-                    'test' => 'something'
-                ]
-            ]
+                    'test' => 'something',
+                ],
+            ],
         ];
 
         $this->doUpdate($data)->assertStatus(401);

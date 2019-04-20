@@ -15,8 +15,8 @@ class CommentPolicy implements ResourcePolicyInterface
         AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -28,8 +28,8 @@ class CommentPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the comment.
      *
-     * @param User    $user
-     * @param Model   $comment
+     * @param User  $user
+     * @param Model $comment
      *
      * @return bool
      */
@@ -42,8 +42,8 @@ class CommentPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create comments.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -63,8 +63,8 @@ class CommentPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the comment.
      *
-     * @param User    $user
-     * @param Model   $comment
+     * @param User  $user
+     * @param Model $comment
      *
      * @return bool
      */
@@ -77,8 +77,8 @@ class CommentPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the comment.
      *
-     * @param User    $user
-     * @param Model   $comment
+     * @param User  $user
+     * @param Model $comment
      *
      * @return bool
      */

@@ -15,8 +15,8 @@ class FittingPolicy implements ResourcePolicyInterface
     use HandlesAuthorization, AuthorizesRelations;
 
     /**
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -28,8 +28,8 @@ class FittingPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the fitting.
      *
-     * @param User    $user
-     * @param Model   $fitting
+     * @param User  $user
+     * @param Model $fitting
      *
      * @return bool
      */
@@ -42,8 +42,8 @@ class FittingPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can create fittings.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -65,8 +65,8 @@ class FittingPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can update the fitting.
      *
-     * @param User    $user
-     * @param Model   $fitting
+     * @param User  $user
+     * @param Model $fitting
      *
      * @return bool
      */
@@ -79,8 +79,8 @@ class FittingPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can delete the fitting.
      *
-     * @param User    $user
-     * @param Model   $fitting
+     * @param User  $user
+     * @param Model $fitting
      *
      * @return bool
      */

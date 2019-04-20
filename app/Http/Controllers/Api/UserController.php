@@ -33,56 +33,60 @@ class UserController extends JsonApiController
     /**
      * Get the response for a successful password reset link.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
+     * @param \Illuminate\Http\Request $request
+     * @param string                   $response
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     protected function sendResetLinkResponse(Request $request, $response)
     {
         return response()->json([
-            'success' => true
+            'success' => true,
         ]);
     }
 
     /**
      * Get the response for a failed password reset link.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
+     * @param \Illuminate\Http\Request $request
+     * @param string                   $response
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {
         return response()->json([
-            'success' => false
+            'success' => false,
         ]);
     }
 
     /**
      * Get the response for a successful password reset.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
+     * @param \Illuminate\Http\Request $request
+     * @param string                   $response
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     protected function sendResetResponse(Request $request, $response)
     {
         return response()->json([
-            'success' => true
+            'success' => true,
         ]);
     }
 
     /**
      * Get the response for a failed password reset.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
+     * @param \Illuminate\Http\Request $request
+     * @param string                   $response
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     protected function sendResetFailedResponse(Request $request, $response)
     {
         return response()->json([
-            'success' => false
+            'success' => false,
         ]);
     }
 }

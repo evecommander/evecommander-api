@@ -4,15 +4,14 @@ namespace App\Policies\Interfaces;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 interface ResourcePolicyInterface
 {
     /**
      * Determine whether the user can view an index list of the given type.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -21,8 +20,8 @@ interface ResourcePolicyInterface
     /**
      * Determine whether the user can view the record.
      *
-     * @param User    $user
-     * @param Model   $record
+     * @param User  $user
+     * @param Model $record
      *
      * @return bool
      */
@@ -31,8 +30,8 @@ interface ResourcePolicyInterface
     /**
      * Determine whether the user can create a record of the given type.
      *
-     * @param User    $user
-     * @param string  $type
+     * @param User   $user
+     * @param string $type
      *
      * @return bool
      */
@@ -41,8 +40,8 @@ interface ResourcePolicyInterface
     /**
      * Determine whether the user can update the record.
      *
-     * @param User    $user
-     * @param Model   $record
+     * @param User  $user
+     * @param Model $record
      *
      * @return bool
      */
@@ -51,8 +50,8 @@ interface ResourcePolicyInterface
     /**
      * Determine whether the user can delete the record.
      *
-     * @param User    $user
-     * @param Model   $record
+     * @param User  $user
+     * @param Model $record
      *
      * @return bool
      */
@@ -61,9 +60,9 @@ interface ResourcePolicyInterface
     /**
      * Determine whether the user can read the relationship.
      *
-     * @param User    $user
-     * @param Model   $record
-     * @param string  $relation
+     * @param User   $user
+     * @param Model  $record
+     * @param string $relation
      *
      * @return bool
      */
@@ -72,9 +71,9 @@ interface ResourcePolicyInterface
     /**
      * Determine whether the user can modify the relationship.
      *
-     * @param User    $user
-     * @param Model   $record
-     * @param string  $relation
+     * @param User   $user
+     * @param Model  $record
+     * @param string $relation
      *
      * @return bool
      */

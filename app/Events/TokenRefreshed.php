@@ -19,7 +19,7 @@ class TokenRefreshed implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @param User $user
+     * @param User      $user
      * @param Character $character
      *
      * @return void
