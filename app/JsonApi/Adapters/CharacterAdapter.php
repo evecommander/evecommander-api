@@ -18,6 +18,11 @@ class CharacterAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
+    protected $guarded = [
+        'created-at',
+        'updated-at',
+    ];
+
     /**
      * Adapter constructor.
      *

@@ -6,6 +6,7 @@ use App\Fleet;
 use App\JsonApi\FiltersResources;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
+use Illuminate\Support\Facades\Auth;
 
 class FleetAdapter extends AbstractAdapter
 {
@@ -19,6 +20,7 @@ class FleetAdapter extends AbstractAdapter
     protected $attributes = [];
 
     protected $guarded = [
+        'api-id',
         'created-by',
         'last-updated-by',
     ];
@@ -86,5 +88,15 @@ class FleetAdapter extends AbstractAdapter
     public function squads()
     {
         return $this->hasMany();
+    }
+
+    protected function creating(Fleet $fleet)
+    {
+        $fleet->createdBy()->associate(Auth::user());
+    }
+
+    protected function updating(Fleet $fleet)
+    {
+        $fleet->lastUpdatedBy()->associate(Auth::user());
     }
 }

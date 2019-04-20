@@ -22,6 +22,8 @@ use Illuminate\Support\Carbon;
  *
  * Relationships
  * @property Organization organization
+ * @property Character createdBy
+ * @property Character lastUpdatedBy
  * @property \Illuminate\Database\Eloquent\Collection permissions
  * @property \Illuminate\Database\Eloquent\Collection characters
  * @property \Illuminate\Database\Eloquent\Collection membershipLevels
@@ -68,5 +70,25 @@ class Role extends Model
     public function membershipLevels()
     {
         return $this->belongsToMany(MembershipLevel::class)->withTimestamps();
+    }
+
+    /**
+     * Get relation between this role and the character that created it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function createdBy()
+    {
+        return $this->belongsTo(Character::class, 'created_by');
+    }
+
+    /**
+     * Get Character that last updated this Role.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function lastUpdatedBy()
+    {
+        return $this->belongsTo(Character::class, 'last_updated_by');
     }
 }

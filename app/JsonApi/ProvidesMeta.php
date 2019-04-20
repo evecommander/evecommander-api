@@ -37,11 +37,11 @@ trait ProvidesMeta
     protected function issuedInvoicesCounts(IssuesInvoicesContract $model): array
     {
         return [
-            'count'           => $model->invoices->count(),
-            'count_fulfilled' => $model->fulfilledInvoices->count(),
-            'count_overdue'   => $model->overdueInvoices->count(),
-            'count_pending'   => $model->pendingInvoices->count(),
-            'count_default'   => $model->defaultInvoices->count(),
+            'count'           => $model->issuedInvoices->count(),
+            'count_fulfilled' => $model->fulfilledIssuedInvoices->count(),
+            'count_overdue'   => $model->overdueIssuedInvoices->count(),
+            'count_pending'   => $model->pendingIssuedInvoices->count(),
+            'count_default'   => $model->defaultIssuedInvoices->count(),
         ];
     }
 

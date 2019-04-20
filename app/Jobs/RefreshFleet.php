@@ -53,7 +53,7 @@ class RefreshFleet implements ShouldQueue
      */
     public function __construct(Fleet $fleet)
     {
-        $this->fleet = $fleet;
+        $this->fleet = $fleet->loadMissing('wings.squads');
         $this->wingsToDelete = collect();
         $this->squadsToDelete = collect();
         $this->allCurrentSquads = collect();
@@ -71,7 +71,7 @@ class RefreshFleet implements ShouldQueue
     public function handle()
     {
         $newWings = collect((new FleetsApi())->getFleetsFleetIdWings($this->fleet->api_id))->keyBy('id');
-        $currentWings = $this->fleet->wings()->with('squads')->get()->keyBy('api_id');
+        $currentWings = $this->fleet->wings->keyBy('api_id');
 
         // Mark wings for deletion if they are in $currentWings but not $newWings
         $this->wingsToDelete = $currentWings->filter(function (Wing $wing, $key) use ($newWings) {

@@ -78,6 +78,15 @@ class BillingConditionSchema extends SchemaProvider
                     ];
                 },
             ],
+
+            'billing-condition-group' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => isset($includeRelationships['billing-condition-group']),
+                self::DATA         => function () use ($resource) {
+                    return $resource->billingConditionGroup;
+                },
+            ]
         ];
     }
 }

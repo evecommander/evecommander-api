@@ -7,11 +7,11 @@ use Illuminate\Support\Collection;
 /**
  * Interface IssuesInvoicesContract.
  *
- * @property Collection invoices
- * @property Collection fulfilledInvoices
- * @property Collection overdueInvoices
- * @property Collection pendingInvoices
- * @property Collection defaultInvoices
+ * @property Collection issuedInvoices
+ * @property Collection fulfilledIssuedInvoices
+ * @property Collection overdueIssuedInvoices
+ * @property Collection pendingIssuedInvoices
+ * @property Collection defaultIssuedInvoices
  */
 interface IssuesInvoicesContract
 {
@@ -20,33 +20,33 @@ interface IssuesInvoicesContract
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function invoices();
+    public function issuedInvoices();
 
     /**
      * Get all fulfilled invoices belonging to this model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function fulfilledInvoices();
+    public function fulfilledIssuedInvoices();
 
     /**
      * Get all overdue invoices belonging to this model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function overdueInvoices();
+    public function overdueIssuedInvoices();
 
     /**
      * Get all pending invoices belonging to this model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function pendingInvoices();
+    public function pendingIssuedInvoices();
 
     /**
      * Get all invoices that are in default belonging to this model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function defaultInvoices();
+    public function defaultIssuedInvoices();
 }

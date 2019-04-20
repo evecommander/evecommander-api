@@ -17,13 +17,17 @@ class CreateDiscountsTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('organization_id')->index();
             $table->string('organization_type')->index();
-            $table->uuid('billing_condition_id')->nullable();
+            $table->uuid('conditional_id')->nullable()->index();
+            $table->string('conditional_type')->nullable()->index();
+            $table->uuid('membership_level_id')->nullable()->index();
+            $table->string('name');
+            $table->text('description');
             $table->enum('amount_type', ['fixed', 'percent', 'per_member']);
             $table->decimal('amount', 20)->comment('If amount_type is fixed, amount is in ISK; If percent, amount is a percentage; If per_member, amount is fixed but multiplied by how many members the target has.');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 
-            $table->foreign('billing_condition_id')->references('id')->on('billing_conditions');
+            $table->foreign('membership_level_id')->references('id')->on('membership_levels');
         });
 
         // add trigger to new table

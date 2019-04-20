@@ -21,10 +21,10 @@ use Illuminate\Support\Carbon;
  * @property Carbon updated_at
  *
  * Relationships
- * @property \Illuminate\Database\Eloquent\Collection comments
  * @property Doctrine doctrine
  * @property Organization organization
  * @property \Illuminate\Database\Eloquent\Collection replacementClaims
+ * @property \Illuminate\Database\Eloquent\Collection comments
  */
 class Fitting extends Model
 {

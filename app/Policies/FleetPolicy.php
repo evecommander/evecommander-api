@@ -10,7 +10,6 @@ use App\Policies\Traits\AuthorizesRelations;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class FleetPolicy implements ResourcePolicyInterface
 {
@@ -19,11 +18,10 @@ class FleetPolicy implements ResourcePolicyInterface
     /**
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function index(User $user, string $type, Request $request): bool
+    public function index(User $user, string $type): bool
     {
         return false;
     }
@@ -33,14 +31,13 @@ class FleetPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $fleet
-     * @param Request $request
      *
      * @return bool
      */
-    public function read(User $user, Model $fleet, Request $request): bool
+    public function read(User $user, Model $fleet): bool
     {
         /* @var Fleet $fleet */
-        return $this->authorizeRelation($fleet->organization, 'fleets', 'read', $request);
+        return $this->readRelationship($user, $fleet->organization, 'fleets');
     }
 
     /**
@@ -48,12 +45,13 @@ class FleetPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function create(User $user, string $type, Request $request): bool
+    public function create(User $user, string $type): bool
     {
+        $request = \request();
+
         // this is run before validation so reject bad requests
         if (!$request->has('organization_type') || !$request->has('organization_id')) {
             return false;
@@ -62,7 +60,7 @@ class FleetPolicy implements ResourcePolicyInterface
         /** @var Organization $organization */
         $organization = $request->get('organization_type')::find($request->get('organization_id'));
 
-        return $this->authorizeRelation($organization, 'fleets', 'modify', $request);
+        return $this->modifyRelationship($user, $organization, 'fleets');
     }
 
     /**
@@ -70,14 +68,13 @@ class FleetPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $fleet
-     * @param Request $request
      *
      * @return bool
      */
-    public function update(User $user, Model $fleet, Request $request): bool
+    public function update(User $user, Model $fleet): bool
     {
         /* @var Fleet $fleet */
-        return $this->authorizeRelation($fleet->organization, 'fleets', 'modify', $request);
+        return $this->modifyRelationship($user, $fleet->organization, 'fleets');
     }
 
     /**
@@ -85,144 +82,143 @@ class FleetPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $fleet
-     * @param Request $request
      *
      * @return bool
      */
-    public function delete(User $user, Model $fleet, Request $request): bool
+    public function delete(User $user, Model $fleet): bool
     {
         /* @var Fleet $fleet */
-        return $this->authorizeRelation($fleet->organization, 'fleets', 'modify', $request);
+        return $this->modifyRelationship($user, $fleet->organization, 'fleets');
     }
 
     /**
-     * @param Fleet   $fleet
-     * @param Request $request
+     * @param User  $user
+     * @param Fleet $fleet
      *
      * @return bool
      */
-    public function readOrganization(Fleet $fleet, Request $request): bool
+    public function readOrganization(User $user, Fleet $fleet): bool
     {
-        return $request->user()->can('read', [$fleet->organization, $request]);
+        return $user->can('read', [$fleet->organization]);
     }
 
     /**
-     * @param Fleet   $fleet
-     * @param Request $request
+     * @param User  $user
+     * @param Fleet $fleet
      *
      * @return bool
      */
-    public function modifyOrganization(Fleet $fleet, Request $request): bool
-    {
-        return false;
-    }
-
-    /**
-     * @param Fleet   $fleet
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function readComments(Fleet $fleet, Request $request): bool
-    {
-        return $request->user()->can('read', [$fleet->organization, $request]);
-    }
-
-    /**
-     * @param Fleet   $fleet
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function modifyComments(Fleet $fleet, Request $request): bool
+    public function modifyOrganization(User $user, Fleet $fleet): bool
     {
         return false;
     }
 
     /**
-     * @param Fleet   $fleet
-     * @param Request $request
+     * @param User  $user
+     * @param Fleet $fleet
      *
      * @return bool
      */
-    public function readFleetType(Fleet $fleet, Request $request): bool
+    public function readComments(User $user, Fleet $fleet): bool
     {
-        return $request->user()->can('read', [$fleet->organization, $request]);
+        return $user->can('read', [$fleet->organization]);
     }
 
     /**
-     * @param Fleet   $fleet
-     * @param Request $request
+     * @param User  $user
+     * @param Fleet $fleet
      *
      * @return bool
      */
-    public function modifyFleetType(Fleet $fleet, Request $request): bool
-    {
-        return false;
-    }
-
-    /**
-     * @param Fleet   $fleet
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function readCreatedBy(Fleet $fleet, Request $request): bool
-    {
-        return $request->user()->can('read', [$fleet->organization, $request]);
-    }
-
-    /**
-     * @param Fleet   $fleet
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function modifyCreatedBy(Fleet $fleet, Request $request): bool
+    public function modifyComments(User $user, Fleet $fleet): bool
     {
         return false;
     }
 
     /**
-     * @param Fleet   $fleet
-     * @param Request $request
+     * @param User  $user
+     * @param Fleet $fleet
      *
      * @return bool
      */
-    public function readLastUpdatedBy(Fleet $fleet, Request $request): bool
+    public function readFleetType(User $user, Fleet $fleet): bool
     {
-        return $request->user()->can('read', [$fleet->organization, $request]);
+        return $user->can('read', [$fleet->organization]);
     }
 
     /**
-     * @param Fleet   $fleet
-     * @param Request $request
+     * @param User  $user
+     * @param Fleet $fleet
      *
      * @return bool
      */
-    public function modifyLastUpdatedBy(Fleet $fleet, Request $request): bool
+    public function modifyFleetType(User $user, Fleet $fleet): bool
     {
         return false;
     }
 
     /**
-     * @param Fleet   $fleet
-     * @param Request $request
+     * @param User  $user
+     * @param Fleet $fleet
      *
      * @return bool
      */
-    public function readRsvps(Fleet $fleet, Request $request): bool
+    public function readCreatedBy(User $user, Fleet $fleet): bool
     {
-        return $request->user()->can('read', [$fleet->organization, $request]);
+        return $user->can('read', [$fleet->organization]);
     }
 
     /**
-     * @param Fleet   $fleet
-     * @param Request $request
+     * @param User  $user
+     * @param Fleet $fleet
      *
      * @return bool
      */
-    public function modifyRsvps(Fleet $fleet, Request $request): bool
+    public function modifyCreatedBy(User $user, Fleet $fleet): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param User  $user
+     * @param Fleet $fleet
+     *
+     * @return bool
+     */
+    public function readLastUpdatedBy(User $user, Fleet $fleet): bool
+    {
+        return $user->can('read', [$fleet->organization]);
+    }
+
+    /**
+     * @param User  $user
+     * @param Fleet $fleet
+     *
+     * @return bool
+     */
+    public function modifyLastUpdatedBy(User $user, Fleet $fleet): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param User  $user
+     * @param Fleet $fleet
+     *
+     * @return bool
+     */
+    public function readRsvps(User $user, Fleet $fleet): bool
+    {
+        return $user->can('read', [$fleet->organization]);
+    }
+
+    /**
+     * @param User  $user
+     * @param Fleet $fleet
+     *
+     * @return bool
+     */
+    public function modifyRsvps(User $user, Fleet $fleet): bool
     {
         return false;
     }

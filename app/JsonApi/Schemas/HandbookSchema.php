@@ -37,6 +37,7 @@ class HandbookSchema extends SchemaProvider
             'order'       => $resource->order,
             'created-at'  => $resource->created_at->toIso8601String(),
             'updated-at'  => $resource->updated_at->toIso8601String(),
+            'deleted-at'  => $resource->deleted_at->toIso8601String(),
         ];
     }
 

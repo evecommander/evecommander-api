@@ -20,7 +20,7 @@ class CreateInvoicesTable extends Migration
             $table->string('issuer_type')->index();
             $table->uuid('recipient_id')->index();
             $table->string('recipient_type')->index();
-            $table->string('title');
+            $table->string('name');
             $table->enum('status', ['pending', 'fulfilled', 'overdue'])->index();
             $table->decimal('total', 20);
             $table->dateTime('due_date');

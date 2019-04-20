@@ -20,7 +20,12 @@ class FleetMemberValidator extends AbstractValidators
      * @var string[]|null
      *                    the allowed fields, an empty array for none allowed, or null to allow all fields.
      */
-    protected $allowedSortParameters = [];
+    protected $allowedSortParameters = [
+        'join-time',
+        'role',
+        'wing-id',
+        'squad-id',
+    ];
 
     /**
      * Get resource validation rules.
@@ -33,7 +38,7 @@ class FleetMemberValidator extends AbstractValidators
     protected function rules($record = null): array
     {
         return [
-            //
+            // not editable from API
         ];
     }
 

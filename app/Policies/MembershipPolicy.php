@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Abstracts\Organization;
-use App\Http\Middleware\CheckCharacter;
 use App\Membership;
 use App\Policies\Interfaces\ResourcePolicyInterface;
 use App\Policies\Traits\AuthorizesNotificationsRelation;
@@ -11,7 +10,6 @@ use App\Policies\Traits\AuthorizesRelations;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class MembershipPolicy implements ResourcePolicyInterface
 {
@@ -20,11 +18,10 @@ class MembershipPolicy implements ResourcePolicyInterface
     /**
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function index(User $user, string $type, Request $request): bool
+    public function index(User $user, string $type): bool
     {
         return false;
     }
@@ -34,16 +31,14 @@ class MembershipPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $membership
-     * @param Request $request
      *
      * @return bool
      */
-    public function read(User $user, Model $membership, Request $request): bool
+    public function read(User $user, Model $membership): bool
     {
         /* @var Membership $membership */
-        return $this->authorizeRelation($membership->organization, 'members', 'read', $request) ||
-            $this->authorizeRelation($membership->member, 'memberships', 'read', $request) ||
-            $membership->member_id === $request->header(CheckCharacter::CHARACTER_HEADER);
+        return $this->readRelationship($user, $membership->organization, 'members') ||
+            $this->readRelationship($user, $membership->member, 'memberships');
     }
 
     /**
@@ -51,12 +46,13 @@ class MembershipPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function create(User $user, string $type, Request $request): bool
+    public function create(User $user, string $type): bool
     {
+        $request = \request();
+
         // this is run before validation so reject bad requests
         if (!$request->has('organization_type') || !$request->has('organization_id')) {
             return false;
@@ -65,7 +61,7 @@ class MembershipPolicy implements ResourcePolicyInterface
         /** @var Organization $organization */
         $organization = $request->get('organization_type')::find($request->get('organization_id'));
 
-        return $this->authorizeRelation($organization, 'memberships', 'modify', $request);
+        return $this->modifyRelationship($user, $organization, 'memberships');
     }
 
     /**
@@ -73,16 +69,14 @@ class MembershipPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $membership
-     * @param Request $request
      *
      * @return bool
      */
-    public function update(User $user, Model $membership, Request $request): bool
+    public function update(User $user, Model $membership): bool
     {
         /* @var Membership $membership */
-        return $this->authorizeRelation($membership->organization, 'members', 'modify', $request) ||
-            $this->authorizeRelation($membership->member, 'memberships', 'modify', $request) ||
-            $membership->member_id === $request->header(CheckCharacter::CHARACTER_HEADER);
+        return $this->modifyRelationship($user, $membership->organization, 'members') ||
+            $this->modifyRelationship($user, $membership->member, 'memberships');
     }
 
     /**
@@ -90,124 +84,122 @@ class MembershipPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $membership
-     * @param Request $request
      *
      * @return bool
      */
-    public function delete(User $user, Model $membership, Request $request): bool
+    public function delete(User $user, Model $membership): bool
     {
         /* @var Membership $membership */
-        return $this->authorizeRelation($membership->organization, 'members', 'modify', $request) ||
-            $this->authorizeRelation($membership->member, 'memberships', 'modify', $request) ||
-            $membership->member_id === $request->header(CheckCharacter::CHARACTER_HEADER);
+        return $this->modifyRelationship($user, $membership->organization, 'members') ||
+            $this->modifyRelationship($user, $membership->member, 'memberships');
     }
 
     /**
+     * @param User       $user
      * @param Membership $membership
-     * @param Request    $request
      *
      * @return bool
      */
-    public function readOrganization(Membership $membership, Request $request): bool
+    public function readOrganization(User $user, Membership $membership): bool
     {
-        return $request->user()->can('read', [$membership->organization, $request]);
+        return $user->can('read', [$membership->organization]);
     }
 
     /**
+     * @param User       $user
      * @param Membership $membership
-     * @param Request    $request
      *
      * @return bool
      */
-    public function modifyOrganization(Membership $membership, Request $request): bool
-    {
-        return false;
-    }
-
-    /**
-     * @param Membership $membership
-     * @param Request    $request
-     *
-     * @return bool
-     */
-    public function readMembershipLevel(Membership $membership, Request $request): bool
-    {
-        return $this->read($request->user(), $membership, $request);
-    }
-
-    /**
-     * @param Membership $membership
-     * @param Request    $request
-     *
-     * @return bool
-     */
-    public function modifyMembershipLevel(Membership $membership, Request $request): bool
-    {
-        return $this->update($request->user(), $membership, $request);
-    }
-
-    /**
-     * @param Membership $membership
-     * @param Request    $request
-     *
-     * @return bool
-     */
-    public function readMember(Membership $membership, Request $request): bool
-    {
-        return $this->read($request->user(), $membership, $request);
-    }
-
-    /**
-     * @param Membership $membership
-     * @param Request    $request
-     *
-     * @return bool
-     */
-    public function modifyMember(Membership $membership, Request $request): bool
+    public function modifyOrganization(User $user, Membership $membership): bool
     {
         return false;
     }
 
     /**
+     * @param User       $user
      * @param Membership $membership
-     * @param Request    $request
      *
      * @return bool
      */
-    public function readCreatedBy(Membership $membership, Request $request): bool
+    public function readMembershipLevel(User $user, Membership $membership): bool
     {
-        return $this->read($request->user(), $membership, $request);
+        return $this->read($user, $membership);
     }
 
     /**
+     * @param User       $user
      * @param Membership $membership
-     * @param Request    $request
      *
      * @return bool
      */
-    public function modifyCreatedBy(Membership $membership, Request $request): bool
+    public function modifyMembershipLevel(User $user, Membership $membership): bool
+    {
+        return $this->update($user, $membership);
+    }
+
+    /**
+     * @param User       $user
+     * @param Membership $membership
+     *
+     * @return bool
+     */
+    public function readMember(User $user, Membership $membership): bool
+    {
+        return $this->read($user, $membership);
+    }
+
+    /**
+     * @param User       $user
+     * @param Membership $membership
+     *
+     * @return bool
+     */
+    public function modifyMember(User $user, Membership $membership): bool
     {
         return false;
     }
 
     /**
+     * @param User       $user
      * @param Membership $membership
-     * @param Request    $request
      *
      * @return bool
      */
-    public function readLastUpdatedBy(Membership $membership, Request $request): bool
+    public function readCreatedBy(User $user, Membership $membership): bool
     {
-        return $this->read($request->user(), $membership, $request);
+        return $this->read($user, $membership);
     }
 
     /**
+     * @param User       $user
      * @param Membership $membership
-     * @param Request    $request
      *
      * @return bool
      */
-    public function modifyLastUpdatedBy(Membership $membership, Request $request): bool
+    public function modifyCreatedBy(User $user, Membership $membership): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param User       $user
+     * @param Membership $membership
+     *
+     * @return bool
+     */
+    public function readLastUpdatedBy(User $user, Membership $membership): bool
+    {
+        return $this->read($user, $membership);
+    }
+
+    /**
+     * @param User       $user
+     * @param Membership $membership
+     *
+     * @return bool
+     */
+    public function modifyLastUpdatedBy(User $user, Membership $membership): bool
     {
         return false;
     }

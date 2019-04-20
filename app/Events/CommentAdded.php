@@ -8,6 +8,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Str;
 
 class CommentAdded implements ShouldBroadcast
 {
@@ -34,6 +35,12 @@ class CommentAdded implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("{$this->comment->commentable_type}.{$this->comment->commentable_id}");
+        // get resource name of the commentable
+        $commentable = json_api()->getDefaultResolver()->getResourceType($this->comment->commentable_type);
+
+        return [
+            new PrivateChannel("/{$commentable}/{$this->comment->commentable_id}"),
+            new PrivateChannel("/comments/{$this->comment->id}"),
+        ];
     }
 }

@@ -17,6 +17,12 @@ class FittingAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
+    protected $guarded = [
+        'api-id',
+        'created-at',
+        'updated-at',
+    ];
+
     /**
      * Adapter constructor.
      *

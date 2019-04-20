@@ -3,8 +3,10 @@
 namespace App\JsonApi\Adapters;
 
 use App\JsonApi\FiltersResources;
+use App\MembershipLevel;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
+use Illuminate\Support\Facades\Auth;
 
 class MembershipLevelAdapter extends AbstractAdapter
 {
@@ -18,6 +20,8 @@ class MembershipLevelAdapter extends AbstractAdapter
     protected $attributes = [];
 
     protected $guarded = [
+        'created-at',
+        'updated-at',
         'created-by',
         'last-updated-by',
     ];
@@ -29,7 +33,7 @@ class MembershipLevelAdapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\MembershipLevel(), $paging);
+        parent::__construct(new MembershipLevel(), $paging);
     }
 
     public function memberships()
@@ -55,5 +59,25 @@ class MembershipLevelAdapter extends AbstractAdapter
     public function roles()
     {
         return $this->hasMany();
+    }
+
+    public function membershipFees()
+    {
+        return $this->morphMany();
+    }
+
+    public function discounts()
+    {
+        return $this->morphMany();
+    }
+
+    protected function creating(MembershipLevel $membershipLevel)
+    {
+        $membershipLevel->createdBy()->associate(Auth::user());
+    }
+
+    protected function updating(MembershipLevel $membershipLevel)
+    {
+        $membershipLevel->lastUpdatedBy()->associate(Auth::user());
     }
 }

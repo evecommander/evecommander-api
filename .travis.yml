@@ -9,12 +9,10 @@ services:
   - docker
   - redis-server
 
+dist: xenial
+
 addons:
-  postgresql: "10"
-  apt:
-    packages:
-     - postgresql-10
-     - postgresql-client-10
+  postgresql: "11.2"
 
 language: php
 
@@ -22,11 +20,17 @@ php:
   - "7.2"
   - "7.3"
 
+before_install:
+  - sudo apt-get update
+  - sudo apt-get --yes remove postgresql\*
+  - sudo apt-get install -y postgresql-11 postgresql-client-11
+  - sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
+  - sudo service postgresql restart 11
+
 before_script:
   - composer install --optimize-autoloader
   - cp .env.example .env
   - php artisan key:generate
-  - php artisan jwt:secret
   - psql -c "CREATE USER commander PASSWORD 'secret';"
   - psql -c "CREATE DATABASE eve_commander WITH OWNER = commander;"
   - psql -c "CREATE DATABASE eve_sde WITH OWNER = commander;"

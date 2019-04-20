@@ -2,19 +2,16 @@
 
 namespace App\Policies;
 
-use App\Character;
 use App\Coalition;
-use App\Http\Middleware\CheckCharacter;
 use App\Policies\Interfaces\ResourcePolicyInterface;
 use App\Policies\Traits\AuthorizesDefaultMembershipLevelRelation;
-use App\Policies\Traits\AuthorizesInvoicesRelation;
 use App\Policies\Traits\AuthorizesNotificationsRelation;
 use App\Policies\Traits\AuthorizesReceivedInvoicesRelation;
 use App\Policies\Traits\AuthorizesRelations;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class CoalitionPolicy implements ResourcePolicyInterface
 {
@@ -22,17 +19,15 @@ class CoalitionPolicy implements ResourcePolicyInterface
         AuthorizesRelations,
         AuthorizesDefaultMembershipLevelRelation,
         AuthorizesReceivedInvoicesRelation,
-        AuthorizesInvoicesRelation,
         AuthorizesNotificationsRelation;
 
     /**
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function index(User $user, string $type, Request $request): bool
+    public function index(User $user, string $type): bool
     {
         return true;
     }
@@ -41,31 +36,27 @@ class CoalitionPolicy implements ResourcePolicyInterface
      * Determine whether the user can view the coalition.
      *
      * @param User    $user
-     * @param Model   $condition
-     * @param Request $request
+     * @param Model   $coalition
      *
      * @return bool
      */
-    public function read(User $user, Model $condition, Request $request): bool
+    public function read(User $user, Model $coalition): bool
     {
-        // check if character is a member of the alliance
-        /** @var Character $character */
-        $character = Character::find($request->header(CheckCharacter::CHARACTER_HEADER))->load('corporation.alliance.coalition');
-
-        /* @var Coalition $coalition */
-        return $character->corporation->alliance->coalition->id === $coalition->id;
+        // check if any characters are members of the alliance
+        return $user->characters()->whereHas('corporation.alliance.coalition', function (Builder $builder) use ($coalition) {
+            $builder->where('id', $coalition->id);
+        })->exists();
     }
 
     /**
-     * Determine whether the user can create coalition.
+     * Determine whether the user can create coalitions.
      *
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function create(User $user, string $type, Request $request): bool
+    public function create(User $user, string $type): bool
     {
         return false;
     }
@@ -74,60 +65,50 @@ class CoalitionPolicy implements ResourcePolicyInterface
      * Determine whether the user can update the coalition.
      *
      * @param User    $user
-     * @param Model   $condition
-     * @param Request $request
+     * @param Model   $coalition
      *
      * @return bool
      */
-    public function update(User $user, Model $condition, Request $request): bool
+    public function update(User $user, Model $coalition): bool
     {
-        /** @var Character $character */
-        $character = Character::find($request->header(CheckCharacter::CHARACTER_HEADER));
-
-        /* @var Coalition $coalition */
-        return $character->hasPermission('update', $coalition);
+        return $user->hasCharacterWithPermission($coalition, 'organization', 'modify');
     }
 
     /**
      * Determine whether the user can delete the coalition.
      *
      * @param User    $user
-     * @param Model   $condition
-     * @param Request $request
+     * @param Model   $coalition
      *
      * @return bool
      */
-    public function delete(User $user, Model $condition, Request $request): bool
+    public function delete(User $user, Model $coalition): bool
     {
-        /** @var Character $character */
-        $character = Character::find($request->header(CheckCharacter::CHARACTER_HEADER));
-
-        /* @var Coalition $coalition */
-        return $character->hasPermission('delete', $coalition);
+        return $user->hasCharacterWithPermission($coalition, 'organization', 'delete');
     }
 
     /**
      * Determine whether the user can view the alliances relation.
      *
+     * @param User      $user
      * @param Coalition $coalition
-     * @param Request   $request
      *
      * @return bool
      */
-    public function readAlliances(Coalition $coalition, Request $request): bool
+    public function readAlliances(User $user, Coalition $coalition): bool
     {
-        return $this->authorizeRelation($coalition, 'memberships', 'read', $request);
+        return $this->readRelationship($user, $coalition, 'memberships');
     }
 
     /**
      * Determine whether the user can modify the alliances relation.
      *
+     * @param User      $user
      * @param Coalition $coalition
-     * @param Request   $request
      *
      * @return bool
      */
-    public function modifyAlliances(Coalition $coalition, Request $request): bool
+    public function modifyAlliances(User $user, Coalition $coalition): bool
     {
         return false;
     }
@@ -135,25 +116,25 @@ class CoalitionPolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the coalition relation.
      *
+     * @param User      $user
      * @param Coalition $coalition
-     * @param Request   $request
      *
      * @return bool
      */
-    public function readCoalition(Coalition $coalition, Request $request): bool
+    public function readCoalition(User $user, Coalition $coalition): bool
     {
-        return $this->authorizeRelation($coalition, 'member_of', 'read', $request);
+        return $this->readRelationship($user, $coalition, 'member_of');
     }
 
     /**
      * Determine whether the user can modify the coalition relation.
      *
+     * @param User      $user
      * @param Coalition $coalition
-     * @param Request   $request
      *
      * @return bool
      */
-    public function modifyCoalition(Coalition $coalition, Request $request): bool
+    public function modifyCoalition(User $user, Coalition $coalition): bool
     {
         return false;
     }

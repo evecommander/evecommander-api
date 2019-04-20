@@ -9,7 +9,6 @@ use App\Policies\Traits\AuthorizesRelations;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class DoctrinePolicy implements ResourcePolicyInterface
 {
@@ -18,11 +17,10 @@ class DoctrinePolicy implements ResourcePolicyInterface
     /**
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function index(User $user, string $type, Request $request): bool
+    public function index(User $user, string $type): bool
     {
         return false;
     }
@@ -32,14 +30,13 @@ class DoctrinePolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $doctrine
-     * @param Request $request
      *
      * @return bool
      */
-    public function read(User $user, Model $doctrine, Request $request): bool
+    public function read(User $user, Model $doctrine): bool
     {
         /* @var Doctrine $doctrine */
-        return $this->authorizeRelation($doctrine->organization, 'doctrines', 'read', $request);
+        return $this->readRelationship($user, $doctrine->organization, 'doctrines');
     }
 
     /**
@@ -47,12 +44,13 @@ class DoctrinePolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function create(User $user, string $type, Request $request): bool
+    public function create(User $user, string $type): bool
     {
+        $request = \request();
+
         // this is run before validation so reject bad requests
         if (!$request->has('organization_type') || !$request->has('organization_id')) {
             return false;
@@ -61,7 +59,7 @@ class DoctrinePolicy implements ResourcePolicyInterface
         /** @var Organization $organization */
         $organization = $request->get('organization_type')::find($request->get('organization_id'));
 
-        return $this->authorizeRelation($organization, 'doctrines', 'modify', $request);
+        return $this->modifyRelationship($user, $organization, 'doctrines');
     }
 
     /**
@@ -69,14 +67,13 @@ class DoctrinePolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $doctrine
-     * @param Request $request
      *
      * @return bool
      */
-    public function update(User $user, Model $doctrine, Request $request): bool
+    public function update(User $user, Model $doctrine): bool
     {
         /* @var Doctrine $doctrine */
-        return $this->authorizeRelation($doctrine->organization, 'doctrines', 'modify', $request);
+        return $this->modifyRelationship($user, $doctrine->organization, 'doctrines');
     }
 
     /**
@@ -84,100 +81,99 @@ class DoctrinePolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $doctrine
-     * @param Request $request
      *
      * @return bool
      */
-    public function delete(User $user, Model $doctrine, Request $request): bool
+    public function delete(User $user, Model $doctrine): bool
     {
         /* @var Doctrine $doctrine */
-        return $this->authorizeRelation($doctrine->organization, 'doctrines', 'modify', $request);
+        return $this->modifyRelationship($user, $doctrine->organization, 'doctrines');
     }
 
     /**
+     * @param User     $user
      * @param Doctrine $doctrine
-     * @param Request  $request
      *
      * @return bool
      */
-    public function readOrganization(Doctrine $doctrine, Request $request): bool
+    public function readOrganization(User $user, Doctrine $doctrine): bool
     {
-        return $request->user()->can('read', [$doctrine->organization, $request]);
+        return $user->can('read', [$doctrine->organization]);
     }
 
     /**
+     * @param User     $user
      * @param Doctrine $doctrine
-     * @param Request  $request
      *
      * @return bool
      */
-    public function modifyOrganization(Doctrine $doctrine, Request $request): bool
-    {
-        return false;
-    }
-
-    /**
-     * @param Doctrine $doctrine
-     * @param Request  $request
-     *
-     * @return bool
-     */
-    public function readFittings(Doctrine $doctrine, Request $request): bool
-    {
-        return $this->authorizeRelation($doctrine->organization, 'fittings', 'read', $request);
-    }
-
-    /**
-     * @param Doctrine $doctrine
-     * @param Request  $request
-     *
-     * @return bool
-     */
-    public function modifyFittings(Doctrine $doctrine, Request $request): bool
-    {
-        return $this->authorizeRelation($doctrine->organization, 'fittings', 'modify', $request);
-    }
-
-    /**
-     * @param Doctrine $doctrine
-     * @param Request  $request
-     *
-     * @return bool
-     */
-    public function readCreatedBy(Doctrine $doctrine, Request $request): bool
-    {
-        return $this->authorizeRelation($doctrine->organization, 'doctrines', 'read', $request);
-    }
-
-    /**
-     * @param Doctrine $doctrine
-     * @param Request  $request
-     *
-     * @return bool
-     */
-    public function modifyCreatedBy(Doctrine $doctrine, Request $request): bool
+    public function modifyOrganization(User $user, Doctrine $doctrine): bool
     {
         return false;
     }
 
     /**
+     * @param User     $user
      * @param Doctrine $doctrine
-     * @param Request  $request
      *
      * @return bool
      */
-    public function readLastUpdatedBy(Doctrine $doctrine, Request $request): bool
+    public function readFittings(User $user, Doctrine $doctrine): bool
     {
-        return $this->authorizeRelation($doctrine->organization, 'doctrines', 'read', $request);
+        return $this->readRelationship($user, $doctrine->organization, 'fittings');
     }
 
     /**
+     * @param User     $user
      * @param Doctrine $doctrine
-     * @param Request  $request
      *
      * @return bool
      */
-    public function modifyLastUpdatedBy(Doctrine $doctrine, Request $request): bool
+    public function modifyFittings(User $user, Doctrine $doctrine): bool
+    {
+        return $this->modifyRelationship($user, $doctrine->organization, 'fittings');
+    }
+
+    /**
+     * @param User     $user
+     * @param Doctrine $doctrine
+     *
+     * @return bool
+     */
+    public function readCreatedBy(User $user, Doctrine $doctrine): bool
+    {
+        return $this->read($user, $doctrine);
+    }
+
+    /**
+     * @param User     $user
+     * @param Doctrine $doctrine
+     *
+     * @return bool
+     */
+    public function modifyCreatedBy(User $user, Doctrine $doctrine): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param User     $user
+     * @param Doctrine $doctrine
+     *
+     * @return bool
+     */
+    public function readLastUpdatedBy(User $user, Doctrine $doctrine): bool
+    {
+        return $this->readRelationship($user, $doctrine->organization, 'doctrines');
+    }
+
+    /**
+     * @param User     $user
+     * @param Doctrine $doctrine
+     *
+     * @return bool
+     */
+    public function modifyLastUpdatedBy(User $user, Doctrine $doctrine): bool
     {
         return false;
     }

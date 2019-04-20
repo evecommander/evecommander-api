@@ -98,7 +98,7 @@ class CorporationSchema extends SchemaProvider
                 },
             ],
 
-            'invoices' => [
+            'issued-invoices' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
@@ -151,6 +151,46 @@ class CorporationSchema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::META         => function () use ($resource) {
                     return $this->subscriptionsCount($resource);
+                },
+            ],
+
+            'fleets' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->fleets->count(),
+                    ];
+                },
+            ],
+
+            'fleet-types' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->fleetTypes->count(),
+                    ];
+                },
+            ],
+
+            'billing-conditions' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->billingConditions->count(),
+                    ];
+                },
+            ],
+
+            'billing-condition-groups' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->billingConditionGroups->count(),
+                    ];
                 },
             ],
         ];

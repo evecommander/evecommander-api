@@ -17,6 +17,11 @@ class BillingConditionAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
+    protected $guarded = [
+        'created-at',
+        'updated-at',
+    ];
+
     /**
      * Adapter constructor.
      *
@@ -40,5 +45,10 @@ class BillingConditionAdapter extends AbstractAdapter
     public function membershipFees()
     {
         return $this->hasMany();
+    }
+
+    public function billingConditionGroup()
+    {
+        return $this->belongsTo();
     }
 }

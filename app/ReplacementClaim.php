@@ -44,6 +44,14 @@ class ReplacementClaim extends Model
     const STATUS_PAYED = 'payed';
     const STATUS_ACCEPTED = 'accepted';
 
+    const AVAILABLE_STATUSES = [
+        self::STATUS_PENDING,
+        self::STATUS_CONTESTED,
+        self::STATUS_CLOSED,
+        self::STATUS_PAYED,
+        self::STATUS_ACCEPTED,
+    ];
+
     /**
      * Get Character that this ReplacementClaim belongs to.
      *

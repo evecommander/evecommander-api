@@ -34,11 +34,11 @@ class FleetSchema extends SchemaProvider
     public function getAttributes($resource)
     {
         return [
-            'title'         => $resource->title,
+            'name'          => $resource->name,
             'description'   => $resource->description,
             'status'        => $resource->status,
-            'start-time'    => $resource->start_time->toIso8601String(),
-            'end-time'      => $resource->end_time->toIso8601String(),
+            'start-at'      => $resource->start_at->toIso8601String(),
+            'end-at'        => $resource->end_at->toIso8601String(),
             'created-at'    => $resource->created_at->toIso8601String(),
             'updated-at'    => $resource->updated_at->toIso8601String(),
             'track-history' => $resource->track_history,

@@ -19,8 +19,7 @@ class CreateMembershipLevelsTable extends Migration
             $table->string('organization_type')->index();
             $table->string('name');
             $table->text('description');
-            $table->decimal('dues', 20);
-            $table->enum('dues_structure', ['per_day', 'per_week', 'per_month', 'per_quarter', 'per_half', 'per_year', 'upon_joining']);
+            $table->enum('dues_structure', ['per_day', 'per_week', 'per_month', 'per_quarter', 'per_half', 'per_year', 'upon_joining', 'never']);
             $table->uuid('created_by');
             $table->uuid('last_updated_by');
             $table->timestamp('created_at')->useCurrent();

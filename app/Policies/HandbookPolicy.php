@@ -9,7 +9,6 @@ use App\Policies\Traits\AuthorizesRelations;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class HandbookPolicy implements ResourcePolicyInterface
 {
@@ -18,11 +17,10 @@ class HandbookPolicy implements ResourcePolicyInterface
     /**
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function index(User $user, string $type, Request $request): bool
+    public function index(User $user, string $type): bool
     {
         return false;
     }
@@ -32,14 +30,13 @@ class HandbookPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $handbook
-     * @param Request $request
      *
      * @return bool
      */
-    public function read(User $user, Model $handbook, Request $request): bool
+    public function read(User $user, Model $handbook): bool
     {
         /* @var Handbook $handbook */
-        return $this->authorizeRelation($handbook->organization, 'handbooks', 'read', $request);
+        return $this->readRelationship($user, $handbook->organization, 'handbooks');
     }
 
     /**
@@ -47,12 +44,13 @@ class HandbookPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function create(User $user, string $type, Request $request): bool
+    public function create(User $user, string $type): bool
     {
+        $request = \request();
+
         // this is run before validation so reject bad requests
         if (!$request->has('organization_type') || !$request->has('organization_id')) {
             return false;
@@ -61,7 +59,7 @@ class HandbookPolicy implements ResourcePolicyInterface
         /** @var Organization $organization */
         $organization = $request->get('organization_type')::find($request->get('organization_id'));
 
-        return $this->authorizeRelation($organization, 'fleet_types', 'modify', $request);
+        return $this->modifyRelationship($user, $organization, 'fleet_types');
     }
 
     /**
@@ -69,14 +67,13 @@ class HandbookPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $handbook
-     * @param Request $request
      *
      * @return bool
      */
-    public function update(User $user, Model $handbook, Request $request): bool
+    public function update(User $user, Model $handbook): bool
     {
         /* @var Handbook $handbook */
-        return $this->authorizeRelation($handbook->organization, 'handbooks', 'modify', $request);
+        return $this->modifyRelationship($user, $handbook->organization, 'handbooks');
     }
 
     /**
@@ -84,78 +81,77 @@ class HandbookPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $handbook
-     * @param Request $request
      *
      * @return bool
      */
-    public function delete(User $user, Model $handbook, Request $request): bool
+    public function delete(User $user, Model $handbook): bool
     {
         /* @var Handbook $handbook */
-        return $this->authorizeRelation($handbook->organization, 'handbooks', 'modify', $request);
+        return $this->modifyRelationship($user, $handbook->organization, 'handbooks');
     }
 
     /**
+     * @param User     $user
      * @param Handbook $handbook
-     * @param Request  $request
      *
      * @return bool
      */
-    public function readOrganization(Handbook $handbook, Request $request): bool
+    public function readOrganization(User $user, Handbook $handbook): bool
     {
-        return $request->user()->can('read', [$handbook->organization, $request]);
+        return $user->can('read', [$handbook->organization]);
     }
 
     /**
+     * @param User     $user
      * @param Handbook $handbook
-     * @param Request  $request
      *
      * @return bool
      */
-    public function modifyOrganization(Handbook $handbook, Request $request): bool
-    {
-        return false;
-    }
-
-    /**
-     * @param Handbook $handbook
-     * @param Request  $request
-     *
-     * @return bool
-     */
-    public function readCreatedBy(Handbook $handbook, Request $request): bool
-    {
-        return $request->user()->can('read', [$handbook->organization, $request]);
-    }
-
-    /**
-     * @param Handbook $handbook
-     * @param Request  $request
-     *
-     * @return bool
-     */
-    public function modifyCreatedBy(Handbook $handbook, Request $request): bool
+    public function modifyOrganization(User $user, Handbook $handbook): bool
     {
         return false;
     }
 
     /**
+     * @param User     $user
      * @param Handbook $handbook
-     * @param Request  $request
      *
      * @return bool
      */
-    public function readLastUpdatedBy(Handbook $handbook, Request $request): bool
+    public function readCreatedBy(User $user, Handbook $handbook): bool
     {
-        return $request->user()->can('read', [$handbook->organization, $request]);
+        return $user->can('read', [$handbook->organization]);
     }
 
     /**
+     * @param User     $user
      * @param Handbook $handbook
-     * @param Request  $request
      *
      * @return bool
      */
-    public function modifyLastUpdatedBy(Handbook $handbook, Request $request): bool
+    public function modifyCreatedBy(User $user, Handbook $handbook): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param User     $user
+     * @param Handbook $handbook
+     *
+     * @return bool
+     */
+    public function readLastUpdatedBy(User $user, Handbook $handbook): bool
+    {
+        return $user->can('read', [$handbook->organization]);
+    }
+
+    /**
+     * @param User     $user
+     * @param Handbook $handbook
+     *
+     * @return bool
+     */
+    public function modifyLastUpdatedBy(User $user, Handbook $handbook): bool
     {
         return false;
     }

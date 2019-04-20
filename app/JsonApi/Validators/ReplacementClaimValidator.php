@@ -2,10 +2,13 @@
 
 namespace App\JsonApi\Validators;
 
+use App\ReplacementClaim;
 use CloudCreativity\LaravelJsonApi\Contracts\Validators\RelationshipsValidatorInterface;
+use CloudCreativity\LaravelJsonApi\Validation\AbstractValidators;
 use CloudCreativity\LaravelJsonApi\Validators\AbstractValidatorProvider;
+use Illuminate\Validation\Rule;
 
-class ReplacementClaimValidator extends AbstractValidatorProvider
+class ReplacementClaimValidator extends AbstractValidators
 {
     /**
      * @var string
@@ -13,31 +16,54 @@ class ReplacementClaimValidator extends AbstractValidatorProvider
     protected $resourceType = 'replacement-claims';
 
     /**
-     * Get the validation rules for the resource attributes.
+     * The include paths a client is allowed to request.
      *
-     * @param $record
-     *      the record being updated, or null if it is a create request.
+     * @var string[]|null
+     *      the allowed paths, an empty array for none allowed, or null to allow all paths.
+     */
+    protected $allowedIncludePaths = null;
+
+    /**
+     * The sort field names a client is allowed send.
      *
+     * @var string[]|null
+     *      the allowed fields, an empty array for none allowed, or null to allow all fields.
+     */
+    protected $allowedSortParameters = [
+        'status',
+        'created-at',
+        'updated-at',
+    ];
+
+    /**
+     * Get resource validation rules.
+     *
+     * @param mixed|null $record
+     *      the record being updated, or null if creating a resource.
      * @return array
      */
-    protected function attributeRules($record = null)
+    protected function rules($record = null): array
     {
         return [
-            //
+            'killmail-id' => 'required|string',
+            'killmail-hash' => 'required|string',
+            'status' => [
+                'required',
+                'string',
+                Rule::in(ReplacementClaim::AVAILABLE_STATUSES)
+            ],
         ];
     }
 
     /**
-     * Define the validation rules for the resource relationships.
+     * Get query parameter validation rules.
      *
-     * @param RelationshipsValidatorInterface $relationships
-     * @param $record
-     *      the record being updated, or null if it is a create request.
-     *
-     * @return void
+     * @return array
      */
-    protected function relationshipRules(RelationshipsValidatorInterface $relationships, $record = null)
+    protected function queryRules(): array
     {
-        //
+        return [
+            //
+        ];
     }
 }

@@ -19,13 +19,15 @@ class TokenRefreshed implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
+     * @param User $user
      * @param Character $character
      *
      * @return void
      */
-    public function __construct(Character $character)
+    public function __construct(User $user, Character $character)
     {
-        $this->character = $character;
+        $this->user = $user;
+        $this->character = $character->loadMissing('token');
     }
 
     /**
@@ -35,7 +37,7 @@ class TokenRefreshed implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('user.'.$this->character->user->id);
+        return new PrivateChannel('user.'.$this->user->id);
     }
 
     /**

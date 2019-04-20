@@ -17,6 +17,8 @@ class OAuth2TokenAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
+    protected $fillable = [];
+
     /**
      * Adapter constructor.
      *

@@ -4,10 +4,8 @@ namespace App\Policies;
 
 use App\Abstracts\Organization;
 use App\Alliance;
-use App\Character;
 use App\Coalition;
 use App\Corporation;
-use App\Http\Middleware\CheckCharacter;
 use App\Policies\Interfaces\ResourcePolicyInterface;
 use App\Policies\Traits\AuthorizesRelations;
 use App\ReplacementClaim;
@@ -15,7 +13,6 @@ use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class ReplacementClaimPolicy implements ResourcePolicyInterface
 {
@@ -24,11 +21,10 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
     /**
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function index(User $user, string $type, Request $request): bool
+    public function index(User $user, string $type): bool
     {
         return false;
     }
@@ -38,14 +34,13 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $replacementClaim
-     * @param Request $request
      *
      * @return bool
      */
-    public function read(User $user, Model $replacementClaim, Request $request): bool
+    public function read(User $user, Model $replacementClaim): bool
     {
         /* @var ReplacementClaim $replacementClaim */
-        return $this->authorizeRelation($replacementClaim->organization, 'replacement_claims', 'read', $request);
+        return $this->readRelationship($user, $replacementClaim->organization, 'replacement_claims');
     }
 
     /**
@@ -53,12 +48,13 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function create(User $user, string $type, Request $request): bool
+    public function create(User $user, string $type): bool
     {
+        $request = \request();
+
         // this is run before validation so reject bad requests
         if (!$request->has('organization_type') || !$request->has('organization_id')) {
             return false;
@@ -67,23 +63,22 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
         /** @var Organization $organization */
         $organization = $request->get('organization_type')::find($request->get('organization_id'));
 
-        /** @var Character $character */
-        $character = Character::find($request->header(CheckCharacter::CHARACTER_HEADER));
-
         if ($organization instanceof Coalition) {
-            return $character->corporation()->with(['alliance.coalition' => function (Builder $query) use ($organization) {
+            return $user->characters()->with(['corporation.alliance.coalition' => function (Builder $query) use ($organization) {
                 $query->where('coalitions.id', '=', $organization->id);
             }])->exists();
         }
 
         if ($organization instanceof Alliance) {
-            return $character->corporation()->with(['alliance' => function (Builder $query) use ($organization) {
+            return $user->characters()->with(['corporation.alliance' => function (Builder $query) use ($organization) {
                 $query->where('alliances.id', '=', $organization->id);
             }])->exists();
         }
 
-        // $organization is a corporation
-        return $organization->members()->where('member_id', '=', $character)->exists();
+        /** @var Corporation $organization */
+        return $user->characters()->with(['corporation' => function (Builder $query) use ($organization) {
+            $query->where('corporations.id', '=', $organization->id);
+        }])->exists();
     }
 
     /**
@@ -91,14 +86,13 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $replacementClaim
-     * @param Request $request
      *
      * @return bool
      */
-    public function update(User $user, Model $replacementClaim, Request $request): bool
+    public function update(User $user, Model $replacementClaim): bool
     {
         /* @var ReplacementClaim $replacementClaim */
-        return $this->authorizeRelation($replacementClaim->organization, 'replacement_claims', 'modify', $request);
+        return $this->modifyRelationship($user, $replacementClaim->organization, 'replacement_claims');
     }
 
     /**
@@ -106,122 +100,121 @@ class ReplacementClaimPolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $replacementClaim
-     * @param Request $request
      *
      * @return bool
      */
-    public function delete(User $user, Model $replacementClaim, Request $request): bool
+    public function delete(User $user, Model $replacementClaim): bool
     {
         /* @var ReplacementClaim $replacementClaim */
-        return $this->authorizeRelation($replacementClaim->organization, 'replacement_claims', 'modify', $request);
+        return $this->modifyRelationship($user, $replacementClaim->organization, 'replacement_claims');
     }
 
     /**
+     * @param User             $user
      * @param ReplacementClaim $replacementClaim
-     * @param Request          $request
      *
      * @return bool
      */
-    public function readOrganization(ReplacementClaim $replacementClaim, Request $request): bool
+    public function readOrganization(User $user, ReplacementClaim $replacementClaim): bool
     {
-        return $request->user()->can('read', [$replacementClaim->organization, $request]);
+        return $user->can('read', [$replacementClaim->organization]);
     }
 
     /**
+     * @param User             $user
      * @param ReplacementClaim $replacementClaim
-     * @param Request          $request
      *
      * @return bool
      */
-    public function modifyOrganization(ReplacementClaim $replacementClaim, Request $request): bool
-    {
-        return false;
-    }
-
-    /**
-     * @param ReplacementClaim $replacementClaim
-     * @param Request          $request
-     *
-     * @return bool
-     */
-    public function readCharacter(ReplacementClaim $replacementClaim, Request $request): bool
-    {
-        return $this->read($request->user(), $replacementClaim, $request);
-    }
-
-    /**
-     * @param ReplacementClaim $replacementClaim
-     * @param Request          $request
-     *
-     * @return bool
-     */
-    public function modifyCharacter(ReplacementClaim $replacementClaim, Request $request): bool
+    public function modifyOrganization(User $user, ReplacementClaim $replacementClaim): bool
     {
         return false;
     }
 
     /**
+     * @param User             $user
      * @param ReplacementClaim $replacementClaim
-     * @param Request          $request
      *
      * @return bool
      */
-    public function readComments(ReplacementClaim $replacementClaim, Request $request): bool
+    public function readCharacter(User $user, ReplacementClaim $replacementClaim): bool
     {
-        return $this->read($request->user(), $replacementClaim, $request);
+        return $this->read($user, $replacementClaim);
     }
 
     /**
+     * @param User             $user
      * @param ReplacementClaim $replacementClaim
-     * @param Request          $request
      *
      * @return bool
      */
-    public function modifyComments(ReplacementClaim $replacementClaim, Request $request): bool
+    public function modifyCharacter(User $user, ReplacementClaim $replacementClaim): bool
     {
-        return $this->update($request->user(), $replacementClaim, $request);
+        return false;
     }
 
     /**
+     * @param User             $user
      * @param ReplacementClaim $replacementClaim
-     * @param Request          $request
      *
      * @return bool
      */
-    public function readFitting(ReplacementClaim $replacementClaim, Request $request): bool
+    public function readComments(User $user, ReplacementClaim $replacementClaim): bool
     {
-        return $this->read($request->user(), $replacementClaim, $request);
+        return $this->read($user, $replacementClaim);
     }
 
     /**
+     * @param User             $user
      * @param ReplacementClaim $replacementClaim
-     * @param Request          $request
      *
      * @return bool
      */
-    public function modifyFitting(ReplacementClaim $replacementClaim, Request $request): bool
+    public function modifyComments(User $user, ReplacementClaim $replacementClaim): bool
     {
-        return $this->update($request->user(), $replacementClaim, $request);
+        return $this->update($user, $replacementClaim);
     }
 
     /**
+     * @param User             $user
      * @param ReplacementClaim $replacementClaim
-     * @param Request          $request
      *
      * @return bool
      */
-    public function readLastUpdatedBy(ReplacementClaim $replacementClaim, Request $request): bool
+    public function readFitting(User $user, ReplacementClaim $replacementClaim): bool
     {
-        return $this->read($request->user(), $replacementClaim, $request);
+        return $this->read($user, $replacementClaim);
     }
 
     /**
+     * @param User             $user
      * @param ReplacementClaim $replacementClaim
-     * @param Request          $request
      *
      * @return bool
      */
-    public function modifyLastUpdatedBy(ReplacementClaim $replacementClaim, Request $request): bool
+    public function modifyFitting(User $user, ReplacementClaim $replacementClaim): bool
+    {
+        return $this->update($user, $replacementClaim);
+    }
+
+    /**
+     * @param User             $user
+     * @param ReplacementClaim $replacementClaim
+     *
+     * @return bool
+     */
+    public function readLastUpdatedBy(User $user, ReplacementClaim $replacementClaim): bool
+    {
+        return $this->read($user, $replacementClaim);
+    }
+
+    /**
+     * @param User             $user
+     * @param ReplacementClaim $replacementClaim
+     *
+     * @return bool
+     */
+    public function modifyLastUpdatedBy(User $user, ReplacementClaim $replacementClaim): bool
     {
         return false;
     }

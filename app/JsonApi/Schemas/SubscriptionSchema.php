@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\Schemas;
 
+use App\Subscription;
 use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class SubscriptionSchema extends SchemaProvider
@@ -31,7 +32,7 @@ class SubscriptionSchema extends SchemaProvider
     public function getAttributes($resource)
     {
         return [
-            'settings'   => $resource->settings,
+            'notification-type' => $resource->notification,
             'created-at' => $resource->created_at->toAtomString(),
             'updated-at' => $resource->updated_at->toAtomString(),
         ];
@@ -64,6 +65,13 @@ class SubscriptionSchema extends SchemaProvider
                     return $resource->organization;
                 },
             ],
+        ];
+    }
+
+    public function getPrimaryMeta($resource)
+    {
+        return [
+            'available-notifications' => Subscription::AVAILABLE_NOTIFICATIONS
         ];
     }
 }

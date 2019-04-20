@@ -19,6 +19,8 @@ class CoalitionAdapter extends AbstractAdapter
     protected $attributes = [];
 
     protected $guarded = [
+        'created-at',
+        'updated-at',
         'alliances',
     ];
 
@@ -57,7 +59,7 @@ class CoalitionAdapter extends AbstractAdapter
         return $this->hasMany();
     }
 
-    public function invoices()
+    public function issuedInvoices()
     {
         return $this->hasMany();
     }
@@ -92,5 +94,25 @@ class CoalitionAdapter extends AbstractAdapter
         return $this->queriesMany(function (Coalition $coalition) {
             return $coalition->alliances();
         });
+    }
+
+    public function fleets()
+    {
+        return $this->hasMany();
+    }
+
+    public function fleetTypes()
+    {
+        return $this->hasMany();
+    }
+
+    public function billingConditions()
+    {
+        return $this->hasMany();
+    }
+
+    public function billingConditionGroups()
+    {
+        return $this->hasMany();
     }
 }

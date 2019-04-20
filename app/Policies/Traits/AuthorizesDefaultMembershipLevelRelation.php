@@ -3,33 +3,33 @@
 namespace App\Policies\Traits;
 
 use App\Abstracts\Organization;
-use Illuminate\Http\Request;
+use App\User;
 
 trait AuthorizesDefaultMembershipLevelRelation
 {
     /**
      * Determine whether the user can read the default membership level.
      *
+     * @param User         $user
      * @param Organization $organization
-     * @param Request      $request
      *
      * @return bool
      */
-    public function readDefaultMembershipLevel(Organization $organization, Request $request)
+    public function readDefaultMembershipLevel(User $user, Organization $organization)
     {
-        return $this->authorizeRelation($organization, 'membershipLevels', 'read', $request);
+        return $this->readRelationship($user, $organization, 'membershipLevels');
     }
 
     /**
      * Determine whether the user can modify the default membership level.
      *
+     * @param User         $user
      * @param Organization $organization
-     * @param Request      $request
      *
      * @return bool
      */
-    public function modifyDefaultMembershipLevel(Organization $organization, Request $request)
+    public function modifyDefaultMembershipLevel(User $user, Organization $organization)
     {
-        return $this->authorizeRelation($organization, 'membershipLevels', 'modify', $request);
+        return $this->modifyRelationship($user, $organization, 'membershipLevels');
     }
 }

@@ -18,15 +18,27 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Swagger\Client\ApiException;
 
 class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * @var string
+     */
     protected $authorizationCode;
+
+    /**
+     * @var OAuth2Token
+     */
+    protected $token;
+
+    /**
+     * @var User
+     */
     protected $user;
-    protected $corporationID;
 
     /**
      * Create a new job instance.
@@ -47,6 +59,8 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
      *
      * @throws ApiException
      * @throws InvalidApiResponse
+     * @throws \Jose\Component\Checker\InvalidClaimException
+     * @throws \Jose\Component\Checker\MissingMandatoryClaimException
      *
      * @return void
      */
@@ -55,25 +69,23 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
         // verify the code and get an access token
         $response = $this->getAccessToken();
 
-        $token = new OAuth2Token();
-        $token->access_token = $response['access_token'];
-        $token->refresh_token = $response['refresh_token'];
-        $token->expires_on = Carbon::create()->addSeconds($response['expires_in']);
+        $this->token = new OAuth2Token();
+        $this->token->access_token = $response['access_token'];
+        $this->token->refresh_token = $response['refresh_token'];
+        $this->token->expires_on = Carbon::create()->addSeconds($response['expires_in']);
+
+        $this->verifyJWT($this->token->access_token);
 
         // call api to get character information
-        $response = $this->getCharacterID($token);
+        $response = $this->getCharacterID();
 
         $character = $this->getCharacterInformation($response['CharacterID']);
-        $corporation = $this->checkCorporation();
-        /** @var MembershipLevel $membershipLevel */
-        $membershipLevel = $corporation->defaultMembershipLevel;
-        $this->createMembership($corporation, $character, $membershipLevel);
 
         $character->user()->associate($this->user);
-        $token->character()->associate($character);
+        $this->token->character()->associate($character);
 
         $character->save();
-        $token->save();
+        $this->token->save();
 
         broadcast(new \App\Events\CharacterAdded($this->user, $character));
     }
@@ -85,18 +97,42 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
      */
     private function getAccessToken()
     {
-        $curl = curl_init(self::EVE_AUTH_URL);
-        curl_setopt_array($curl, [
+        Log::debug('Getting access token');
+        $curl = curl_init(static::EVE_AUTH_URL);
+        $headers = $this->getBasicAuthHeader() + [
+            'Content-Type: application/x-www-form-urlencoded',
+            'Host: login.eveonline.com'
+        ];
+
+        $options = [
             CURLOPT_USERAGENT      => env('EVE_USERAGENT'),
-            CURLOPT_HTTPHEADER     => $this->getBasicAuthHeader(),
+            CURLOPT_HTTPHEADER     => $headers,
             CURLOPT_POST           => 1,
-            CURLOPT_POSTFIELDS     => 'grant_type=authorization_code&code='.$this->authorizationCode,
+            CURLOPT_POSTFIELDS     => http_build_query([
+                'grant_type' => 'authorization_code',
+                'code'       => $this->authorizationCode
+            ]),
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
-        ]);
-        $response = json_decode(curl_exec($curl), true);
+            CURLOPT_VERBOSE        => true,
+        ];
+
+        curl_setopt_array($curl, $options);
+
+        if (!$response = json_decode(curl_exec($curl), true)) {
+          trigger_error(curl_error($curl));
+        }
+
+        $info = curl_getinfo($curl);
         curl_close($curl);
+
+        Log::debug('Response from getting access token', [
+            'response' => $response,
+            'info' => $info,
+            'headers' => $headers,
+            'options' => $options,
+        ]);
 
         if (!isset($response['access_token'])) {
             throw new InvalidApiResponse();
@@ -106,24 +142,29 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
     }
 
     /**
-     * @param OAuth2Token $token
-     *
      * @throws InvalidApiResponse
      *
      * @return array
      */
-    private function getCharacterID(OAuth2Token $token)
+    private function getCharacterID()
     {
+        Log::debug('Getting character ID');
         $curl = curl_init('https://esi.tech.ccp.is/verify/');
         curl_setopt_array($curl, [
             CURLOPT_USERAGENT      => env('EVE_USERAGENT'),
-            CURLOPT_HTTPHEADER     => 'Authorization: Bearer '.$token->access_token,
+            CURLOPT_HTTPHEADER     => 'Authorization: Bearer '.$this->token->access_token,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
         ]);
-        $response = json_decode(curl_exec($curl), true);
+
+        if (!$response = json_decode(curl_exec($curl), true)) {
+            trigger_error(curl_error($curl));
+        }
+
         curl_close($curl);
+
+        Log::debug('Response from getting character ID', $response);
 
         if (!isset($response['CharacterID'])) {
             throw new InvalidApiResponse();
@@ -141,30 +182,34 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
      */
     private function getCharacterInformation($characterID)
     {
-        $characterResponse = (new \Swagger\Client\Api\CharacterApi())
-            ->getCharactersCharacterId($characterID, null, null, env('EVE_USERAGENT'));
+        $characterResponse = (new \Swagger\Client\Api\CharacterApi(null, $this->buildConfiguration()))
+            ->getCharactersCharacterId($characterID);
         $character = new Character();
         $character->api_id = $characterID;
         $character->name = $characterResponse->getName();
-        $this->corporationID = $characterResponse->getCorporationId();
+        $corporation = $this->checkCorporation($characterResponse->getCorporationId());
+        /** @var MembershipLevel $membershipLevel */
+        $membershipLevel = $corporation->defaultMembershipLevel;
+        $this->createMembership($corporation, $character, $membershipLevel);
 
         return $character;
     }
 
     /**
+     * @param int $corporationID
      * @throws ApiException
      *
      * @return Corporation
      */
-    private function checkCorporation()
+    private function checkCorporation($corporationID)
     {
         try {
-            $corporation = Corporation::where('api_id', $this->corporationID)->firstOrFail();
+            $corporation = Corporation::where('api_id', $corporationID)->firstOrFail();
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
             $corporation = new Corporation();
-            $response = (new \Swagger\Client\Api\CorporationApi())
-                ->getCorporationsCorporationId($this->corporationID, null, null, env('EVE_USERAGENT'));
-            $corporation->api_id = $this->corporationID;
+            $response = (new \Swagger\Client\Api\CorporationApi(null, $this->buildConfiguration()))
+                ->getCorporationsCorporationId($corporationID);
+            $corporation->api_id = $corporationID;
             $corporation->name = $response->getName();
             $corporation->save();
 
@@ -230,8 +275,8 @@ class ProcessAuthCallback extends AuthorizesAPI implements ShouldQueue
             $alliance = Alliance::where('api_id', $allianceID)->firstOrFail();
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
             $alliance = new Alliance();
-            $response = (new \Swagger\Client\Api\AllianceApi())
-                ->getAlliancesAllianceId($allianceID, null, null, env('EVE_USERAGENT'));
+            $response = (new \Swagger\Client\Api\AllianceApi(null, $this->buildConfiguration()))
+                ->getAlliancesAllianceId($allianceID);
             $alliance->api_id = $allianceID;
             $alliance->name = $response->getName();
             $alliance->save();

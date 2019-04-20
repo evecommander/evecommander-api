@@ -34,8 +34,6 @@ class FleetCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        $type = end(explode('\\', $this->fleet->organization_type));
-
-        return new PrivateChannel("App.{$type}.{$this->fleet->organization_id}.Fleets");
+        return new PrivateChannel("/organizations/{$this->fleet->organization_id}/fleets");
     }
 }

@@ -96,6 +96,26 @@ class MembershipLevelSchema extends SchemaProvider
                     ];
                 },
             ],
+
+            'membership-fees' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->membershipFees->count(),
+                    ];
+                },
+            ],
+
+            'discounts' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::META         => function () use ($resource) {
+                    return [
+                        'count' => $resource->discounts->count(),
+                    ];
+                },
+            ],
         ];
     }
 }

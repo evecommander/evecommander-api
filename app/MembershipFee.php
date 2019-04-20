@@ -2,10 +2,8 @@
 
 namespace App;
 
-use App\Abstracts\Organization;
-use App\Traits\ModifiesAmounts;
+use App\Abstracts\ModifiedAmounts;
 use App\Traits\UuidTrait;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
@@ -14,36 +12,15 @@ use Illuminate\Support\Carbon;
  * @property string id
  * @property string organization_id
  * @property string organization_type
+ * @property string conditional_id
+ * @property string conditional_type
+ * @property string name
  * @property string amount_type
  * @property float amount
  * @property Carbon created_at
  * @property Carbon updated_at
- *
- * Relationships
- * @property Organization organization
- * @property \Illuminate\Database\Eloquent\Collection billingConditions
  */
-class MembershipFee extends Model
+class MembershipFee extends ModifiedAmounts
 {
-    use UuidTrait, ModifiesAmounts;
-
-    /**
-     * Get relation between this membership fee and the organization that owns it.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function organization()
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * Get relation between this membership fee and any billing conditions that are tied to it.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function billingConditions()
-    {
-        return $this->belongsToMany(BillingCondition::class)->withPivotValue('sort')->orderBy('sort');
-    }
+    use UuidTrait;
 }

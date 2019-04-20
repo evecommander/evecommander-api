@@ -22,7 +22,7 @@ class CreateFleetsTable extends Migration
             $table->uuid('organization_id')->index();
             $table->string('organization_type')->index();
             $table->unsignedInteger('api_id')->index()->nullable();
-            $table->string('title');
+            $table->string('name');
             $table->text('description');
             $table->enum('status', [
                 Fleet::STATUS_PENDING,
@@ -32,8 +32,8 @@ class CreateFleetsTable extends Migration
                 Fleet::STATUS_COMPLETED,
                 Fleet::STATUS_CANCELLED,
             ])->default(Fleet::STATUS_PENDING);
-            $table->dateTime('start_time');
-            $table->dateTime('end_time')->nullable();
+            $table->dateTime('start_at');
+            $table->dateTime('end_at')->nullable();
             $table->uuid('created_by');
             $table->uuid('last_updated_by')->nullable();
             $table->boolean('track_history')->default(false);

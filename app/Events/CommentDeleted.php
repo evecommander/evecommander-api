@@ -34,8 +34,12 @@ class CommentDeleted implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        $type = implode('.', explode('\\', $this->comment->commentable_type));
+        // get resource name of the commentable
+        $commentable = json_api()->getDefaultResolver()->getResourceType($this->comment->commentable_type);
 
-        return new PrivateChannel("{$type}.{$this->comment->commentable_id}");
+        return [
+            new PrivateChannel("/{$commentable}/{$this->comment->commentable_id}"),
+            new PrivateChannel("/comments/{$this->comment->id}"),
+        ];
     }
 }

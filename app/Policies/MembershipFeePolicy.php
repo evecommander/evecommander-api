@@ -9,7 +9,6 @@ use App\Policies\Traits\AuthorizesRelations;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class MembershipFeePolicy implements ResourcePolicyInterface
 {
@@ -18,11 +17,10 @@ class MembershipFeePolicy implements ResourcePolicyInterface
     /**
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function index(User $user, string $type, Request $request): bool
+    public function index(User $user, string $type): bool
     {
         return false;
     }
@@ -32,14 +30,13 @@ class MembershipFeePolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $membershipFee
-     * @param Request $request
      *
      * @return bool
      */
-    public function read(User $user, Model $membershipFee, Request $request): bool
+    public function read(User $user, Model $membershipFee): bool
     {
         /* @var MembershipFee $membershipFee */
-        return $this->authorizeRelation($membershipFee->organization, 'membership_fees', 'read', $request);
+        return $this->readRelationship($user, $membershipFee->organization, 'membership_fees');
     }
 
     /**
@@ -47,12 +44,13 @@ class MembershipFeePolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function create(User $user, string $type, Request $request): bool
+    public function create(User $user, string $type): bool
     {
+        $request = \request();
+
         // this is run before validation so reject bad requests
         if (!$request->has('organization_type') || !$request->has('organization_id')) {
             return false;
@@ -61,7 +59,7 @@ class MembershipFeePolicy implements ResourcePolicyInterface
         /** @var Organization $organization */
         $organization = $request->get('organization_type')::find($request->get('organization_id'));
 
-        return $this->authorizeRelation($organization, 'membership_fees', 'modify', $request);
+        return $this->modifyRelationship($user, $organization, 'membership_fees');
     }
 
     /**
@@ -69,14 +67,13 @@ class MembershipFeePolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $membershipFee
-     * @param Request $request
      *
      * @return bool
      */
-    public function update(User $user, Model $membershipFee, Request $request): bool
+    public function update(User $user, Model $membershipFee): bool
     {
         /* @var MembershipFee $membershipFee */
-        return $this->authorizeRelation($membershipFee->organization, 'membership_fees', 'modify', $request);
+        return $this->modifyRelationship($user, $membershipFee->organization, 'membership_fees');
     }
 
     /**
@@ -84,56 +81,55 @@ class MembershipFeePolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $membershipFee
-     * @param Request $request
      *
      * @return bool
      */
-    public function delete(User $user, Model $membershipFee, Request $request): bool
+    public function delete(User $user, Model $membershipFee): bool
     {
         /* @var MembershipFee $membershipFee */
-        return $this->authorizeRelation($membershipFee->organization, 'membership_fees', 'modify', $request);
+        return $this->modifyRelationship($user, $membershipFee->organization, 'membership_fees');
     }
 
     /**
+     * @param User          $user
      * @param MembershipFee $membershipFee
-     * @param Request       $request
      *
      * @return bool
      */
-    public function readOrganization(MembershipFee $membershipFee, Request $request): bool
+    public function readOrganization(User $user, MembershipFee $membershipFee): bool
     {
-        return $request->user()->can('read', [$membershipFee->organization, $request]);
+        return $user->can('read', [$membershipFee->organization]);
     }
 
     /**
+     * @param User          $user
      * @param MembershipFee $membershipFee
-     * @param Request       $request
      *
      * @return bool
      */
-    public function modifyOrganization(MembershipFee $membershipFee, Request $request): bool
+    public function modifyOrganization(User $user, MembershipFee $membershipFee): bool
     {
         return false;
     }
 
     /**
+     * @param User          $user
      * @param MembershipFee $membershipFee
-     * @param Request       $request
      *
      * @return bool
      */
-    public function readBillingConditions(MembershipFee $membershipFee, Request $request): bool
+    public function readBillingConditions(User $user, MembershipFee $membershipFee): bool
     {
-        return $request->user()->can('read', [$membershipFee->organization, $request]);
+        return $user->can('read', [$membershipFee->organization]);
     }
 
     /**
+     * @param User          $user
      * @param MembershipFee $membershipFee
-     * @param Request       $request
      *
      * @return bool
      */
-    public function modifyBillingConditions(MembershipFee $membershipFee, Request $request): bool
+    public function modifyBillingConditions(User $user, MembershipFee $membershipFee): bool
     {
         return false;
     }

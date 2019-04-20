@@ -15,7 +15,9 @@ class SubscriptionAdapter extends AbstractAdapter
      *
      * @var array
      */
-    protected $attributes = [];
+    protected $attributes = [
+        'notification-type' => 'notification'
+    ];
 
     /**
      * Adapter constructor.

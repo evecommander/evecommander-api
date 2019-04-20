@@ -20,7 +20,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string recipient_id
  * @property string recipient_type
  * @property string code
- * @property string title
+ * @property string name
  * @property string status
  * @property float total
  * @property Carbon due_date
@@ -45,12 +45,16 @@ class Invoice extends Model implements HasNotificationsContract
     use UuidTrait, HasComments, Notifiable;
 
     const STATE_PENDING = 'pending';
-
     const STATE_FULFILLED = 'fulfilled';
-
     const STATE_OVERDUE = 'overdue';
-
     const STATE_IN_DEFAULT = 'default';
+
+    const AVAILABLE_STATES = [
+        self::STATE_PENDING,
+        self::STATE_FULFILLED,
+        self::STATE_OVERDUE,
+        self::STATE_IN_DEFAULT,
+    ];
 
     protected $dates = [
         'created_at',
@@ -63,8 +67,10 @@ class Invoice extends Model implements HasNotificationsContract
      * Called when an invoice is being created to set a random code on the model.
      *
      * @param Invoice $model
+     *
+     * @throws \Exception
      */
-    protected static function onCreate(self $model)
+    protected static function onCreate(Invoice $model)
     {
         $model->code = 'I-'.substr(bin2hex(random_bytes(16)), 0, 16);
     }

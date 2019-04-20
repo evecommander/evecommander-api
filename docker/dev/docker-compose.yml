@@ -3,7 +3,6 @@ services:
   app:
     build:
       context: ./app
-      dockerfile: ./app/Dockerfile
     image: vessel/app
     ports:
      - "${APP_PORT}:80"
@@ -18,7 +17,6 @@ services:
   node:
     build:
       context: ./node
-      dockerfile: ./node/Dockerfile
       args:
         uid: "${WWWUSER}"
     image: vessel/node
@@ -28,12 +26,12 @@ services:
     networks:
      - vessel
   pgsql:
-    image: postgres:10-alpine
+    image: postgres:11-alpine
     ports:
     - "${PGSQL_PORT}:5432"
     environment:
-      POSTGRES_DATABASE: "eve_commander"
-      POSTGRES_USERNAME: "homestead"
+      POSTGRES_DB: "eve_commander"
+      POSTGRES_USER: "homestead"
       POSTGRES_PASSWORD: "secret"
     volumes:
     - vesselpgsql:/var/lib/postgresql/data

@@ -3,6 +3,9 @@
 namespace App\Observers;
 
 use App\Character;
+use App\Events\HandbookCreated;
+use App\Events\HandbookDeleted;
+use App\Events\HandbookUpdated;
 use App\Handbook;
 use App\Http\Middleware\CheckCharacter;
 use App\Notifications\Handbook\Created;
@@ -47,6 +50,7 @@ class HandbookObserver
         });
 
         Notification::send($notifiables, new Created($handbook));
+        broadcast(new HandbookCreated($handbook));
     }
 
     /**
@@ -84,5 +88,19 @@ class HandbookObserver
         });
 
         Notification::send($notifiables, new Updated($handbook));
+
+        broadcast(new HandbookUpdated($handbook));
+    }
+
+    /**
+     * Handle the handbook "deleted" event.
+     *
+     * @param \App\Handbook $handbook
+     *
+     * @return void
+     */
+    public function deleted(Handbook $handbook)
+    {
+        broadcast(new HandbookDeleted($handbook));
     }
 }

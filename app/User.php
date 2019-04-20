@@ -2,11 +2,18 @@
 
 namespace App;
 
+use App\Abstracts\Organization;
 use App\Contracts\HasNotificationsContract;
 use App\Traits\UuidTrait;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Laravel\Passport\HasApiTokens;
+use League\OAuth2\Server\Exception\OAuthServerException;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
@@ -17,6 +24,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string password
  * @property array settings
  * @property bool is_admin
+ * @property bool is_email_verified
  * @property Carbon created_at
  * @property Carbon updated_at
  *
@@ -26,9 +34,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property \Illuminate\Database\Eloquent\Collection unreadNotifications
  * @property \Illuminate\Database\Eloquent\Collection characters
  */
-class User extends Authenticatable implements HasNotificationsContract, JWTSubject
+class User extends Authenticatable implements HasNotificationsContract
 {
-    use Notifiable, UuidTrait;
+    use HasApiTokens, Notifiable, UuidTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -52,32 +60,45 @@ class User extends Authenticatable implements HasNotificationsContract, JWTSubje
     protected $casts = [
         'settings' => 'array',
         'is_admin' => 'boolean',
+        'is_email_verified' => 'boolean',
     ];
 
     /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
+     * @param $password
+     * @return bool
      *
-     * @return string
+     * @throws OAuthServerException
      */
-    public function getJWTIdentifier()
+    public function validateForPassportPasswordGrant($password)
     {
-        return $this->getKey();
+        if (Hash::check($password, $this->getAuthPassword())) {
+            // check that the user's email is verified
+            if ($this->is_email_verified) {
+                return true;
+            } else {
+                throw new OAuthServerException('User account is not active', 6, 'account_inactive', 401);
+            }
+        }
+
+        return false;
     }
 
     /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
+     * @param Model  $organization
+     * @param string $target
+     * @param string $action
      *
-     * @return array
+     * @return bool
      */
-    public function getJWTCustomClaims()
+    public function hasCharacterWithPermission(Model $organization, string $target, string $action): bool
     {
-        $claims = [];
-
-        if ($this->is_admin) {
-            $claims['adm'] = true;
-        }
-
-        return $claims;
+        return $this->characters()->whereHas('roles', function (Builder $builder) use ($organization, $target, $action) {
+            $builder->where('organization_id', '=', $organization->id)
+                ->where('organization_type', '=', get_class($organization))
+                ->whereHas('permissions', function (Builder $query) use ($target, $action) {
+                    $query->where('slug', '=', Str::snake("{$target}_{$action}"));
+                });
+        })->exists();
     }
 
     /**

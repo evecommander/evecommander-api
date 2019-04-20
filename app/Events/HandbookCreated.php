@@ -34,8 +34,9 @@ class HandbookCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        $type = end(explode('\\', $this->handbook->organization_type));
-
-        return new PrivateChannel("App.{$type}.{$this->handbook->organization_id}.Handbooks");
+        return [
+            new PrivateChannel("/handbooks/{$this->handbook->id}"),
+            new PrivateChannel("/organizations/{$this->handbook->organization_id}/handbooks"),
+        ];
     }
 }

@@ -17,6 +17,11 @@ class MembershipFeeAdapter extends AbstractAdapter
      */
     protected $attributes = [];
 
+    protected $guarded = [
+        'created-at',
+        'updated-at',
+    ];
+
     /**
      * Adapter constructor.
      *
@@ -33,6 +38,11 @@ class MembershipFeeAdapter extends AbstractAdapter
     }
 
     public function billingConditions()
+    {
+        return $this->hasMany();
+    }
+
+    public function billingConditionGroups()
     {
         return $this->hasMany();
     }

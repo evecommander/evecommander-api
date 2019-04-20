@@ -18,11 +18,11 @@ use Illuminate\Support\Carbon;
  * @property string organization_id
  * @property string organization_type
  * @property int api_id
- * @property string title
+ * @property string name
  * @property string description
  * @property string status
- * @property Carbon start_time
- * @property Carbon end_time
+ * @property Carbon start_at
+ * @property Carbon end_at
  * @property string created_by
  * @property string last_updated_by
  * @property bool track_history

@@ -6,6 +6,10 @@ use App\JsonApi\FiltersResources;
 use App\ReplacementClaim;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
+use Illuminate\Support\Facades\Auth;
+use Swagger\Client\Api\KillmailsApi;
+use Swagger\Client\Api\MarketApi;
+use Swagger\Client\Configuration;
 
 class ReplacementClaimAdapter extends AbstractAdapter
 {
@@ -55,5 +59,15 @@ class ReplacementClaimAdapter extends AbstractAdapter
     public function lastUpdatedBy()
     {
         return $this->belongsTo();
+    }
+
+    protected function updating(ReplacementClaim $replacementClaim)
+    {
+        $replacementClaim->lastUpdatedBy()->associate(Auth::user());
+    }
+
+    protected function creating(ReplacementClaim $replacementClaim)
+    {
+
     }
 }

@@ -3,19 +3,16 @@
 namespace App\Policies;
 
 use App\Alliance;
-use App\Character;
-use App\Http\Middleware\CheckCharacter;
 use App\Policies\Interfaces\ResourcePolicyInterface;
 use App\Policies\Traits\AuthorizesDefaultMembershipLevelRelation;
-use App\Policies\Traits\AuthorizesInvoicesRelation;
 use App\Policies\Traits\AuthorizesMembershipsRelation;
 use App\Policies\Traits\AuthorizesNotificationsRelation;
 use App\Policies\Traits\AuthorizesReceivedInvoicesRelation;
 use App\Policies\Traits\AuthorizesRelations;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class AlliancePolicy implements ResourcePolicyInterface
 {
@@ -23,18 +20,16 @@ class AlliancePolicy implements ResourcePolicyInterface
         AuthorizesRelations,
         AuthorizesDefaultMembershipLevelRelation,
         AuthorizesReceivedInvoicesRelation,
-        AuthorizesInvoicesRelation,
         AuthorizesNotificationsRelation,
         AuthorizesMembershipsRelation;
 
     /**
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function index(User $user, string $type, Request $request): bool
+    public function index(User $user, string $type): bool
     {
         return true;
     }
@@ -44,18 +39,15 @@ class AlliancePolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $alliance
-     * @param Request $request
      *
      * @return bool
      */
-    public function read(User $user, Model $alliance, Request $request): bool
+    public function read(User $user, Model $alliance): bool
     {
         // check if any characters are members of the alliance
-        /** @var Character $character */
-        $character = Character::find($request->header(CheckCharacter::CHARACTER_HEADER))->load('corporation.alliance');
-
-        /* @var Alliance $alliance */
-        return $character->corporation->alliance->id === $alliance->id;
+        return $user->characters()->whereHas('corporation.alliance', function (Builder $builder) use ($alliance) {
+            $builder->where('id', $alliance->id);
+        })->exists();
     }
 
     /**
@@ -63,11 +55,10 @@ class AlliancePolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param string  $type
-     * @param Request $request
      *
      * @return bool
      */
-    public function create(User $user, string $type, Request $request): bool
+    public function create(User $user, string $type): bool
     {
         return false;
     }
@@ -77,17 +68,12 @@ class AlliancePolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $alliance
-     * @param Request $request
      *
      * @return bool
      */
-    public function update(User $user, Model $alliance, Request $request): bool
+    public function update(User $user, Model $alliance): bool
     {
-        /** @var Character $character */
-        $character = Character::find($request->header(CheckCharacter::CHARACTER_HEADER));
-
-        /* @var Alliance $alliance */
-        return $character->hasPermission('organization_modify', $alliance);
+        return $user->hasCharacterWithPermission($alliance, 'organization', 'modify');
     }
 
     /**
@@ -95,41 +81,36 @@ class AlliancePolicy implements ResourcePolicyInterface
      *
      * @param User    $user
      * @param Model   $alliance
-     * @param Request $request
      *
      * @return bool
      */
-    public function delete(User $user, Model $alliance, Request $request): bool
+    public function delete(User $user, Model $alliance): bool
     {
-        /** @var Character $character */
-        $character = Character::find($request->header(CheckCharacter::CHARACTER_HEADER));
-
-        /* @var Alliance $alliance */
-        return $character->hasPermission('organization_delete', $alliance);
+        return $user->hasCharacterWithPermission($alliance, 'organization', 'delete');
     }
 
     /**
      * Determine whether the user can view the corporations relation.
      *
+     * @param User     $user
      * @param Alliance $alliance
-     * @param Request  $request
      *
      * @return bool
      */
-    public function readCorporations(Alliance $alliance, Request $request): bool
+    public function readCorporations(User $user, Alliance $alliance): bool
     {
-        return $this->authorizeRelation($alliance, 'memberships', 'read', $request);
+        return $user->hasCharacterWithPermission($alliance, 'memberships', 'read');
     }
 
     /**
      * Determine whether the user can modify the corporations relation.
      *
+     * @param User     $user
      * @param Alliance $alliance
-     * @param Request  $request
      *
      * @return bool
      */
-    public function modifyCorporations(Alliance $alliance, Request $request): bool
+    public function modifyCorporations(User $user, Alliance $alliance): bool
     {
         return false;
     }
@@ -137,25 +118,25 @@ class AlliancePolicy implements ResourcePolicyInterface
     /**
      * Determine whether the user can view the coalition relation.
      *
+     * @param User     $user
      * @param Alliance $alliance
-     * @param Request  $request
      *
      * @return bool
      */
-    public function readCoalition(Alliance $alliance, Request $request): bool
+    public function readCoalition(User $user, Alliance $alliance): bool
     {
-        return $this->authorizeRelation($alliance, 'member_of', 'read', $request);
+        return $this->authorizeRelation($user, $alliance, 'member_of', 'read');
     }
 
     /**
      * Determine whether the user can modify the coalition relation.
      *
+     * @param User     $user
      * @param Alliance $alliance
-     * @param Request  $request
      *
      * @return bool
      */
-    public function modifyCoalition(Alliance $alliance, Request $request): bool
+    public function modifyCoalition(User $user, Alliance $alliance): bool
     {
         return false;
     }

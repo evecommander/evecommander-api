@@ -34,6 +34,6 @@ class FleetUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('App.Fleet.'.$this->fleet->id);
+        return new PrivateChannel('/fleets/'.$this->fleet->id);
     }
 }
